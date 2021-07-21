@@ -17,31 +17,54 @@
             padding-left: 300px;
         }
 
-
-        .no-id-bold{
-            font-weight: bold;  
-            font-size: 1.5rem;          
+        .col {
+            padding-left: -20px !important;
         }
 
-         .no-margin{
-             margin-top: -30px !important;
-         }
+        .no-id-bold {
+            font-weight: bold !important;
+            font-size: 1.5rem !important;
+        }
 
-         .no-text-box{
-             width: 70% !important;
-             margin-left: 3px !important;
-         }
+        .no-margin {
+            margin-top: -30px !important;
+        }
 
-         .no-text-box-dd{
-             width: 70% !important;
-             margin-left: 3px !important;
-         }
+        .no-text-box {
+            width: 70% !important;
+            margin-left: 3px !important;
+            border-style: solid !important;
+            border-width: 1px !important;
+            line-height: 25px !important;
+            height: 25px !important;
+        }
 
-         .margin-dd{
-             padding-right: 100px !important;
-         }
+        .no-text-box-dd {
+            width: 70% !important;
+            margin-left: 3px !important;
+        }
+
+        .margin-dd {
+            padding-right: 100px !important;
+        }
+
+        .datepicker-date-display {
+            background-color: #000 !important;
+        }
+
+        .datepicker-table td.is-selected {
+            background-color: #000 !important;
+
+        }
 
 
+        .datepicker-cancel,
+        .datepicker-clear,
+        .datepicker-today,
+        .datepicker-done {
+            color: #0072bc;
+
+        }
 
         @media only screen and (max-width : 992px) {
 
@@ -57,20 +80,167 @@
 
 <body class="grey lighten-5">
 
-    
+
     <!-- Numbering prompt -->
-  <div id="modal1" class="modal" style="width: 80%;">
-    <div class="modal-content">
-      <h4 class="center-align"><b>Numbering</b></h4>
-      <div class="row">
-         <div id="numberings"></div> 
-      </div>
-     
+    <div id="modal1" class="modal" style="width: 70%;">
+        <div class="modal-content ">
+            <div class="row ">
+                <h5 class="left-align" style="margin-top: -10px !important;"><b>Numbering</b></h5>
+                <div class="divider"></div>
+            </div>
+
+            <div class="row grey lighten-4">
+                <div id="numberings"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:Void(0);" class="waves-effect waves-green btn-small black">Save</a>
+            <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
     </div>
-    <div class="modal-footer">
-      <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
+
+    <!-- Game setup prompt -->
+    <div id="modal2" class="modal" style="width: 90%;">
+        <div class="modal-content " style="height: 500px;">
+            <div class="row">
+                <h5 class="left-align" style="margin-top: -10px !important;"><b>Game Setup</b></h5>
+                <div class="divider"></div>
+            </div>
+
+
+
+            <div class="row">
+                <p>
+                    <label>
+                      <input name="game_setup_selection" type="radio" class="select_setup_type" id="new_game_radio"/>
+                      <span class="black-text">NEW SETUP</span>
+                    </label>
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                    <label>
+                        <input name="game_setup_selection" type="radio"  class="select_setup_type" id="edit_game_radio"/>
+                        <span  class="black-text">EDIT SETUP</span>
+                      </label>
+                  </p>
+                  <p>
+                   
+                  </p>
+            </div>
+            <div class="row" style="margin-top: -25px !important;">
+                <div id="New_Setup" class="setup_type">                   
+                    <div class="row">
+                        <div class="col s7 push-s5">                            
+                            <table>
+                                <thead>
+                                  <tr>
+                                      <th>Game</th>
+                                      <th>Color</th>
+                                      <th>One Line</th>
+                                      <th>Two Line</th>
+                                      <th>Full House</th>
+                                      <th>Corner</th>
+                                  </tr>
+                                </thead>
+                        
+                                <tbody>
+                                  <tr>
+                                    <td> Game 1</td>
+                                    <td> Red </td>
+                                    <td>
+                                        <input id="" type="text" class="browser-default" value="0.00" style="width:50%">
+                                    </td>
+                                    <td> 
+                                        <input id="" type="text" class="browser-default" value="0.00" style="width:50%">
+                                    </td>
+                                    <td> 
+                                        <input id="" type="text" class="browser-default" value="0.00" style="width:50%">
+                                    </td>
+                                    <td>
+                                        <input id="" type="text" class="browser-default" value="0.00" style="width:50%"> 
+                                    </td>
+                                  </tr>
+                                  
+                                </tbody>
+                              </table>
+
+                        </div>
+                        <div class="col s5 pull-s7  grey lighten-4">
+                            <h6 class="flow-text center-align">New Setup</h6>
+                            <div class="divider"></div>
+                            <div class="col s12">
+                                <div class="input-field inline">
+                                    <span>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <input type="text" class="datepicker browser-default">
+                                </div>
+                            </div>
+                            <div class="col s12" style="margin-top: -40px !important;">
+                                <div class="input-field inline">
+                                    <span>Game Name</span>
+                                    <input type="text" class="browser-default">
+                                </div>
+                            </div>
+
+                            <div class="col s12" style="margin-top: -40px !important;margin-left: -10px !important;">
+                                <div class="input-field  col s12 ">                                   
+                                    <select id="new_game_ticket_inplay" class="browser-default ticket_in_play_new_setup">
+                                        <option value="" disabled selected>Ticket In Play</option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                      </select>
+                                </div>
+                            </div>
+
+
+                            
+
+                        </div>
+                      </div>
+
+                </div>
+                <div id="Edit_Setup"  class="setup_type">                    
+                    <div class="row">
+                        <div class="col s7 push-s5 ">
+                            <span class="flow-text">Details comes here</span>
+                        </div>
+                        <div class="col s5 pull-s7  grey lighten-4">
+                            <h6 class="flow-text center-align">Edit Setup</h6>
+                            <div class="divider"></div>
+                            <div class="col s12">
+                                <div class="input-field inline">
+                                    <span>Date</span>
+                                    <input type="text" class="datepicker browser-default">
+                                </div>
+                            </div>
+                            <div class="col s12" style="margin-top: -33px !important;margin-left: -10px !important;">
+                                <div class="input-field  col s12 ">                                   
+                                    <select id="game_name_select" class="browser-default edit_game_name_select">
+                                        <option value="" disabled selected>Game Name</option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col s12" style="margin-top: -20px !important;margin-left: -10px !important;">
+                                <div class="input-field  col s12 ">                                   
+                                    <select id="new_game_ticket_inplay" class="browser-default ticket_in_play_new_setup">
+                                        <option value="" disabled selected>Ticket In Play</option>
+                                        <option value="1">Option 1</option>
+                                        <option value="2">Option 2</option>
+                                        <option value="3">Option 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:Void(0);" class="waves-effect waves-green btn-small black">Save</a>
+            <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
     </div>
-  </div>
 
 
 
@@ -92,7 +262,7 @@
                 <a class="white-text" style="font-size: 2rem;">Dashboard</a>
                 <a href="#name"><span class="white-text name">Samihan</span></a>
                 <a href="#email"><span class="white-text email">samihan@gmail.com</span></a>
-               
+
             </div>
         </li>
         <li>
@@ -101,8 +271,10 @@
                     <div class="collapsible-header"><i class="material-icons">settings_applications</i>Setup</div>
                     <div class="collapsible-body grey lighten-5">
                         <ul>
-                            <li><a href="#modal1" class="modal-trigger"><i class="material-icons">chevron_right</i>Numbering</a></li>
-                            <li><a href="#!"><i class="material-icons">chevron_right</i>Game setup</a></a></li>
+                            <li><a href="#modal1" class="modal-trigger"><i
+                                        class="material-icons">chevron_right</i>Numbering</a></li>
+                            <li><a href="#modal2" class="modal-trigger"><i class="material-icons">chevron_right</i>Game
+                                    setup</a></a></li>
                         </ul>
                     </div>
                 </li>
@@ -112,7 +284,7 @@
                         <ul>
                             <li><a href="#!"><i class="material-icons">chevron_right</i>Display</a></li>
                             <li><a href="#!"><i class="material-icons">chevron_right</i>Game screen</a></a></li>
-                        </ul> 
+                        </ul>
                     </div>
                 </li>
                 <li>
@@ -146,7 +318,8 @@
         </li>
 
     </ul>
-    <a href="#" data-target="slide-out" class="sidenav-trigger large  right-align black-text hide-on-large-only show-on-small"
+    <a href="#" data-target="slide-out"
+        class="sidenav-trigger large  right-align black-text hide-on-large-only show-on-small"
         style="font-size: 1.5rem !important;"><i class="material-icons">menu</i></a>
 
 
