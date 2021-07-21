@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jumbo Bingo</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/assets/materialize/css/materialize.min.css"
+        media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/assets/jumbobingo.css" media="screen,projection" />
+
+    <style>
+        nav,
+        header,
+        main,
+        footer {
+            padding-left: 300px;
+        }
+
+
+        .no-id-bold{
+            font-weight: bold;  
+            font-size: 1.5rem;          
+        }
+
+         .no-margin{
+             margin-top: -30px !important;
+         }
+
+         .no-text-box{
+             width: 70% !important;
+             margin-left: 3px !important;
+         }
+
+         .no-text-box-dd{
+             width: 70% !important;
+             margin-left: 3px !important;
+         }
+
+         .margin-dd{
+             padding-right: 100px !important;
+         }
+
+
+
+        @media only screen and (max-width : 992px) {
+
+            header,
+            main,
+            footer {
+                padding-left: 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body class="grey lighten-5">
+
+    
+    <!-- Numbering prompt -->
+  <div id="modal1" class="modal" style="width: 80%;">
+    <div class="modal-content">
+      <h4 class="center-align"><b>Numbering</b></h4>
+      <div class="row">
+         <div id="numberings"></div> 
+      </div>
+     
+    </div>
+    <div class="modal-footer">
+      <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+
+
+
+
+    <!-- <nav class="black">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo white-text" style="font-weight: bold; padding-left: 20px;">
+                Jumbo Bingo : ST Limited
+                
+            </a>
+        </div>        
+    </nav> -->
+
+    <ul id="slide-out" class="sidenav sidenav-fixed scrollbar">
+        <li>
+            <div class="user-view">
+                <div class="background black">
+                </div>
+                <a class="white-text" style="font-size: 2rem;">Dashboard</a>
+                <a href="#name"><span class="white-text name">Samihan</span></a>
+                <a href="#email"><span class="white-text email">samihan@gmail.com</span></a>
+               
+            </div>
+        </li>
+        <li>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">settings_applications</i>Setup</div>
+                    <div class="collapsible-body grey lighten-5">
+                        <ul>
+                            <li><a href="#modal1" class="modal-trigger"><i class="material-icons">chevron_right</i>Numbering</a></li>
+                            <li><a href="#!"><i class="material-icons">chevron_right</i>Game setup</a></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">play_arrow</i>Play</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="#!"><i class="material-icons">chevron_right</i>Display</a></li>
+                            <li><a href="#!"><i class="material-icons">chevron_right</i>Game screen</a></a></li>
+                        </ul> 
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">verified_user</i>Verify</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="#!"><i class="material-icons">chevron_right</i>Bingo 90 tickets</a></li>
+                            <li><a href="#!"><i class="material-icons">chevron_right</i>Approve Users</a></a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">insert_drive_file</i>Reports</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="#!"><i class="material-icons">chevron_right</i>Game details</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">drafts</i>Others</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="#!"><i class="material-icons">chevron_right</i>Help</a></li>
+                            <li><a href="#!"><i class="material-icons">chevron_right</i>Feedback</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+        </li>
+
+    </ul>
+    <a href="#" data-target="slide-out" class="sidenav-trigger large  right-align black-text hide-on-large-only show-on-small"
+        style="font-size: 1.5rem !important;"><i class="material-icons">menu</i></a>
+
+
+
+    <main>
+        <div class="container">
+
+        </div>
+    </main>
+
+
+
+    <!-- <footer class="page-footer black" style="margin-top: 37px;">           
+            <div class="footer-copyright">
+              <div class="container">
+              © 2021 Copyright SIVA Tec Ltd.               
+              </div>
+            </div>
+          </footer> -->
+
+
+    <script type="text/javascript" src="/assets/jquery.js"></script>
+    <script type="text/javascript" src="/assets/materialize/js/materialize.min.js"></script>
+    <script type="text/javascript" src="/assets/jumbobingo.js"></script>
+</body>
+
+</html>

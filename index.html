@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jumbo Bingo</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/assets/materialize/css/materialize.min.css"
+        media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/assets/jumbobingo.css" media="screen,projection" />
+
+
+</head>
+
+<body class="grey lighten-5">
+
+
+    <!-- Login prompt -->
+  <div id="modal1" class="modal" style="width: 30%;">
+    <div class="modal-content">
+      <h4 class="center-align"><b>Login</b></h4>
+      <div class="container">
+          <br/>
+        <div class="row">
+            <div class="col s12">          
+              <div class="input-field">
+                <input id="user_id" type="text" class="validate">
+                <label for="user_id">User ID</label>            
+              </div>
+            </div>
+            <div class="col s12" style="margin-top: -20px;">          
+                <div class="input-field">
+                  <input id="password" type="password" class="validate">
+                  <label for="password">Password</label>            
+                </div>
+            </div>
+            <div class="col s12" style="margin-top: -20px;">          
+                <div class="input-field">
+                  <a id="login-btn" class="btn-small black">Login</a>        
+                </div>
+            </div>
+          </div>
+      </div>
+     
+    </div>
+    <div class="modal-footer">
+      <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+
+    <!-- Register prompt -->
+    <div id="modal2" class="modal" style="width: 40%;">
+        <div class="modal-content">
+          <h4 class="center-align"><b>Register</b></h4>
+          <div class="container">
+              <br/>
+              <div class="row">
+                <div class="col s12">          
+                    <div class="input-field">
+                      <input id="club_name" type="text" class="validate">
+                      <label for="club_name">Club Name<span class="red-text">*</span></label>            
+                    </div>
+                  </div>
+              </div>
+              <div class="row" >
+                <div class="col s12"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="address_line_1" type="text" class="validate">
+                      <label for="address_line_1">Address Line 1<span class="red-text">*</span></label>            
+                    </div>
+                  </div>
+                 
+              </div>
+              <div class="row">                 
+                  <div class="col s12"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="address_line_2" type="text" class="validate">
+                      <label for="address_line_2">Address Line 2</label>            
+                    </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col s6"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="post_code" type="text" class="validate">
+                      <label for="post_code">Post code<span class="red-text">*</span></label>            
+                    </div>
+                  </div>
+                  <div class="col s6"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="city" type="text" class="validate">
+                      <label for="city">City<span class="red-text">*</span></label>            
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col s6"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="country" type="text" class="validate">
+                      <label for="country">Country<span class="red-text">*</span></label>            
+                    </div>
+                  </div>
+                  <div class="col s6"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="website" type="text" class="validate">
+                      <label for="website">Website</label>            
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col s6"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="contact_person" type="text" class="validate">
+                      <label for="contact_person">Contact person<span class="red-text">*</span></label>            
+                    </div>
+                  </div>
+                  <div class="col s6"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="phone_no" type="text" class="validate">
+                      <label for="phone_no">Phone no</label>            
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col s12"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="email_id" type="email" class="validate">
+                      <label for="email_id">Email ID<span class="red-text">*</span></label>            
+                    </div>
+                  </div>
+              </div>
+               
+            <div class="row">
+                <div class="col s6"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="password" type="password" class="validate">
+                      <label for="password">Password<span class="red-text">*</span></label>            
+                    </div>
+                  </div>
+                  <div class="col s6"  style="margin-top: -30px;">          
+                    <div class="input-field">
+                      <input id="conf_password" type="password" class="validate">
+                      <label for="conf_password">Conf. Password <span class="red-text">*</span></label>            
+                    </div>
+                  </div> 
+            </div>
+
+            <div class="row">
+                <div class="col s12" style="margin-top: -20px;">          
+                    <div class="input-field">
+                      <a id="login-btn" class="btn-small black">Register</a> &nbsp;  <a id="login-btn" class="btn-small btn-flat">Reset</a>       
+                    </div>
+                </div>
+            </div>
+            
+          </div>
+         
+        </div>
+        <div class="modal-footer">
+          <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+      </div>
+    
+
+    <nav class="black">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo white-text" style="font-weight: bold; padding-left: 20px;">
+                Jumbo Bingo : ST Limited
+                <!-- <img src="/assets/media/Siva-Group.png" class="siva-logo"/> -->
+            </a>
+        </div>        
+    </nav>
+
+    <div class="row">
+        <div class="col s7 push-s5">
+           <br/>
+            <img class="responsive-img" src="/assets/media/bingo-startup-2.jpg"/>
+        </div>
+        <div class="col s5 pull-s7">
+
+            <div style="margin-top: 150px;">
+                <div class="row ">
+                    <div class="col ">
+                        <a class="waves-effect waves-light btn-small black bold center-align modal-trigger" href="#modal1" style="font-size: 24px;">LOGIN</a>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col ">
+                       <a class="black-text">Not Registered yet? </a> 
+                        <a class="blue-grey-text text-darken-4 bold center-align modal-trigger" href="#modal2"> <u>REGISTER HERE</u></a> 
+                    </div>
+                </div>
+            </div>           
+         
+        </div>
+      </div>
+
+   
+
+      
+
+
+        <footer class="page-footer black" style="margin-top: 37px;">           
+            <div class="footer-copyright">
+              <div class="container">
+              © 2021 Copyright SIVA Tec Ltd.               
+              </div>
+            </div>
+          </footer>
+
+
+        <script type="text/javascript" src="/assets/jquery.js"></script>
+        <script type="text/javascript" src="/assets/materialize/js/materialize.min.js"></script>
+        <script type="text/javascript" src="/assets/jumbobingo.js"></script>
+</body>
+
+</html>
