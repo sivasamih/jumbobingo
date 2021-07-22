@@ -66,21 +66,71 @@
 
         }
 
-        #new_setup_table tbody tr{
-            height:10px !important;
-            line-height:10px !important;
+        #new_setup_table tbody tr {
+            height: 10px !important;
+            line-height: 10px !important;
         }
 
 
 
-        #new_setup_table tbody td{
-            height:10px !important;
-            line-height:10px !important;
+
+        #new_setup_table tbody td {
+            height: 10px !important;
+            line-height: 10px !important;
         }
 
         td {
-            padding: 0px 0px !important;    
+            padding: 0px 0px !important;
         }
+
+
+        .game-play-div {
+            height: 500px;
+            border-style: solid;
+            border-width: 1px;
+            margin-top: 20px;
+        }
+
+        .number-preview-display{
+            height: 350px;
+            width: 350px;
+            background-color: #ffeb3b;
+            color:red;
+            margin-left: 85px !important;
+            margin-top: 5px !important;
+        }
+
+        .number-preview-digit{
+            font-size: 14rem;
+            font-weight: bold;
+        }
+
+        .all-numbers-display{
+            padding-top: 10px !important;
+            padding-left: 10px !important;
+        }
+
+        .all-number-initial-pointer{
+            color:#fff;
+            font-weight: bold;
+            font-size: 1.4rem;
+        }
+
+        .round-btn-border{
+            border-style: solid !important;
+            border-width: 1px !important;
+            border-color: #000 !important;
+        }
+
+        .round-btn-numberings{
+            border-style: solid !important;
+            border-width: 1px !important;
+            border-color: #000 !important;
+            margin-bottom: 10px !important;
+            margin-right: 10px !important;
+        }
+
+        
 
         @media only screen and (max-width : 992px) {
 
@@ -125,53 +175,52 @@
             <div class="row">
                 <p>
                     <label>
-                      <input name="game_setup_selection" type="radio" class="select_setup_type" id="new_game_radio"/>
-                      <span class="black-text">NEW SETUP</span>
+                        <input name="game_setup_selection" type="radio" class="select_setup_type" id="new_game_radio" />
+                        <span class="black-text">NEW SETUP</span>
                     </label>
                     <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
                     <label>
-                        <input name="game_setup_selection" type="radio"  class="select_setup_type" id="edit_game_radio"/>
-                        <span  class="black-text">EDIT SETUP</span>
-                      </label>
-                  </p>
-                  <p>
-                   
-                  </p>
+                        <input name="game_setup_selection" type="radio" class="select_setup_type"
+                            id="edit_game_radio" />
+                        <span class="black-text">EDIT SETUP</span>
+                    </label>
+                </p>
+                <p>
+
+                </p>
             </div>
             <div class="row" style="margin-top: -25px !important;">
-                <div id="New_Setup" class="setup_type">                   
+                <div id="New_Setup" class="setup_type">
                     <div class="row">
-                        <div class="col s7 push-s5">    
+                        <div class="col s7 push-s5">
                             <div class="row" style="margin-top: -45px !important;">
                                 <div class="col s12">
-                                    <div style="height:350px; overflow: scroll;">                                         
+                                    <div style="height:350px; overflow: scroll;">
                                         <table class="centered small" id="new_setup_table">
                                             <thead>
-                                            <tr class="grey">
-                                                <th class="grey" style="width:100px !important;">Game</th>
-                                                <th class="grey"  style="width:150px !important;">Color</th>
-                                                <th class="grey">One Line</th>
-                                                <th class="grey">Two Line</th>
-                                                <th class="grey">Full House</th>
-                                                <th class="grey">Corner</th>
-                                            </tr>
-                                            </thead>                            
+                                                <tr class="grey">
+                                                    <th class="grey" style="width:100px !important;">Game</th>
+                                                    <th class="grey" style="width:150px !important;">Color</th>
+                                                    <th class="grey">One Line</th>
+                                                    <th class="grey">Two Line</th>
+                                                    <th class="grey">Full House</th>
+                                                    <th class="grey">Corner</th>
+                                                </tr>
+                                            </thead>
                                             <tbody>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                                               
-                            
-
                         </div>
                         <div class="col s5 pull-s7  grey lighten-4">
                             <h6 class="flow-text center-align">New Setup</h6>
                             <div class="divider"></div>
                             <div class="col s12">
                                 <div class="input-field inline">
-                                    <span>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span>Date
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <input type="text" class="datepicker browser-default">
                                 </div>
                             </div>
@@ -183,32 +232,54 @@
                             </div>
 
                             <div class="col s12" style="margin-top: -40px !important;margin-left: -10px !important;">
-                                <div class="input-field  col s12 ">                                   
-                                    <select id="new_game_ticket_in_play" class="browser-default ticket_in_play_new_setup">
-                                        <option value="" disabled selected>Ticket In Play</option>                                        
-                                      </select>
+                                <div class="input-field  col s7 ">
+                                    <select id="new_game_ticket_in_play"
+                                        class="browser-default ticket_in_play_new_setup">
+                                        <option value="" disabled selected>Ticket In Play</option>
+                                    </select>
                                 </div>
                             </div>
                             <div id="new_setup_btn_grp" class="container">
                                 <div class="row">
                                     <div class="col s12 right-align">
-                                        <a href="javascript:Void(0);" class="waves-effect waves-green btn-small black">Save</a>
-                                        <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                                        <a id="new_save_btn" href="javascript:Void(0);"
+                                            class="waves-effect waves-green btn-small black">Save</a>
+                                        <a href="javascript:Void(0);"
+                                            class="modal-close waves-effect waves-green btn-flat">Close</a>
                                     </div>
                                 </div>
                             </div>
 
 
-                            
+
 
                         </div>
-                      </div>
+                    </div>
 
                 </div>
-                <div id="Edit_Setup"  class="setup_type">                    
+                <div id="Edit_Setup" class="setup_type">
                     <div class="row">
                         <div class="col s7 push-s5 ">
-                            <span class="flow-text">Details comes here</span>
+                            <div class="row" style="margin-top: -45px !important;">
+                                <div class="col s12">
+                                    <div style="height:350px; overflow: scroll;">
+                                        <table class="centered small" id="edit_setup_table">
+                                            <thead>
+                                                <tr class="grey">
+                                                    <th class="grey" style="width:100px !important;">Game</th>
+                                                    <th class="grey" style="width:150px !important;">Color</th>
+                                                    <th class="grey">One Line</th>
+                                                    <th class="grey">Two Line</th>
+                                                    <th class="grey">Full House</th>
+                                                    <th class="grey">Corner</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col s5 pull-s7  grey lighten-4">
                             <h6 class="flow-text center-align">Edit Setup</h6>
@@ -220,7 +291,7 @@
                                 </div>
                             </div>
                             <div class="col s12" style="margin-top: -33px !important;margin-left: -10px !important;">
-                                <div class="input-field  col s12 ">                                   
+                                <div class="input-field  col s12 ">
                                     <select id="game_name_select" class="browser-default edit_game_name_select">
                                         <option value="" disabled selected>Game Name</option>
                                         <option value="1">Option 1</option>
@@ -229,13 +300,13 @@
                                     </select>
                                 </div>
                             </div>
-                             
+
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
         </div>
-       
+
     </div>
 
 
@@ -279,7 +350,8 @@
                     <div class="collapsible-body">
                         <ul>
                             <li><a href="#!"><i class="material-icons">chevron_right</i>Display</a></li>
-                            <li><a href="#!"><i class="material-icons">chevron_right</i>Game screen</a></a></li>
+                            <li><a id="game-screen" href="javascript:void(0);"><i
+                                        class="material-icons">chevron_right</i>Game screen</a></a></li>
                         </ul>
                     </div>
                 </li>
@@ -322,10 +394,53 @@
 
     <main>
         <div class="container">
-            <pre>
-                <div id="numberingss"></div>
-            </pre>
-            <img class="responsive-img center-align" src="/assets/media/bingo-startup-index.jpg"/>
+            <img id="dashboard-img" class="responsive-img center-align" src="/assets/media/bingo-startup-index.jpg" />
+            <div >
+               
+            </div>
+        </div>
+        <div id="game-play-window" class="row">
+            <h5 class="center-align red-text" style="font-weight: bold;">ST Limited Game</h5>
+            <div class="col s12">
+                <div class="game-play-div">
+                   <div class="row">
+                       <div class="col s7">                           
+                           <div class="row">
+                               <div class="col s12">
+                                   <div class="all-numbers-display center-align">
+                                   </div>                                
+                               </div>
+                           </div>
+                           <div class="divider"></div>
+                           <div class="row">
+                            <div class="col s12">
+                                                                
+                            </div>
+                        </div>
+                        
+                       </div>
+                       <div class="col s5">
+                           <div class="container">
+                               <div class="row">
+                                   <div class="col s12">
+                                       <div class="number-preview-display center-align" >
+                                           <span class="number-preview-digit">5</span>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                </div>
+            </div>
+            <div class="col s12">
+                <br/>
+                <div class="center-align">
+                    <a class="btn-small black">Start</a>
+                    <a class="btn-small black">Pause</a>
+                    <a class="btn-small black">Verify</a>
+                </div>
+            </div>
         </div>
     </main>
 

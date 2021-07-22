@@ -5,8 +5,10 @@ $(document).ready(function () {
     getMasterGameData();
     getMasterColors();
 
+    var numberings = [];
     var gameMasterData = [];
     var gameMasterColors = [];
+    var gameLiveNumberStack=[1,2,3,90];
 
     function getMasterGameData() {
         $.get("/assets/media/sampleGameData.json", function (data, status) {
@@ -23,7 +25,7 @@ $(document).ready(function () {
         });
     }
     function getNumberings() {
-        var numberings = [];
+       
         $.get("/assets/media/numbers.json", function (data, status) {
             numberings = data;
             //console.log("numberings : ",numberings);
@@ -51,16 +53,35 @@ $(document).ready(function () {
             }
             $("#numberings").html(numberingsColmns);
 
-
+            setAllNumbersDisplay(numberings)
         });
-
-
-
-
-
-
-
     }
+
+    //For Game Play Display window
+    function setAllNumbersDisplay(numberings){
+        var numbersHTML="";
+        var c=1;
+        $.each(numberings, function (key, value) {
+            //console.log("value : ",value.ID);
+            var n="";
+             if(gameLiveNumberStack.includes(value.ID)){
+                 n="<a class='btn-floating btn-small red round-btn-numberings all-number-initial-pointer'>"+value.ID+"</a>";
+                // n="<a class='btn-floating btn-large waves-effect waves-light all-number-initial-pointer red round-btn-border'>"+value.ID+"</a> &nbsp;&nbsp;";
+             }else{
+                n="<a class='btn-floating btn-small grey darken-1 round-btn-numberings all-number-initial-pointer'>"+value.ID+"</a>";
+                // n="<a class='btn-floating btn-large waves-effect waves-light all-number-initial-pointer grey darken-1'>"+value.ID+"</a> &nbsp;&nbsp;";
+             }
+             
+            if(c%15==0){
+                numbersHTML=numbersHTML+n+"<br/>";
+             }else{
+                numbersHTML=numbersHTML+n;
+             }
+             c++;
+        });
+        $(".all-numbers-display").html(numbersHTML);
+    }
+
     function initializeElements() {
         $('.modal').modal({
             dismissible: false,
@@ -76,8 +97,8 @@ $(document).ready(function () {
     }
     function initialHidden() {
         $(".setup_type").hide();
-        $("#new_setup_btn_grp").hide();
-
+        $("#new_save_btn").hide();
+        $("#game-play-window").hide();
     }
 
     function fillTicketInPlayNewSetupDropdown() {
@@ -156,7 +177,7 @@ $(document).ready(function () {
     }
 
     $("#new_game_ticket_in_play").on("change", function (e) {
-        $("#new_setup_btn_grp").fadeIn();
+        $("#new_save_btn").fadeIn();
         var val = $(this).children("option:selected").val();
         var id = $(this).children("option:selected").attr("role");
         console.log("val : ", val);
@@ -200,7 +221,10 @@ $(document).ready(function () {
     });
 
 
-
+    $("#game-screen").click(function(){
+        $("#dashboard-img").hide();
+       $("#game-play-window").fadeIn();
+    });
 
 
 
