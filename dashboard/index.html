@@ -66,6 +66,22 @@
 
         }
 
+        #new_setup_table tbody tr{
+            height:10px !important;
+            line-height:10px !important;
+        }
+
+
+
+        #new_setup_table tbody td{
+            height:10px !important;
+            line-height:10px !important;
+        }
+
+        td {
+            padding: 0px 0px !important;    
+        }
+
         @media only screen and (max-width : 992px) {
 
             header,
@@ -106,9 +122,6 @@
                 <h5 class="left-align" style="margin-top: -10px !important;"><b>Game Setup</b></h5>
                 <div class="divider"></div>
             </div>
-
-
-
             <div class="row">
                 <p>
                     <label>
@@ -128,39 +141,29 @@
             <div class="row" style="margin-top: -25px !important;">
                 <div id="New_Setup" class="setup_type">                   
                     <div class="row">
-                        <div class="col s7 push-s5">                            
-                            <table>
-                                <thead>
-                                  <tr>
-                                      <th>Game</th>
-                                      <th>Color</th>
-                                      <th>One Line</th>
-                                      <th>Two Line</th>
-                                      <th>Full House</th>
-                                      <th>Corner</th>
-                                  </tr>
-                                </thead>
-                        
-                                <tbody>
-                                  <tr>
-                                    <td> Game 1</td>
-                                    <td> Red </td>
-                                    <td>
-                                        <input id="" type="text" class="browser-default" value="0.00" style="width:50%">
-                                    </td>
-                                    <td> 
-                                        <input id="" type="text" class="browser-default" value="0.00" style="width:50%">
-                                    </td>
-                                    <td> 
-                                        <input id="" type="text" class="browser-default" value="0.00" style="width:50%">
-                                    </td>
-                                    <td>
-                                        <input id="" type="text" class="browser-default" value="0.00" style="width:50%"> 
-                                    </td>
-                                  </tr>
-                                  
-                                </tbody>
-                              </table>
+                        <div class="col s7 push-s5">    
+                            <div class="row" style="margin-top: -45px !important;">
+                                <div class="col s12">
+                                    <div style="height:350px; overflow: scroll;">                                         
+                                        <table class="centered small" id="new_setup_table">
+                                            <thead>
+                                            <tr class="grey">
+                                                <th class="grey" style="width:100px !important;">Game</th>
+                                                <th class="grey"  style="width:150px !important;">Color</th>
+                                                <th class="grey">One Line</th>
+                                                <th class="grey">Two Line</th>
+                                                <th class="grey">Full House</th>
+                                                <th class="grey">Corner</th>
+                                            </tr>
+                                            </thead>                            
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                                               
+                            
 
                         </div>
                         <div class="col s5 pull-s7  grey lighten-4">
@@ -181,12 +184,17 @@
 
                             <div class="col s12" style="margin-top: -40px !important;margin-left: -10px !important;">
                                 <div class="input-field  col s12 ">                                   
-                                    <select id="new_game_ticket_inplay" class="browser-default ticket_in_play_new_setup">
-                                        <option value="" disabled selected>Ticket In Play</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
+                                    <select id="new_game_ticket_in_play" class="browser-default ticket_in_play_new_setup">
+                                        <option value="" disabled selected>Ticket In Play</option>                                        
                                       </select>
+                                </div>
+                            </div>
+                            <div id="new_setup_btn_grp" class="container">
+                                <div class="row">
+                                    <div class="col s12 right-align">
+                                        <a href="javascript:Void(0);" class="waves-effect waves-green btn-small black">Save</a>
+                                        <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                                    </div>
                                 </div>
                             </div>
 
@@ -236,10 +244,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <a href="javascript:Void(0);" class="waves-effect waves-green btn-small black">Save</a>
-            <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
-        </div>
+       
     </div>
 
 
@@ -326,7 +331,10 @@
 
     <main>
         <div class="container">
-
+            <pre>
+                <div id="numberingss"></div>
+            </pre>
+            <img class="responsive-img center-align" src="/assets/media/bingo-startup-index.jpg"/>
         </div>
     </main>
 
