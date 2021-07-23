@@ -4,11 +4,19 @@ $(document).ready(function () {
     initialHidden();
     getMasterGameData();
     getMasterColors();
+    loadInitialblankTicketDesign();
 
     var numberings = [];
     var gameMasterData = [];
     var gameMasterColors = [];
-    var gameLiveNumberStack=[1,2,3,90];
+    var gameLiveNumberStack=[];
+    var chkAudio=true;
+    var numberExhausted=false;
+    var autoCallsSet=true;
+    var time=2000;
+    var gameStartCalledNumbers=[];
+
+
 
     function getMasterGameData() {
         $.get("/assets/media/sampleGameData.json", function (data, status) {
@@ -57,6 +65,13 @@ $(document).ready(function () {
         });
     }
 
+    function loadInitialblankTicketDesign(){
+        $.get("/blank-tinket-design.html", function (data, status) {
+            $("#current-ticket-display-div").html(data);            
+            $("#current-ticket-display-div").show();
+       });
+    }
+
     //For Game Play Display window
     function setAllNumbersDisplay(numberings){
         var numbersHTML="";
@@ -64,20 +79,15 @@ $(document).ready(function () {
         $.each(numberings, function (key, value) {
             //console.log("value : ",value.ID);
             var n="";
-             if(gameLiveNumberStack.includes(value.ID)){
-                 n="<a class='btn-floating btn-small red round-btn-numberings all-number-initial-pointer'>"+value.ID+"</a>";
-                // n="<a class='btn-floating btn-large waves-effect waves-light all-number-initial-pointer red round-btn-border'>"+value.ID+"</a> &nbsp;&nbsp;";
-             }else{
-                n="<a class='btn-floating btn-small grey darken-1 round-btn-numberings all-number-initial-pointer'>"+value.ID+"</a>";
-                // n="<a class='btn-floating btn-large waves-effect waves-light all-number-initial-pointer grey darken-1'>"+value.ID+"</a> &nbsp;&nbsp;";
-             }
+            n="<div class='col'><a id='call_number_"+value.ID+"' class='btn-floating btn-small grey darken-1 round-btn-numberings all-number-initial-pointer'>"+value.ID+"</a></div>";
+                
+            //  if(gameLiveNumberStack.includes(value.ID)){
+            //      n="<div class='col'><a id='call_number_"+value.ID+"' class='btn-floating btn-small red round-btn-numberings all-number-initial-pointer'>"+value.ID+"</a></div>";
+            //         }else{
+            //     n="<div class='col'><a id='call_number_"+value.ID+"' class='btn-floating btn-small grey darken-1 round-btn-numberings all-number-initial-pointer'>"+value.ID+"</a></div>";
+            //      }
              
-            if(c%15==0){
-                numbersHTML=numbersHTML+n+"<br/>";
-             }else{
-                numbersHTML=numbersHTML+n;
-             }
-             c++;
+                 numbersHTML=numbersHTML+n;
         });
         $(".all-numbers-display").html(numbersHTML);
     }
@@ -98,7 +108,7 @@ $(document).ready(function () {
     function initialHidden() {
         $(".setup_type").hide();
         $("#new_save_btn").hide();
-        $("#game-play-window").hide();
+         $("#loading-div").hide();
     }
 
     function fillTicketInPlayNewSetupDropdown() {
@@ -220,11 +230,147 @@ $(document).ready(function () {
         }
     });
 
-
-    $("#game-screen").click(function(){
-        $("#dashboard-img").hide();
-       $("#game-play-window").fadeIn();
+    $("#verify-ticket-button").click(function(){
+        $('.modal#modal4').modal('close');
+        $("#loading-div").show();
+        var ticket_val=$("#ticket_number").val();
+        $.get("/current-ticket.html?ticket_no="+ticket_val, function (data, status) {
+             $("#current-ticket-display-div").html(data);
+             $("#loading-div").hide();
+             $("#current-ticket-display-div").show();
+        });       
     });
+   
+    $("#audio-btn").on('change',function(e){
+        console.log("Audion btn e : ",e);
+        console.log("Audion btn e : ",e.target);
+        var chk=$(this).prop('checked');
+        console.log("Audion btn chk : ",chk);
+        if(chk==true){
+            $(this).prop('checked', true); 
+            chkAudio=true;
+            toastMsg("Audio Enabled!");
+        }if(chk==false){
+            $(this).prop('checked', false); 
+            chkAudio=false;
+            toastMsg("<span class='red-text text-lighten-4'>Audio Disabled!</span>");
+        }
+        
+    });
+
+
+//-------------------------------------------------
+
+var bingo = {
+    selectedNumbers: [],
+    generateRandom: function() {
+        var min = 1;
+        var max = 90;
+        var random = Math.floor(Math.random() * (max - min + 1)) + min;
+        return random;
+    },
+    generateNextRandom: function() {
+        if (bingo.selectedNumbers.length > 89) {
+           // alert("All numbers Exhausted");
+            numberExhausted=true;
+            return 0;
+        }
+        var random = bingo.generateRandom();
+        while ($.inArray(random, bingo.selectedNumbers) > -1) {
+            random = bingo.generateRandom();
+        }
+        bingo.selectedNumbers.push(random);
+        return random;
+    }
+};
+
+$("#start-game-btn").click(function(){
+
+    if(autoCallsSet==true){
+        setInterval(function() { 
+            var random = bingo.generateNextRandom().toString();        
+            if(numberExhausted==false){      
+                gameStartCalledNumbers.push(random);        
+                displayNumberOnScreen(random);
+                highlightNumberInSeriesDisplay(random);
+                updateSelectedCallsList();
+                validateCalledNumbers();
+            } 
+        }, time);
+    }else{}
+
+   
+
+    
+   
+});
+
+function displayNumberOnScreen(random){
+    $(".number-preview-digit").text(random);
+}
+
+function highlightNumberInSeriesDisplay(random){
+     $("#call_number_"+random).removeClass("grey darken-1");
+     $("#call_number_"+random).addClass("red");
+}
+
+function updateSelectedCallsList(){
+    try{
+        var first = second =third =0;
+        var len=gameStartCalledNumbers.length;
+        if(len>1){
+            if(len>0){
+               first=gameStartCalledNumbers[len-2];
+            }
+            if(len>1){
+               second=gameStartCalledNumbers[len-3];
+            }
+            if(len>2){
+               third=gameStartCalledNumbers[len-4];
+            }
+        }else{}
+
+        if(first==0){
+             $("#recent-call").text("");
+            }else{ 
+                $("#recent-call").text(first);
+            }
+        if(second==0){
+            $("#second-last-call").text("");
+        }else{
+            $("#second-last-call").text(second);
+        }
+        if(third==0){
+            $("#third-last-call").text("");
+        }else{
+            $("#third-last-call").text(third);
+        }
+   
+        
+    }catch(ex){console.log("updateSelectedCallsList | e > ",e);}
+    
+}
+
+function validateCalledNumbers(){ 
+    if(gameStartCalledNumbers.length==90){
+        toastMsg("<span class='red-text text-lighten-4'>All Numbers Exhausted!</span>");
+        return false
+    }
+}
+
+
+    //---------------------------------------------
+
+    function toastMsg(msg){
+        M.Toast.dismissAll();
+        M.toast({html: msg, classes: 'rounded'});
+    }
+
+    function blinker() {
+        $('.blink').fadeOut(200);
+        $('.blink').fadeIn(200);
+    }
+    setInterval(blinker, 300);
 
 
 

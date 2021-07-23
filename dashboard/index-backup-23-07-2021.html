@@ -91,39 +91,39 @@
             margin-top: 20px;
         }
 
-        .number-preview-display {
+        .number-preview-display{
             height: 450px;
-            width: 100%;
+            width: 350px;
             background-color: #ffeb3b;
-            color: red;
+            color:red;
             /* margin-left: 85px !important; */
             /* margin-top: 20px !important; */
         }
 
-        .number-preview-digit {
-            font-size: 27rem;
+        .number-preview-digit{
+            font-size: 30rem;
             font-weight: bold;
-
+          
         }
 
-        .all-numbers-display {
+        .all-numbers-display{
             padding-top: 10px !important;
             padding-left: 10px !important;
         }
 
-        .all-number-initial-pointer {
-            color: #fff;
+        .all-number-initial-pointer{
+            color:#fff;
             font-weight: bold;
             font-size: 1.4rem;
         }
 
-        .round-btn-border {
+        .round-btn-border{
             border-style: solid !important;
             border-width: 1px !important;
             border-color: #000 !important;
         }
 
-        .round-btn-numberings {
+        .round-btn-numberings{
             border-style: solid !important;
             border-width: 1px !important;
             border-color: #000 !important;
@@ -131,26 +131,25 @@
             /* margin-right: 5px !important; */
         }
 
-        #modal3 {
-            height: 99%;
-            max-height: 100%;
+        #modal3 { 
+            height: 99%; 
+            max-height: 100%; 
             /* overflow: visible; */
-            margin-top: -72px !important;
-            cursor: pointer;
+          margin-top: -70px !important;
         }
 
-        .card-panel {
-            height: 370px !important;
-            width: 100%;
+        .card-panel{
+            height:375px !important;
+             
         }
 
-        .row-bottom-border {
+        .row-bottom-border{
             border-bottom-style: solid;
             border-bottom-width: 1px;
             border-bottom-color: #bdbdbd;
         }
 
-        .td-width {
+        .td-width{
             width: 25px !important;
             height: 36px !important;
             border-style: solid !important;
@@ -159,38 +158,29 @@
             font-weight: bold;
         }
 
-        .bottom-margin {
+        .bottom-margin{
             margin-bottom: -30px !important;
-            margin-top: -10px !important;
+             margin-top: -10px !important; 
         }
 
-        #winner-list-table td {
+        #winner-list-table td{
             height: 36px !important;
             border-style: solid !important;
-            border-width: 1px !important;
+            border-width: 1px !important;           
             font-weight: bold;
         }
-
-        #winner-list-table tr {
+        #winner-list-table tr{
             height: 36px !important;
             border-style: solid !important;
-            border-width: 1px !important;
+            border-width: 1px !important;           
             font-weight: bold;
         }
 
-        .winners-ticket-numbers-text {
-            font-weight: bold;
-            font-size: 12px;
-        }
-
-        .switch label input[type=checkbox]:checked+.lever:after {
-            background-color: #000 !important;
-        }
-
-        .switch label input[type=checkbox]:checked+.lever {
-            background-color: #fff !important;
-        }
-
+        .winners-ticket-numbers-text{
+                font-weight: bold;
+                font-size:12px;
+             }
+ 
 
         @media only screen and (max-width : 992px) {
 
@@ -367,167 +357,140 @@
 
     </div>
 
-    <!-- Game Screen prompt -->
-    <div id="modal3" class="modal brown lighten-4"
-        style="width: 80%; border-style: solid;border-width: 4px;border-color: #eceff1;">
-        <div class="modal-content brown lighten-4">
-            <div style="margin-top: -20px !important;">
-                <h5 class="center-align light-blue-text text-darken-4" style="font-weight: bold;">ST Limited Game</h5>
-                <h6 class="center-align light-blue-text text-darken-3"
-                    style="font-weight: bold;margin-top: -12px !important;">Jumbo Bingo : Game Name : Color</h6>
-            </div>
-            <div class="row">
-                <div class="col s6 game-play-div " style="margin-top: 10px !important;">
-                    <div class="all-numbers-display center-align">
-                    </div>
-                </div>
-                <div class="col s6">
-                    <div class="conatiner">
-                        <div class="row">
-                            <div class="col s8" style="margin-top: 15px !important;">
-                                <div style="margin-left: -35px;">
-                                    <div class="card-panel yellow center-align red-text text-darken-2">
-                                        <div style="margin-top: -135px;margin-left: -35px;">
-                                            <span class="number-preview-digit"></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col s4" style="margin-top: 8px !important;">
-                                <div class="col s12 center-align" style="margin-top: -60px !important;">
-                                    <h5 class="grey-text text-darken-4" style="margin-left: 24px;">
-                                        <u> <b>Recent Calls</b> </u>
-                                    </h5>
-                                </div>
-                                <div style="margin-left: 20px;">
-                                    <div class="container">
-                                        <div class="col s12 white center-align"
-                                            style="height: 90px;border-style: solid;border-width: 1px;">
-                                            <span id="recent-call" class="light-blue-text"
-                                                style="font-size:4rem;font-weight: bold;"></span>
-                                        </div>
-                                        <div class="col s12  center-align white-text">
-                                            <i class="medium material-icons ">arrow_downward</i>
-                                        </div>
-                                        <div class="col s12 white center-align"
-                                            style="height: 90px;border-style: solid;border-width: 1px;">
-                                            <span id="second-last-call" class="light-blue-text"
-                                                style="font-size:4rem;font-weight: bold;"></span>
-                                        </div>
-                                        <div class="col s12  center-align white-text">
-                                            <i class="medium material-icons ">arrow_downward</i>
-                                        </div>
-                                        <div class="col s12 white center-align"
-                                            style="height: 90px;border-style: solid;border-width: 1px;">
-                                            <span id="third-last-call" class="light-blue-text"
-                                                style="font-size:4rem;font-weight: bold;"></span>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+ <!-- Game Screen prompt -->
+ <div id="modal3" class="modal brown lighten-4" style="width: 80%;">
+    <div class="modal-content brown lighten-4">
+        <div style="margin-top: -40px !important;">
+            <h5 class="center-align red-text" style="font-weight: bold;">ST Limited Game</h5>  
+            <h6 class="center-align red-text" style="font-weight: bold;margin-top: -12px !important;">Jumbo Bingo : Game Name : Color</h6> 
+        </div>         
+       <div class="row" >             
+            <div class="col s6 game-play-div " style="margin-top: -2px !important;">
+                <div class="all-numbers-display center-align">
+                </div> 
+            </div>   
+            <div class="col s6" style="margin-top: -10px !important;">
+                <div class="conatiner">
+                    <div class="row">
+                        <div class="col s10">    
+                          <div class="card-panel yellow center-align red-text text-darken-2" style="margin-left: 60px;">
+                            <div style="margin-top: -180px;">
+                                <span class="number-preview-digit">5</span>                           
+                            </div>                             
+                          </div>
                         </div>
-                    </div>
-
+                      </div>
                 </div>
+                                               
+            </div>     
+       </div>  
+       
+       <div class="row" >
+        <div class="col s4 bottom-margin">
+            <h6 class="grey-text text-darken-4">
+              <u> <b> Current Ticket </b> </u>       
+            </h6>
+
+            <div id="loading-div" class="progress blue" style="margin-top: 20px;">
+                <div class="indeterminate yellow"></div>
             </div>
-
-            <div class="row">
-                <div class="col s4 " style="margin-top: -70px;">
-                    <h5 class="grey-text text-darken-4">
-                        <u> <b> Current Ticket </b> </u>
-                    </h5>
-                    <div id="loading-div" class="progress blue" style="margin-top: 20px;">
-                        <div class="indeterminate yellow"></div>
-                    </div>
-                    <div id="current-ticket-display-div" style="margin-top: 5px;"></div>
-                    <select id="game-view-game-select" class="browser-default " style="margin-top: 11px;">
-                        <option value="" disabled selected>Select Game</option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
-                    </select>
-                </div>
-                <div class="col s4 bottom-margin center-align">
-                    <div class="red-text" style="margin-top: 20px;font-weight: bold;">
-                        <span class="blink">Enter Number:</span> <input id="user-input-number" type="text"
-                            class="validate browser-default" style="width: 10%;">
-                        Wrong Number: <input id="user-input-wrong-number" type="text" class="validate browser-default"
-                            style="width: 10%;">
-                    </div>
-                    <div class="switch " style="margin-top: 30px;">
-                        <label class="black-text">
-                            AUDIO OFF
-                            <input id="audio-btn" type="checkbox" checked>
-                            <span class="lever"></span>
-                            AUDIO ON
-                        </label>
-                    </div>
-                    <div style="margin-top: 30px;">
-                        <a id="start-game-btn" class="btn-small black">Start</a>
-                        <a class="btn-small black">Pause</a>
-                        <a href="#modal4" class="btn-small black modal-trigger">Verify</a>
-                        <a href="javascript:void(0);"
-                            class="modal-close waves-effect waves-green btn-small red darken-4">Exit</a>
-                    </div>
-
-
-
-
-                </div>
-                <div class="col s4 bottom-margin ">
-                    <h5 class="grey-text text-darken-4">
-                        <u> <b> Winners Tickets </b> </u>
-                    </h5>
-                    <br />
-                    <span>
-                        <b>1 Line winners:</b>
-                        <font class=" indigo-text" style="font-weight: bold;">12345,56998,78954</font>
-                        <br />
-                    </span>
-                    <span>
-                        <b>2 Line winners:</b>
-                        <font class=" indigo-text" style="font-weight: bold;">12345,56998,78954</font>
-                        <br />
-                    </span>
-                    <span>
-                        <b>Full House winners:</b>
-                        <font class=" indigo-text" style="font-weight: bold;">12345,56998,78954</font>
-                        <br />
-                    </span>
-                    <span>
-                        <b>Corner winners:</b>
-                        <font class=" indigo-text" style="font-weight: bold;">12345,56998,78954</font>
-                        <br />
-                    </span>
-                    <br />
-                </div>
-            </div>
-            <br />
+            <div id="current-ticket-display-div"  style="margin-top: 20px;"></div>
+                            
+             
         </div>
+        <div class="col s4 bottom-margin">
+            <h6 class="grey-text text-darken-4" style="margin-left: 24px;">
+               <u> <b>Selected Calls</b> </u>                  
+             </h6>
+            
+             <div class="row"  style="margin-top: 20px;">
+                <div class="col s1"></div>
+                 <div class="col s2 white center-align" style="height: 70px;border-style: solid;border-width: 1px;">
+                  <span class="blue-text text-darken-4" style="font-size:3.1rem;font-weight: bold;">1</span>
+                 </div>
+                 <div class="col s2 white center-align" style="height: 70px; margin-left: 5px;border-style: solid;border-width: 1px;">
+                    <span class="blue-text text-darken-4" style="font-size:3.1rem;font-weight: bold;">7</span>
+                </div>
+                <div class="col s2 white center-align" style="height: 70px;margin-left: 5px;border-style: solid;border-width: 1px;">
+                    <span class="blue-text text-darken-4" style="font-size:3.1rem;font-weight: bold;">8</span>
+                </div>                
+             </div>
+             
+            
+            <div class="red-text" style="margin-top: 5px;font-weight: bold;">
+                <span class="blink">Enter Number:</span>   <input id="user-input-number" type="text" class="validate browser-default" style="width: 10%;"> 
+                Wrong Number:   <input id="user-input-wrong-number" type="text" class="validate browser-default" style="width: 10%;"> 
+            </div>
+              
+            <div class="switch" style="margin-top: 5px;">
+              
+                   <label class="black-text">
+                     Audio Off
+                     <input id="audio-btn" type="checkbox" checked>
+                     <span class="lever"></span>
+                     Audio On
+                   </label>
+            </div>
+            
+            
+           
+        </div>
+        <div class="col s4 bottom-margin ">
+            <h6 class="grey-text text-darken-4">
+              <u>  <b> Winners Tickets  </b>   </u>                       
+             </h6>
+             <br/>
+             <span>
+                <b>1 Line winners:</b>
+                <font class=" indigo-text" style="font-weight: bold;">12345,56998,78954</font>
+                <br/>
+            </span>
+            <span>
+               <b>2 Line winners:</b>
+               <font class=" indigo-text" style="font-weight: bold;">12345,56998,78954</font>
+               <br/>
+           </span>
+           <span>
+               <b>Full House winners:</b>
+               <font class=" indigo-text" style="font-weight: bold;">12345,56998,78954</font>
+               <br/>
+           </span>
+           <span>
+               <b>Corner winners:</b>
+               <font class=" indigo-text" style="font-weight: bold;">12345,56998,78954</font>
+               <br/>
+           </span>
+             <br/>
+        </div>
+      </div>  
+      <br/> 
+    </div>   
+    <div class="modal-footer">
+        <a class="btn-small black">Start</a>
+        <a class="btn-small black">Pause</a>
+        <a href="#modal4" class="btn-small black modal-trigger">Verify</a>  
+        <a style="margin-left: 150px;" href="javascript:void(0);" class="modal-close waves-effect waves-green btn-small red darken-4">Exit</a> 
+    </div> 
+</div>
 
+   <!-- Verify Ticket prompt prompt -->
+   <div id="modal4" class="modal" style="width: 20%;">
+    <div class="modal-content ">
+        <div class="row">
+            <div class="col s12">
+                <!-- Enter Ticket Number: -->
+              <div class="input-field inline">
+                <input id="ticket_number" type="text" class="validate">
+                <label for="ticket_number">Enter Ticket Number</label>                
+              </div>
+            </div>
+          </div>
     </div>
-
-    <!-- Verify Ticket prompt prompt -->
-    <div id="modal4" class="modal" style="width: 20%;">
-        <div class="modal-content ">
-            <div class="row">
-                <div class="col s12">
-                    <!-- Enter Ticket Number: -->
-                    <div class="input-field inline">
-                        <input id="ticket_number" type="text" class="validate">
-                        <label for="ticket_number">Enter Ticket Number</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <a id="verify-ticket-button" href="javascript:Void(0);"
-                class="waves-effect waves-green btn-small black">OK</a>
-            <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-        </div>
+    <div class="modal-footer">
+        <a id="verify-ticket-button" href="javascript:Void(0);" class="waves-effect waves-green btn-small black">OK</a>
+        <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
     </div>
+</div>
 
 
 
@@ -570,8 +533,8 @@
                     <div class="collapsible-body">
                         <ul>
                             <li><a href="#!"><i class="material-icons">chevron_right</i>Display</a></li>
-                            <li><a href="#modal3" class="modal-trigger"><i class="material-icons">chevron_right</i>Game
-                                    screen</a></a></li>
+                            <li><a href="#modal3" class="modal-trigger"><i
+                                        class="material-icons">chevron_right</i>Game screen</a></a></li>
                         </ul>
                     </div>
                 </li>
@@ -614,13 +577,12 @@
 
     <main>
         <div class="container">
-            <img id="dashboard-img" class="responsive-img center-align" src="/assets/media/bingo-startup-index.jpg"
-                style="margin-top: 3%;" />
-            <div>
-
+            <img id="dashboard-img" class="responsive-img center-align" src="/assets/media/bingo-startup-index.jpg"  style="margin-top: 3%;"/>
+            <div >
+               
             </div>
         </div>
-
+       
     </main>
 
 
