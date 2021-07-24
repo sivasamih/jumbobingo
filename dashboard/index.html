@@ -139,6 +139,12 @@
             cursor: pointer;
         }
 
+        #modal2{
+            height: 75%;
+            max-height: 100%;            
+            margin-top: -50px !important;
+        }
+
         .card-panel {
             height: 370px !important;
             width: 100%;
@@ -213,9 +219,19 @@
                 <div class="divider"></div>
             </div>
 
+            <div class="row ">
+                <select id="game-voice-language" class="browser-default voice-language col s6">
+                    <option value="" disabled selected>Select Game Speech Language</option>
+                   
+                </select>
+            </div>
+            <div class="divider"></div>
+
             <div class="row grey lighten-4">
                 <div id="numberings"></div>
             </div>
+           
+            
         </div>
         <div class="modal-footer">
             <a href="javascript:void(0);" class="waves-effect waves-green btn-small black">Save</a>
@@ -364,7 +380,9 @@
                 </div>
             </div>
         </div>
-
+        <div class="modal-footer">          
+            <a href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
     </div>
 
     <!-- Game Screen prompt -->
@@ -407,7 +425,7 @@
                                             <span id="recent-call" class="light-blue-text"
                                                 style="font-size:4rem;font-weight: bold;"></span>
                                         </div>
-                                        <div class="col s12  center-align white-text">
+                                        <div class="col s12  center-align red-text">
                                             <i class="medium material-icons ">arrow_downward</i>
                                         </div>
                                         <div class="col s12 white center-align"
@@ -415,7 +433,7 @@
                                             <span id="second-last-call" class="light-blue-text"
                                                 style="font-size:4rem;font-weight: bold;"></span>
                                         </div>
-                                        <div class="col s12  center-align white-text">
+                                        <div class="col s12  center-align red-text">
                                             <i class="medium material-icons ">arrow_downward</i>
                                         </div>
                                         <div class="col s12 white center-align"
@@ -466,9 +484,9 @@
                     </div>
                     <div style="margin-top: 30px;">
                         <a id="start-game-btn" class="btn-small black">Start</a>
-                        <a class="btn-small black">Pause</a>
+                        <a id="pause-game-btn" class="btn-small black">Pause</a>
                         <a href="#modal4" class="btn-small black modal-trigger">Verify</a>
-                        <a href="javascript:void(0);"
+                        <a id="exit-game-btn" href="javascript:void(0);"
                             class="modal-close waves-effect waves-green btn-small red darken-4">Exit</a>
                     </div>
 
