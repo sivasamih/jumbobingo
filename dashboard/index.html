@@ -145,6 +145,12 @@
             margin-top: -50px !important;
         }
 
+        #modal1{
+            height: 97%;
+            max-height: 100%;            
+            margin-top: -70px !important;
+        }
+
         .card-panel {
             height: 370px !important;
             width: 100%;
@@ -221,20 +227,21 @@
 
             <div class="row ">
                 <select id="game-voice-language" class="browser-default voice-language col s6">
-                    <option value="" disabled selected>Select Game Speech Language</option>
-                   
+                    <option value="" disabled selected>Select Game Speech Language</option>                   
                 </select>
             </div>
             <div class="divider"></div>
-
             <div class="row grey lighten-4">
                 <div id="numberings"></div>
             </div>
-           
+            <div id="numbering-modal-preloader" class="progress blue">
+                <div class="indeterminate yellow"></div>
+            </div>
             
         </div>
         <div class="modal-footer">
-            <a href="javascript:void(0);" class="waves-effect waves-green btn-small black">Save</a>
+           
+            <a id="numberings-save-btn" href="javascript:void(0);" class="waves-effect waves-green btn-small black">Save</a>
             <a href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
     </div>

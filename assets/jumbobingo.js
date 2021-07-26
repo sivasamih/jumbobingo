@@ -7,6 +7,7 @@ $(document).ready(function () {
     loadInitialblankTicketDesign();
     getAllLanguages();
 
+     
     var numberings = [];
     var gameMasterData = [];
     var gameMasterColors = [];
@@ -34,41 +35,27 @@ $(document).ready(function () {
         });
     }
     function getMasterColors() {
-        $.get("/assets/media/colors.json", function (data, status) {
-            gameMasterColors = data;
-            //  console.log("gameMasterColors : ", gameMasterColors);
-        });
+      var url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/ColorList";
+        $.ajax({  
+            type: 'POST',  
+            url: url,  
+            success: function (json) {                
+                gameMasterColors = json;
+            },  
+            error: function (parsedjson, textStatus, errorThrown) {  
+                console.log("gameMasterColors > ",errorThrown);  
+            }  
+        });  
+    
+        
     }
     function getNumberings() {
 
         $.get("/assets/media/numbers.json", function (data, status) {
             numberings = data;
             //console.log("numberings : ",numberings);
-            var numberingsColmns = "";
-            for (var i = 0; i < numberings.length; i++) {
-                var nc = "";
-                if (i > 5) {
-                    if (numberings[i]["ID"] < 10) {
-                        nc = "<div id='col_" + i + "' class='col s2 no-margin'><div class='input-field inline '><span class='no-id-bold'>" + numberings[i]["ID"] + "&nbsp;&nbsp;</span><input id='no_" + numberings[i]["ID"] + "' type='text' class='validate numbers_text no-text-box active' value='" + numberings[i]["No Text"] + "'></div></div>";
-                    } else {
-                        nc = "<div id='col_" + i + "' class='col s2 no-margin'><div class='input-field inline '><span class='no-id-bold'>" + numberings[i]["ID"] + "</span><input id='no_" + numberings[i]["ID"] + "' type='text' class='validate numbers_text no-text-box active' value='" + numberings[i]["No Text"] + "'></div></div>";
-                    }
-
-                } else {
-
-                    if (numberings[i]["ID"] < 10) {
-                        nc = "<div id='col_" + i + "' class='col s2'><div class='input-field inline'><span class='no-id-bold'>" + numberings[i]["ID"] + "&nbsp;&nbsp;</span><input id='no_" + numberings[i]["ID"] + "' type='text' class='validate numbers_text  no-text-box active' value='" + numberings[i]["No Text"] + "'>  </div></div>";
-                    } else {
-
-                        nc = "<div id='col_" + i + "' class='col s2'><div class='input-field inline'><span class='no-id-bold'>" + numberings[i]["ID"] + "</span><input id='no_" + numberings[i]["ID"] + "' type='text' class='validate numbers_text  no-text-box active' value='" + numberings[i]["No Text"] + "'>  </div></div>";
-                    }
-
-                }
-                numberingsColmns = numberingsColmns + nc;
-            }
-            $("#numberings").html(numberingsColmns);
-
-            setAllNumbersDisplay(numberings)
+            setNumberingsDisplay(numberings);
+            setAllNumbersDisplay(numberings);
         });
     }
 
@@ -90,6 +77,32 @@ $(document).ready(function () {
                         .text(TEXT));
             });
         });
+    }
+
+    function setNumberingsDisplay(numberings){
+        var numberingsColmns = "";
+        for (var i = 0; i < numberings.length; i++) {
+            var nc = "";
+            if (i > 5) {
+                if (numberings[i]["ID"] < 10) {
+                    nc = "<div id='col_" + i + "' class='col s2 no-margin'><div class='input-field inline '><span class='no-id-bold'>" + numberings[i]["ID"] + "&nbsp;&nbsp;</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text no-text-box active' value='" + numberings[i]["No Text"] + "'></div></div>";
+                } else {
+                    nc = "<div id='col_" + i + "' class='col s2 no-margin'><div class='input-field inline '><span class='no-id-bold'>" + numberings[i]["ID"] + "</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text no-text-box active' value='" + numberings[i]["No Text"] + "'></div></div>";
+                }
+
+            } else {
+
+                if (numberings[i]["ID"] < 10) {
+                    nc = "<div id='col_" + i + "' class='col s2'><div class='input-field inline'><span class='no-id-bold'>" + numberings[i]["ID"] + "&nbsp;&nbsp;</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text  no-text-box active' value='" + numberings[i]["No Text"] + "'>  </div></div>";
+                } else {
+
+                    nc = "<div id='col_" + i + "' class='col s2'><div class='input-field inline'><span class='no-id-bold'>" + numberings[i]["ID"] + "</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text  no-text-box active' value='" + numberings[i]["No Text"] + "'>  </div></div>";
+                }
+
+            }
+            numberingsColmns = numberingsColmns + nc;
+        }
+        $("#numberings").html(numberingsColmns);
     }
 
     //For Game Play Display window
@@ -191,20 +204,66 @@ $(document).ready(function () {
     }
 
     function getOptions(color) {
+        // console.log("getOptions | color > ",color);
+        // console.log("getOptions | gameMasterColors > ",gameMasterColors);
         var options = "";
+
+        // console.log("getOptions | gameMasterColors length > ",gameMasterColors.length);
+        
+
+         
         $.each(gameMasterColors, function (key, value) {
+            console.log("ColorID > ",value["ColorID"]);
+            console.log("Colors > ",value["Colors"]);
             var o = "";
-            if (color.id == value.id) {
-                o = "<option value='" + value.name + "' role='" + value.id + "' selected>" + value.name + "</option>";
+            if (color.id == value["ColorID"]) {
+                o = "<option value='" + value["Colors"] + "' role='" + value["ColorID"] + "' selected>" + value["Colors"]+ "</option>";
             } else {
-                o = "<option value='" + value.name + "' role='" + value.id + "'>" + value.name + "</option>";
+                o = "<option value='" + value["Colors"] + "' role='" + value["ColorID"] + "'>" + value["Colors"] + "</option>";
             }
 
             options = options + o;
         });
+         
 
         return options;
     }
+
+    function setNumbersChangedValue(obj){
+        console.log("setNumbersChangedValue > obj : ",obj);     
+        var index=null;   
+        $.each(numberings, function (key, value) {
+            if(value.ID==obj.ID){
+                index=key;
+            }
+        }); 
+        console.log("setNumbersChangedValue > index : ",index);   
+        if(index!=null){
+            numberings[index]=obj;
+        }
+        
+    }
+
+    $(document).on('keyup', '.no-text-box', function (e) {       
+        var ID= $(this).attr("role");
+        var no_text= $(this).val();
+        var obj={
+            "ID": ID,
+            "No Text": no_text
+        };        
+        setNumbersChangedValue(obj);
+    });
+
+    //saving the number's text entered by user
+    $("#numberings-save-btn").click(function(){
+        $("#numbering-modal-preloader").show();
+        setNumberingsDisplay(numberings);
+        setAllNumbersDisplay(numberings);
+        
+
+        $("#numbering-modal-preloader").hide();
+
+    });
 
     $("#new_game_ticket_in_play").on("change", function (e) {
         $("#new_save_btn").fadeIn();
@@ -305,22 +364,7 @@ $(document).ready(function () {
     };
 
     //initializing all the parameters and exiting the modal
-    $("#exit-game-btn").click(function () {
-        //  clearInterval(setIntervalVal);
-        //  gameLiveNumberStack = [];
-        //  chkAudio = true;
-        //  numberExhausted = false;
-        //  autoCallsSet = true;
-        //  isPaused = false;        
-        //  gameStartCalledNumbers = [];
-        //  promptDisableMsg=0;      
-        //  setAllNumbersDisplay(numberings);
-        //  $("#recent-call").text("");
-        //  $("#second-last-call").text("");
-        //  $("#third-last-call").text("");
-        //  $(".number-preview-digit").text("");
-        //  $("#pause-game-btn").attr("disabled", false);
-        //  $("#start-game-btn").attr("disabled", false);
+    $("#exit-game-btn").click(function () {      
         location.reload(true);
     });
 
