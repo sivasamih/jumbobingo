@@ -83,6 +83,10 @@
             padding: 0px 0px !important;
         }
 
+        #revenue-check-table tr {
+            border-spacing: unset !important;
+        }
+
 
         .game-play-div {
             height: 100%;
@@ -139,21 +143,34 @@
             cursor: pointer;
         }
 
-        #modal2{
+        #modal6 {
+            height: 79%;
+            max-height: 100%;
+            /* overflow: visible; */
+            margin-top: -50px !important;
+            cursor: pointer;
+        }
+
+
+        #modal2 {
             height: 75%;
-            max-height: 100%;            
+            max-height: 100%;
             margin-top: -50px !important;
         }
 
-        #modal1{
-            height: 97%;
-            max-height: 100%;            
+        #modal1 {
+            height: 85%;
+            max-height: 100%;
             margin-top: -70px !important;
         }
 
         .card-panel {
             height: 370px !important;
             width: 100%;
+        }
+
+        .radio-label{
+            color:#000 !important;
         }
 
         .row-bottom-border {
@@ -163,11 +180,11 @@
         }
 
         .td-width {
-            width: 25px !important;
+            width: 27px !important;
             height: 36px !important;
             border-style: solid !important;
             border-width: 1px !important;
-            font-size: 1.2rem;
+            font-size: 1.8rem;
             font-weight: bold;
         }
 
@@ -218,7 +235,8 @@
 
 <body class="grey lighten-5">
     <!-- Numbering prompt -->
-    <div id="modal1" class="modal" style="width: 70%;">
+    <div id="modal1" class="modal brown lighten-4"
+        style="width: 70%; border-style: solid;border-width: 4px;border-color: #eceff1;">
         <div class="modal-content ">
             <div class="row ">
                 <h5 class="left-align" style="margin-top: -10px !important;"><b>Numbering</b></h5>
@@ -226,29 +244,35 @@
             </div>
 
             <div class="row ">
+                Language:<br />
                 <select id="game-voice-language" class="browser-default voice-language col s6">
-                    <option value="" disabled selected>Select Game Speech Language</option>                   
+                    <option value="" disabled>Select Game Speech Language</option>
                 </select>
             </div>
             <div class="divider"></div>
             <div class="row grey lighten-4">
-                <div id="numberings"></div>
+                <div style="height: 350px; overflow-y: scroll;">
+                    <div id="numberings"></div>
+                </div>
+
             </div>
             <div id="numbering-modal-preloader" class="progress blue">
                 <div class="indeterminate yellow"></div>
             </div>
-            
+
         </div>
-        <div class="modal-footer">
-           
-            <a id="numberings-save-btn" href="javascript:void(0);" class="waves-effect waves-green btn-small black">Save</a>
+        <div class="modal-footer  brown lighten-4">
+
+            <a id="numberings-save-btn" href="javascript:void(0);"
+                class="waves-effect waves-green btn-small black">Save</a>
             <a href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
     </div>
 
     <!-- Game setup prompt -->
-    <div id="modal2" class="modal" style="width: 90%;">
-        <div class="modal-content " style="height: 500px;">
+    <div id="modal2" class="modal brown lighten-4"
+        style="width: 90%;border-style: solid;border-width: 4px;border-color: #eceff1;">
+        <div class="modal-content ">
             <div class="row">
                 <h5 class="left-align" style="margin-top: -10px !important;"><b>Game Setup</b></h5>
                 <div class="divider"></div>
@@ -387,7 +411,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer">          
+        <div class="modal-footer brown lighten-4">
             <a href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
         </div>
     </div>
@@ -429,24 +453,32 @@
                                     <div class="container">
                                         <div class="col s12 white center-align"
                                             style="height: 90px;border-style: solid;border-width: 1px;">
-                                            <span id="recent-call" class="light-blue-text"
-                                                style="font-size:4rem;font-weight: bold;"></span>
+                                            <div style="margin-top: -24px;">
+                                                <span id="recent-call" class="light-blue-text"
+                                                style="font-size:6rem;font-weight: bold;"></span>
+                                            </div>                                            
                                         </div>
                                         <div class="col s12  center-align red-text">
                                             <i class="medium material-icons ">arrow_downward</i>
                                         </div>
                                         <div class="col s12 white center-align"
                                             style="height: 90px;border-style: solid;border-width: 1px;">
-                                            <span id="second-last-call" class="light-blue-text"
-                                                style="font-size:4rem;font-weight: bold;"></span>
+                                            <div style="margin-top: -24px;">
+                                                <span id="second-last-call" class="light-blue-text"
+                                                style="font-size:6rem;font-weight: bold;"></span>
+                                            </div>
+                                            
                                         </div>
                                         <div class="col s12  center-align red-text">
                                             <i class="medium material-icons ">arrow_downward</i>
                                         </div>
                                         <div class="col s12 white center-align"
                                             style="height: 90px;border-style: solid;border-width: 1px;">
-                                            <span id="third-last-call" class="light-blue-text"
-                                                style="font-size:4rem;font-weight: bold;"></span>
+                                            <div style="margin-top: -24px;">
+                                                <span id="third-last-call" class="light-blue-text"
+                                                style="font-size:6rem;font-weight: bold;"></span>
+                                            </div>
+                                            
                                         </div>
                                     </div>
 
@@ -469,9 +501,9 @@
                     <div id="current-ticket-display-div" style="margin-top: 5px;"></div>
                     <select id="game-view-game-select" class="browser-default " style="margin-top: 11px;">
                         <option value="" disabled selected>Select Game</option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
+                        <option value="1">Game 1</option>
+                        <option value="2">Game 2</option>
+                        <option value="3">Game 3</option>
                     </select>
                 </div>
                 <div class="col s4 bottom-margin center-align">
@@ -492,7 +524,7 @@
                     <div style="margin-top: 30px;">
                         <a id="start-game-btn" class="btn-small black">Start</a>
                         <a id="pause-game-btn" class="btn-small black">Pause</a>
-                        <a href="#modal4" class="btn-small black modal-trigger">Verify</a>
+                        <a id="game-modal-verify-btn" href="#modal4" class="btn-small black modal-trigger">Verify</a>
                         <a id="exit-game-btn" href="javascript:void(0);"
                             class="modal-close waves-effect waves-green btn-small red darken-4">Exit</a>
                     </div>
@@ -534,22 +566,205 @@
 
     </div>
 
-    <!-- Verify Ticket prompt prompt -->
-    <div id="modal4" class="modal" style="width: 20%;">
+    <!-- Game Display Verify Ticket prompt prompt -->
+    <div id="modal4" class="modal brown lighten-4"
+        style="width: 25%;border-style: solid;border-width: 4px;border-color: #eceff1;">
         <div class="modal-content ">
             <div class="row">
                 <div class="col s12">
                     <!-- Enter Ticket Number: -->
-                    <div class="input-field inline">
-                        <input id="ticket_number" type="text" class="validate">
-                        <label for="ticket_number">Enter Ticket Number</label>
+                    <div class="input-field">
+                        Enter Ticket Number:
+                        <input id="ticket_number" type="text" class="validate browser-default">
+
                     </div>
                 </div>
+
             </div>
+
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer brown lighten-4">
             <a id="verify-ticket-button" href="javascript:Void(0);"
                 class="waves-effect waves-green btn-small black">OK</a>
+            <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+
+    <!-- Verify Ticket prompt prompt -->
+    <div id="modal5" class="modal brown lighten-4"
+        style="width: 25%;border-style: solid;border-width: 4px;border-color: #eceff1;">
+        <div class="modal-content ">
+            <div class="row">
+                <div class="col s12">
+                    <!-- Enter Ticket Number: -->
+                    <div class="input-field ">
+                        Enter Ticket Number:
+                        <input id="verify_ticket_number" type="text" class="validate browser-default" />
+                    </div>
+                </div>
+
+                <div id="verify-wait" class="progress blue">
+                    <div class="indeterminate yellow"></div>
+                </div>
+
+
+                <div class="col s12">
+                    <div id="verify-ticket-blank-display-div"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer  brown lighten-4">
+            <a id="verify-ticket-btn" href="javascript:Void(0);" class="waves-effect waves-green btn-small black">OK</a>
+            <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+
+    <!-- Verify Ticket prompt prompt -->
+    <div id="modal6" class="modal brown lighten-4"
+        style="width: 70%;border-style: solid;border-width: 4px;border-color: #eceff1;">
+        <div class="modal-content ">
+            <div class="row">
+                <h5 class="left-align" style="margin-top: -10px !important;"><b>Game Setup</b></h5>
+                <div class="divider"></div>
+            </div>
+            <div class="row">
+                <div class="col s7">
+                    <div class="row">
+                        <div class="col s6">
+                            <select id="select-game-modal-choose-game" class="browser-default "
+                                style="margin-top: 11px;">
+                                <option value="" disabled selected>Select Game</option>
+                                <option value="1">Game 1</option>
+                                <option value="2">Game 2</option>
+                                <option value="3">Game 3</option>
+                            </select>
+                        </div>
+                        <div class="col s6">
+                            <div style="margin-top: 18px !important;">
+                                <h5>
+                                    <i class="material-icons">chevron_right</i>   
+                                    <b class="grey lighten-3 grey-text" 
+                                    style="border-style: solid;border-width: 1px;padding-left: 20px;padding-right: 20px;padding-top: 7px;padding-bottom: 7px;">
+                                    1206
+                                </b>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                   
+
+                </div>
+                <div class="col s5 brown lighten-5">
+
+                    <div class="row">
+                        <div class="col s12">
+                            <h6><b><u>Revenue</u></b></h6>
+                            <table id="revenue-check-table"
+                                style="border-style: none !important;border-collapse:initial !important;">
+                                <tr>
+                                    <td style="width: 120px;"> Tickets sold:</td>
+                                    <td style="width: 120px;">
+                                        <input id="sold-from" type="text" class="validate browser-default"
+                                            placeholder="From" style="width:100%">
+                                    </td>
+                                    <td class="center-align">-</td>
+                                    <td style="width: 120px;">
+                                        <input id="sold-to" type="text" class="validate browser-default"
+                                            placeholder="To" style="width:100%">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 120px;"> Booklet price:</td>
+                                    <td style="width: 120px;">
+                                        <input id="per-booklet-price" type="text" class="validate browser-default"
+                                            placeholder="Price" style="width:100%">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 120px;"> Total tickets sold:</td>
+                                    <td style="width: 120px;">
+                                        <input disabled id="total-tickets-sold" type="text"
+                                            class="validate browser-default" placeholder="0" style="width:100%">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 120px;"> Total price:</td>
+                                    <td style="width: 120px;">
+                                        <input disabled id="total-price" type="text" class="validate browser-default"
+                                            placeholder="0" style="width:100%">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 120px;"> Total revenue:</td>
+                                    <td style="width: 120px;">
+                                        <input disabled id="total-revenue" type="text" class="validate browser-default"
+                                            placeholder="0" style="width:100%">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 120px;"> Total gain:</td>
+                                    <td style="width: 120px;">
+                                        <input disabled id="total-gain" type="text" class="validate browser-default"
+                                            placeholder="0" style="width:100%">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <h6><b><u>Calling</u></b></h6>
+                            <table id="" style="border-style: none !important;border-collapse:initial !important;">
+                                <tr>
+                                    <td style="width: 120px;">
+                                        Speed of call:
+                                    </td>
+                                    <td style="width: 40px;">
+                                        <div class="inline">
+                                            <input id="game-call-speed" type="text" class="validate browser-default"
+                                                placeholder="Time"> secs
+                                        </div>
+                                    </td>
+                                </tr>
+                                 
+                            </table>
+                        </div>
+                    </div>
+                    <div style="margin-top: -20px !important;">
+                    <div class="row">
+                        <div class="col s12">
+                            <p>
+                                <label>
+                                    <input name="game-call-type" type="radio" checked />
+                                    <span class="radio-label">Auto</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input name="game-call-type" type="radio"  />
+                                    <span class="radio-label">Auto-Manual, Press "ENTER-KEY" to continue</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input name="game-call-type" type="radio"  />
+                                    <span class="radio-label">Manual, Enter a number from keyboard</span>
+                                </label>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <div class="modal-footer  brown lighten-4">
+            <a id="play-btn-from-select-game" href="#modal3"
+                class="waves-effect waves-green btn-small black modal-trigger">PLAY</a>
             <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
         </div>
     </div>
@@ -583,7 +798,7 @@
                     <div class="collapsible-header"><i class="material-icons">settings_applications</i>Setup</div>
                     <div class="collapsible-body grey lighten-5">
                         <ul>
-                            <li><a href="#modal1" class="modal-trigger"><i
+                            <li><a id="numbering-modal-open" href="#modal1" class="modal-trigger"><i
                                         class="material-icons">chevron_right</i>Numbering</a></li>
                             <li><a href="#modal2" class="modal-trigger"><i class="material-icons">chevron_right</i>Game
                                     setup</a></a></li>
@@ -594,7 +809,8 @@
                     <div class="collapsible-header"><i class="material-icons">play_arrow</i>Play</div>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="#!"><i class="material-icons">chevron_right</i>Display</a></li>
+                            <li><a href="#modal6" class="modal-trigger"><i
+                                        class="material-icons">chevron_right</i>Select Game</a></li>
                             <li><a href="#modal3" class="modal-trigger"><i class="material-icons">chevron_right</i>Game
                                     screen</a></a></li>
                         </ul>
@@ -604,7 +820,8 @@
                     <div class="collapsible-header"><i class="material-icons">verified_user</i>Verify</div>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="#!"><i class="material-icons">chevron_right</i>Bingo 90 tickets</a></li>
+                            <li><a id="bingo-ticket-verify" href="#modal5" class="modal-trigger"><i class="material-icons">chevron_right</i>Bingo
+                                    90 tickets</a></li>
                             <li><a href="#!"><i class="material-icons">chevron_right</i>Approve Users</a></a></li>
                         </ul>
                     </div>

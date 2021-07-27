@@ -1,13 +1,4 @@
 $(document).ready(function () {
-    initializeElements()
-    getNumberings();
-    initialHidden();
-    getMasterGameData();
-    getMasterColors();
-    loadInitialblankTicketDesign();
-    getAllLanguages();
-
-     
     var numberings = [];
     var gameMasterData = [];
     var gameMasterColors = [];
@@ -16,15 +7,55 @@ $(document).ready(function () {
     var numberExhausted = false;
     var autoCallsSet = true;
     var isPaused = false;
-    var time = 2000;
+    var time = 3000;
     var gameStartCalledNumbers = [];
     var promptDisableMsg = 0;
     var setIntervalVal = "";
-var userID="123";
+    var userID="123";
+    var language="en";
 
+    var soldFrom=0;
+    var soldTo=0;
+    var bookletPrice=0;
+    var totalTicketsSold=0;
+    var totalPrice=0;
+    var totalRevenue=0;
+    var totalGain=0;
    
 
+    initializeElements()
+    getNumberings();
+    initialHidden();
+    getMasterGameData();
+    getMasterColors();
+    loadInitialblankTicketDesign();
+    getAllLanguages();
+   
 
+     
+    
+
+   function preSetLanguageElements(){
+       console.log("language > ",language);
+    // $('#game-voice-language').val(language);
+    // $('#game-voice-language option[value='+language+']').attr("selected",true);
+    //document.getElementById("game-voice-language").value= language;
+    var e = document.getElementById("game-voice-language");
+    for (i = 0; i< e.options.length; i++)
+    {     
+        console.log(" option > ",e.options[i]); 
+        console.log("Found option.value > ",e.options[i].value); 
+        console.log("Found option.language > ",language); 
+        if (e.options[i].value == language)    
+            {    
+            // Item is found. Set its property and exit   
+            // console.log("Found option > ",e.options[i]); 
+            e.options[i].selected = true;    
+            break;    
+            }    
+    }
+     
+   }
 
     function getMasterGameData() {
         $.get("/assets/media/sampleGameData.json", function (data, status) {
@@ -50,8 +81,8 @@ var userID="123";
         
     }
     function getNumberings() {
-        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetNumbers";
-        const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetNumbers?UID="+userID;
+        const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetNumbers";
+        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetNumbers?UID="+userID;
         var D={
             "UID":userID
         }
@@ -78,6 +109,7 @@ var userID="123";
     function loadInitialblankTicketDesign() {
         $.get("/blank-tinket-design.html", function (data, status) {
             $("#current-ticket-display-div").html(data);
+            $("#verify-ticket-blank-display-div").html(data);//loading in very ticket modal
             $("#current-ticket-display-div").show();
         });
     }
@@ -91,8 +123,12 @@ var userID="123";
                         .attr("value", key)
                         .attr("role", key)
                         .text(TEXT));
+                      
             });
+         
         });
+
+       
     }
 
     function setNumberingsDisplay(numberings){
@@ -153,12 +189,15 @@ var userID="123";
             setDefaultDate: true,
             defaultDate: new Date(),
         });
+
+      
     }
     function initialHidden() {
         $(".setup_type").hide();
         $("#new_save_btn").hide();
         $("#loading-div").hide();
         $("#numbering-modal-preloader").hide();
+        $("#verify-wait").hide();       
     }
 
     function fillTicketInPlayNewSetupDropdown() {
@@ -249,166 +288,7 @@ var userID="123";
         
     }
 
-    $(document).on('keyup', '.no-text-box', function (e) {       
-        var ID= $(this).attr("role");
-        var no_text= $(this).val();
-        var obj={
-            "ID": ID,
-            "Numbers": no_text
-        };        
-        setNumbersChangedValue(obj);
-    });
-
-    //saving the number's text entered by user
-    $("#numberings-save-btn").click(function(){
-        $("#numbering-modal-preloader").show();
-        setNumberingsDisplay(numberings);
-        setAllNumbersDisplay(numberings);
-        $("#numbering-modal-preloader").hide();
-
-    });
-
-    $("#new_game_ticket_in_play").on("change", function (e) {
-        $("#new_save_btn").fadeIn();
-        var val = $(this).children("option:selected").val();
-        var id = $(this).children("option:selected").attr("role");
-        
-        var ticket_in_play_selected = {
-            "id": parseInt(id),
-            "ticket": val
-        };
-        populateTableListAsPerSelectedTicket(ticket_in_play_selected);
-    });
-
-    $(".select_setup_type").click(function () {
-        if ($(this).attr('id') == "new_game_radio") {
-            $(".setup_type").hide();
-            $("#New_Setup").fadeIn();
-        }
-        if ($(this).attr('id') == "edit_game_radio") {
-            $(".setup_type").hide();
-            $("#Edit_Setup").fadeIn();
-        }
-    });
-
-    $(document).on('click', '.game_selection_chk', function (e) {
-        console.log("checkbox clicked : ", e.target);
-        console.log("checkbox val : ", e.target.checked);
-        if (e.target.checked == true) {
-            //enable the input box next to it
-            var role = $(this).attr("role");
-            var name = $(this).attr("name");
-
-            $("#" + name + "_game_price_" + role).removeAttr("disabled");
-        }
-        if (e.target.checked == false) {
-            //disable the input box next to it
-            var role = $(this).attr("role");
-            var name = $(this).attr("name");
-            console.log("checkbox role : ", role);
-            $("#" + name + "_game_price_" + role).val("0.00");
-            $("#" + name + "_game_price_" + role).attr("disabled", "disabled");
-        }
-    });
-
-    $("#verify-ticket-button").click(function () {
-        $('.modal#modal4').modal('close');
-        $("#loading-div").show();
-        var ticket_val = $("#ticket_number").val();
-        $.get("/current-ticket.html?ticket_no=" + ticket_val, function (data, status) {
-            $("#current-ticket-display-div").html(data);
-            $("#loading-div").hide();
-            $("#current-ticket-display-div").show();
-        });
-    });
-
-    $("#audio-btn").on('change', function (e) {
-        console.log("Audion btn e : ", e);
-        console.log("Audion btn e : ", e.target);
-        var chk = $(this).prop('checked');
-        console.log("Audion btn chk : ", chk);
-        if (chk == true) {
-            $(this).prop('checked', true);
-            chkAudio = true;
-            toastMsg("Audio Enabled!");
-        } if (chk == false) {
-            $(this).prop('checked', false);
-            chkAudio = false;
-            toastMsg("<span class='red-text text-lighten-4'>Audio Disabled!</span>");
-        }
-
-    });
-
-
-    //-------------------------------------------------
-
-    var bingo = {
-        selectedNumbers: [],
-        generateRandom: function () {
-            var min = 1;
-            var max = 90;
-            var random = Math.floor(Math.random() * (max - min + 1)) + min;
-            return random;
-        },
-        generateNextRandom: function () {
-            if (bingo.selectedNumbers.length > 89) {
-                // alert("All numbers Exhausted");
-                numberExhausted = true;
-                return 0;
-            }
-            var random = bingo.generateRandom();
-            while ($.inArray(random, bingo.selectedNumbers) > -1) {
-                random = bingo.generateRandom();
-            }
-            bingo.selectedNumbers.push(random);
-            return random;
-        }
-    };
-
-    //initializing all the parameters and exiting the modal
-    $("#exit-game-btn").click(function () {      
-        location.reload(true);
-    });
-
-    $("#pause-game-btn").click(function () {
-        clearInterval(setIntervalVal);
-        $(this).attr("disabled", true);
-        toastMsg("<span class='red-text text-lighten-4'>Game Paused!</span>");
-        isPaused = true;
-        $("#start-game-btn").attr("disabled", false);
-    });
-
-    $("#start-game-btn").click(function () {
-        M.Toast.dismissAll();
-        $("#pause-game-btn").attr("disabled", false);
-        isPaused = false;
-        $(this).attr("disabled", true);
-        if (autoCallsSet == true) {
-            setIntervalVal = setInterval(function () {
-                if (isPaused == false) {
-                    var random = bingo.generateNextRandom().toString();
-                    if (numberExhausted == false) {
-                        gameStartCalledNumbers.push(random);
-                        if (chkAudio == true) {
-                            dictateNumber(random);
-                        }
-                        displayNumberOnScreen(random);
-                        highlightNumberInSeriesDisplay(random);
-                        updateSelectedCallsList();
-                        validateCalledNumbers();
-                    }
-                } else {
-                    // if(promptDisableMsg==1){
-                    //     toastMsg("<span class='red-text text-lighten-4'>Game Paused!</span>");
-                    // }                        
-                    // promptDisableMsg++;
-                }
-            }, time);
-
-
-        } else { }
-    });
-
+    
     function displayNumberOnScreen(random) {
         if (random > 9) {
             $(".number-preview-digit").html("<div style='margin-left:20px'>" + random + "</div>");
@@ -491,6 +371,426 @@ var userID="123";
             }
         });
     }
+
+    
+    function setVerifiedTicket(json,location){
+        console.log("setVerifiedTicket > json > ",json);
+        console.log("setVerifiedTicket > location > ",location);
+         var html="";
+if(location=="outside"){
+    var tr1="<tr>"+
+    "<td class='td-width F1' ></td>"+
+    "<td class='td-width F2'></td>"+
+    "<td class='td-width F3'></td> "+
+    "<td class='td-width F4'></td>"+
+    "<td class='td-width F5'></td>"+
+    "<td class='td-width F6'></td> "+
+    "<td class='td-width F7'></td>"+
+    "<td class='td-width F8'></td>"+
+    "<td class='td-width F9'></td> "+
+    "</tr>";
+    var tr2="<tr>"+
+    "<td class='td-width F10'></td>"+
+    "<td class='td-width F11'></td>"+
+    "<td class='td-width F12'></td> "+
+    "<td class='td-width F13'></td>"+
+    "<td class='td-width F14'></td>"+
+    "<td class='td-width F15'></td> "+
+    "<td class='td-width F16'></td>"+
+    "<td class='td-width F17'></td>"+
+    "<td class='td-width F18'></td> "+
+    "</tr>";
+    var tr3="<tr>"+
+    "<td class='td-width F19'></td>"+
+    "<td class='td-width F20'></td>"+
+    "<td class='td-width F21'></td> "+
+    "<td class='td-width F22'></td>"+
+    "<td class='td-width F23'></td>"+
+    "<td class='td-width F24'></td> "+
+    "<td class='td-width F25'></td>"+
+    "<td class='td-width F26'></td>"+
+    "<td class='td-width F27'></td> "+
+    "</tr>";
+
+    html="<table class='white centered'>"+tr1+tr2+tr3+"</table>";
+    var showDiv=false;
+    $("#verify-ticket-blank-display-div").html(html);        
+    showDiv=setTicketValues(json);
+    if(showDiv==true){ 
+        $("#verify-wait").hide(); 
+    }
+}
+if(location=="inSideGame"){
+    console.log("inside");
+    var tr1="<tr>"+
+    "<td class='td-width F1' ></td>"+
+    "<td class='td-width F2'></td>"+
+    "<td class='td-width F3'></td> "+
+    "<td class='td-width F4'></td>"+
+    "<td class='td-width F5'></td>"+
+    "<td class='td-width F6'></td> "+
+    "<td class='td-width F7'></td>"+
+    "<td class='td-width F8'></td>"+
+    "<td class='td-width F9'></td> "+
+    "</tr>";
+    var tr2="<tr>"+
+    "<td class='td-width F10'></td>"+
+    "<td class='td-width F11'></td>"+
+    "<td class='td-width F12'></td> "+
+    "<td class='td-width F13'></td>"+
+    "<td class='td-width F14'></td>"+
+    "<td class='td-width F15'></td> "+
+    "<td class='td-width F16'></td>"+
+    "<td class='td-width F17'></td>"+
+    "<td class='td-width F18'></td> "+
+    "</tr>";
+    var tr3="<tr>"+
+    "<td class='td-width F19'></td>"+
+    "<td class='td-width F20'></td>"+
+    "<td class='td-width F21'></td> "+
+    "<td class='td-width F22'></td>"+
+    "<td class='td-width F23'></td>"+
+    "<td class='td-width F24'></td> "+
+    "<td class='td-width F25'></td>"+
+    "<td class='td-width F26'></td>"+
+    "<td class='td-width F27'></td> "+
+    "</tr>";
+
+    html="<table id='current-called-ticket' class='white centered'>"+tr1+tr2+tr3+"</table>";
+    var showDiv=false;
+       
+    $("#current-ticket-display-div").html(html); 
+                
+    showDiv=setTicketValuesInsideGame(json);
+    if(showDiv==true){ 
+        $("#loading-div").hide(); 
+        $("#current-ticket-display-div").show(); 
+        validateRowStrike();
+    }
+}
+        
+         
+     }
+
+     function validateRowStrike(){
+        var rows=$("#current-called-ticket").find('> tbody > tr');
+        $.each(rows, function (key, value) {
+            // console.log("key > ", key);
+            console.log("value > ", value);
+            var tds=$(value).find('td');
+            console.log("tds > ", tds);
+            var count=0;
+            $.each(tds, function (k, v) {
+                console.log("tds > v > ", v);
+                console.log("tds > v.role > ", $(v).attr("role"));
+                console.log("tds > v.text > ", v.innerText);
+                if($(v).attr("role")=="numberCalled" || v.innerText.trim()==""){
+                    count++;
+                }
+            });
+            console.log("count > ", count);
+            if(count==9){
+                $.each(tds, function (k, v) {                    
+                   $(this).addClass("cyan accent-2");
+                });
+            }
+            
+        });
+     }
+ 
+     function setTicketValues(json){       
+         $.each(json, function (key, value) {            
+             $("."+value.Place).text(value['Number']);//setting the parameters 
+         });
+         return true;
+     }
+
+     function setTicketValuesInsideGame(json){            
+        $.each(json, function (key, value) {
+            var tdHtml=""; 
+            if(gameStartCalledNumbers.includes(value['Number'])){
+                //$("."+value.Place).addClass("numberCalled");
+                $("."+value.Place).attr("role","numberCalled");
+                 tdHtml="<span class='red-text'>"+value['Number']+"</span>";
+            }else{
+                tdHtml="<span class='black-text'>"+value['Number']+"</span>";
+            }        
+            $("."+value.Place).html(tdHtml);//setting the parameters 
+        });
+        return true;
+    }
+
+
+    //-------------------------------------------EVENTS--------------------------------
+
+    $("#game-modal-verify-btn").click(function(){
+        document.getElementById("ticket_number").value="";
+    });
+
+    $("#numbering-modal-open").click(function(){
+        preSetLanguageElements();
+    });
+
+    $(document).on('keyup', '.no-text-box', function (e) {       
+        var ID= $(this).attr("role");
+        var no_text= $(this).val();
+        var obj={
+            "ID": ID,
+            "Numbers": no_text
+        };        
+        setNumbersChangedValue(obj);
+    });
+
+    //saving the number's text entered by user
+    $("#numberings-save-btn").click(function(){
+        $("#numbering-modal-preloader").show();
+        setNumberingsDisplay(numberings);
+        setAllNumbersDisplay(numberings);
+        var lang="";
+        //game-voice-language
+        lang=$("#game-voice-language").children("option:selected").val();
+        console.log("language > ",lang);
+        language=lang;
+
+        // $("#numbering-modal-preloader").hide();
+
+    });
+
+    $("#new_game_ticket_in_play").on("change", function (e) {
+        $("#new_save_btn").fadeIn();
+        var val = $(this).children("option:selected").val();
+        var id = $(this).children("option:selected").attr("role");
+        
+        var ticket_in_play_selected = {
+            "id": parseInt(id),
+            "ticket": val
+        };
+        populateTableListAsPerSelectedTicket(ticket_in_play_selected);
+    });
+
+    $(".select_setup_type").click(function () {
+        if ($(this).attr('id') == "new_game_radio") {
+            $(".setup_type").hide();
+            $("#New_Setup").fadeIn();
+        }
+        if ($(this).attr('id') == "edit_game_radio") {
+            $(".setup_type").hide();
+            $("#Edit_Setup").fadeIn();
+        }
+    });
+
+    $(document).on('click', '.game_selection_chk', function (e) {
+        console.log("checkbox clicked : ", e.target);
+        console.log("checkbox val : ", e.target.checked);
+        if (e.target.checked == true) {
+            //enable the input box next to it
+            var role = $(this).attr("role");
+            var name = $(this).attr("name");
+
+            $("#" + name + "_game_price_" + role).removeAttr("disabled");
+        }
+        if (e.target.checked == false) {
+            //disable the input box next to it
+            var role = $(this).attr("role");
+            var name = $(this).attr("name");
+            console.log("checkbox role : ", role);
+            $("#" + name + "_game_price_" + role).val("0.00");
+            $("#" + name + "_game_price_" + role).attr("disabled", "disabled");
+        }
+    });
+
+    $("#bingo-ticket-verify").click(function(){
+        document.getElementById("verify_ticket_number").value="";
+        $.get("/blank-tinket-design.html", function (data, status) {               
+            $("#verify-ticket-blank-display-div").html(data);//loading blank in very ticket modal 
+            $("#verify-wait").hide();              
+        });
+    });
+
+    $("#verify-ticket-btn").click(function () {
+        $("#verify-wait").fadeIn();
+        var ticket_val = $("#verify_ticket_number").val();
+        if(ticket_val==""){
+            toastMsg("<span class='red-text text-lighten-4'>Enter Ticket Number!</span>");
+            $.get("/blank-tinket-design.html", function (data, status) {               
+                $("#verify-ticket-blank-display-div").html(data);//loading blank in very ticket modal 
+                $("#verify-wait").hide();              
+            });
+        }else{
+            var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketData";
+            var D={
+                "ID":ticket_val
+            }
+            $.ajax({  
+                type: 'POST',  
+                url: url,  
+                data:D,           
+                success: function (json) {      
+                    setVerifiedTicket(json,"outside");          
+                   
+                },  
+                error: function (parsedjson, textStatus, errorThrown) {  
+                   
+                }  
+            }); 
+            // $.get("/current-ticket.html?ticket_no=" + ticket_val, function (data, status) {
+            //     $("#verify-ticket-blank-display-div").html(data);             
+            //     $("#verify-wait").hide();       
+            // });
+        }
+        
+    });
+
+
+    $("#verify-ticket-button").click(function () {       
+        $("#loading-div").show();
+        var ticket_val = $("#ticket_number").val();
+        if(ticket_val==""){
+            toastMsg("<span class='red-text text-lighten-4'>Enter Ticket Number!</span>");
+            $.get("/blank-tinket-design.html", function (data, status) {               
+                $("#current-ticket-display-div").html(data);//loading blank in very ticket modal 
+                $("#loading-div").hide();  
+                $("#current-ticket-display-div").show();           
+            });
+        }else{
+            $('.modal#modal4').modal('close');
+            // $.get("/current-ticket.html?ticket_no=" + ticket_val, function (data, status) {
+            //     $("#current-ticket-display-div").html(data);
+            //     $("#loading-div").hide();
+            //     $("#current-ticket-display-div").show();
+            // });
+            var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketData";
+            var D={
+                "ID":ticket_val
+            }
+            $.ajax({  
+                type: 'POST',  
+                url: url,  
+                data:D,           
+                success: function (json) {      
+                    setVerifiedTicket(json,"inSideGame");          
+                   
+                },  
+                error: function (parsedjson, textStatus, errorThrown) {  
+                   
+                }  
+            });
+        }
+    });
+
+    $("#audio-btn").on('change', function (e) {
+        console.log("Audion btn e : ", e);
+        console.log("Audion btn e : ", e.target);
+        var chk = $(this).prop('checked');
+        console.log("Audion btn chk : ", chk);
+        if (chk == true) {
+            $(this).prop('checked', true);
+            chkAudio = true;
+            toastMsg("Audio Enabled!");
+        } if (chk == false) {
+            $(this).prop('checked', false);
+            chkAudio = false;
+            toastMsg("<span class='red-text text-lighten-4'>Audio Disabled!</span>");
+        }
+    });
+
+    
+
+    function calculateOthers(){
+        totalTicketsSold=parseInt(soldTo) -parseInt(soldFrom) +1;
+        totalPrice=bookletPrice*totalTicketsSold;
+
+
+        $("#total-tickets-sold").val(totalTicketsSold);
+    }
+
+    $("#sold-from").on("keyup",function(){
+        soldFrom=$(this).val();
+        calculateOthers();
+    });
+    $("#sold-to").on("keyup",function(){
+        soldTo=$(this).val();
+        calculateOthers();
+    });
+    $("#per-booklet-price").on("keyup",function(){
+        bookletPrice=$(this).val();
+        calculateOthers();
+    });
+
+
+    //-------------------------------------------------
+
+    var bingo = {
+        selectedNumbers: [],
+        generateRandom: function () {
+            var min = 1;
+            var max = 90;
+            var random = Math.floor(Math.random() * (max - min + 1)) + min;
+            return random;
+        },
+        generateNextRandom: function () {
+            if (bingo.selectedNumbers.length > 89) {
+                // alert("All numbers Exhausted");
+                numberExhausted = true;
+                return 0;
+            }
+            var random = bingo.generateRandom();
+            while ($.inArray(random, bingo.selectedNumbers) > -1) {
+                random = bingo.generateRandom();
+            }
+            bingo.selectedNumbers.push(random);
+            return random;
+        }
+    };
+
+    //initializing all the parameters and exiting the modal
+    $("#exit-game-btn").click(function () {      
+        location.reload(true);
+    });
+
+    $("#pause-game-btn").click(function () {
+        clearInterval(setIntervalVal);
+        $(this).attr("disabled", true);
+        toastMsg("<span class='red-text text-lighten-4'>Game Paused!</span>");
+        isPaused = true;
+        $("#start-game-btn").attr("disabled", false);
+    });
+
+    $("#start-game-btn").click(function () {
+        M.Toast.dismissAll();
+        $("#pause-game-btn").attr("disabled", false);
+        isPaused = false;
+        $(this).attr("disabled", true);
+        if (autoCallsSet == true) {
+            setIntervalVal = setInterval(function () {
+                if (isPaused == false) {
+                    var random = bingo.generateNextRandom().toString();
+                    if (numberExhausted == false) {
+                        gameStartCalledNumbers.push(random);
+                        if (chkAudio == true) {
+                            dictateNumber(random);
+                        }
+                        displayNumberOnScreen(random);
+                        highlightNumberInSeriesDisplay(random);
+                        updateSelectedCallsList();
+                        validateCalledNumbers();
+                    }
+                } else {
+                    // if(promptDisableMsg==1){
+                    //     toastMsg("<span class='red-text text-lighten-4'>Game Paused!</span>");
+                    // }                        
+                    // promptDisableMsg++;
+                }
+            }, time);
+
+
+        } else { }
+    });
+
+
+
+
+
 
 
     //---------------------------------------------
