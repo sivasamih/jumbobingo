@@ -20,7 +20,7 @@ $(document).ready(function () {
     var gameStartCalledNumbers = [];
     var promptDisableMsg = 0;
     var setIntervalVal = "";
-
+var userID="123";
 
    
 
@@ -35,7 +35,7 @@ $(document).ready(function () {
         });
     }
     function getMasterColors() {
-      var url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/ColorList";
+        const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/ColorList";
         $.ajax({  
             type: 'POST',  
             url: url,  
@@ -43,20 +43,36 @@ $(document).ready(function () {
                 gameMasterColors = json;
             },  
             error: function (parsedjson, textStatus, errorThrown) {  
-                console.log("gameMasterColors > ",errorThrown);  
+                
             }  
         });  
     
         
     }
     function getNumberings() {
+        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetNumbers";
+        const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetNumbers?UID="+userID;
+        var D={
+            "UID":userID
+        }
+        $.ajax({  
+            type: 'POST',  
+            url: url,  
+            data:D,           
+            success: function (json) {                
+                numberings = json;              
+                setNumberingsDisplay(numberings);
+               setAllNumbersDisplay(numberings);
+            },  
+            error: function (parsedjson, textStatus, errorThrown) {  
+                console.log("parsedjson > ",parsedjson);
+                console.log("textStatus > ",textStatus);
+                console.log("errorThrown > ",errorThrown);
+                var numberingsColmns="<div class='col s12'><h6 class='center-align red-text'>Pls check later...</h6></div>";
+                $("#numberings").html(numberingsColmns);
+            }  
+        }); 
 
-        $.get("/assets/media/numbers.json", function (data, status) {
-            numberings = data;
-            //console.log("numberings : ",numberings);
-            setNumberingsDisplay(numberings);
-            setAllNumbersDisplay(numberings);
-        });
     }
 
     function loadInitialblankTicketDesign() {
@@ -81,27 +97,34 @@ $(document).ready(function () {
 
     function setNumberingsDisplay(numberings){
         var numberingsColmns = "";
-        for (var i = 0; i < numberings.length; i++) {
-            var nc = "";
-            if (i > 5) {
-                if (numberings[i]["ID"] < 10) {
-                    nc = "<div id='col_" + i + "' class='col s2 no-margin'><div class='input-field inline '><span class='no-id-bold'>" + numberings[i]["ID"] + "&nbsp;&nbsp;</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text no-text-box active' value='" + numberings[i]["No Text"] + "'></div></div>";
+
+        if(numberings.length>0){
+            for (var i = 0; i < numberings.length; i++) {
+                var nc = "";
+    
+                if (i > 5) {
+                    if (numberings[i]["ID"] < 10) {
+                        nc = "<div id='col_" + i + "' class='col s2 no-margin'><div class='input-field inline '><span class='no-id-bold'>" + numberings[i]["ID"] + "&nbsp;&nbsp;</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text no-text-box active' value='" + numberings[i]["Numbers"] + "'></div></div>";
+                    } else {
+                        nc = "<div id='col_" + i + "' class='col s2 no-margin'><div class='input-field inline '><span class='no-id-bold'>" + numberings[i]["ID"] + "</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text no-text-box active' value='" + numberings[i]["Numbers"] + "'></div></div>";
+                    }
+    
                 } else {
-                    nc = "<div id='col_" + i + "' class='col s2 no-margin'><div class='input-field inline '><span class='no-id-bold'>" + numberings[i]["ID"] + "</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text no-text-box active' value='" + numberings[i]["No Text"] + "'></div></div>";
+    
+                    if (numberings[i]["ID"] < 10) {
+                        nc = "<div id='col_" + i + "' class='col s2'><div class='input-field inline'><span class='no-id-bold'>" + numberings[i]["ID"] + "&nbsp;&nbsp;</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text  no-text-box active' value='" + numberings[i]["Numbers"] + "'>  </div></div>";
+                    } else {
+    
+                        nc = "<div id='col_" + i + "' class='col s2'><div class='input-field inline'><span class='no-id-bold'>" + numberings[i]["ID"] + "</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text  no-text-box active' value='" + numberings[i]["Numbers"] + "'>  </div></div>";
+                    }
+    
                 }
-
-            } else {
-
-                if (numberings[i]["ID"] < 10) {
-                    nc = "<div id='col_" + i + "' class='col s2'><div class='input-field inline'><span class='no-id-bold'>" + numberings[i]["ID"] + "&nbsp;&nbsp;</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text  no-text-box active' value='" + numberings[i]["No Text"] + "'>  </div></div>";
-                } else {
-
-                    nc = "<div id='col_" + i + "' class='col s2'><div class='input-field inline'><span class='no-id-bold'>" + numberings[i]["ID"] + "</span><input id='no_" + numberings[i]["ID"] + "' role='"+numberings[i]["ID"]+"' type='text' class='validate numbers_text  no-text-box active' value='" + numberings[i]["No Text"] + "'>  </div></div>";
-                }
-
+                numberingsColmns = numberingsColmns + nc;
             }
-            numberingsColmns = numberingsColmns + nc;
+        }else{
+            numberingsColmns="<div class='col s12'><h6 class='center-align red-text'>Pls check later...</h6></div>";
         }
+        
         $("#numberings").html(numberingsColmns);
     }
 
@@ -109,17 +132,10 @@ $(document).ready(function () {
     function setAllNumbersDisplay(numberings) {
         var numbersHTML = "";
         var c = 1;
-        $.each(numberings, function (key, value) {
-            //console.log("value : ",value.ID);
+
+        $.each(numberings, function (key, value) {           
             var n = "";
             n = "<div class='col'><a id='call_number_" + value.ID + "' class='btn-floating btn-small grey darken-1 round-btn-numberings all-number-initial-pointer'>" + value.ID + "</a></div>";
-
-            //  if(gameLiveNumberStack.includes(value.ID)){
-            //      n="<div class='col'><a id='call_number_"+value.ID+"' class='btn-floating btn-small red round-btn-numberings all-number-initial-pointer'>"+value.ID+"</a></div>";
-            //         }else{
-            //     n="<div class='col'><a id='call_number_"+value.ID+"' class='btn-floating btn-small grey darken-1 round-btn-numberings all-number-initial-pointer'>"+value.ID+"</a></div>";
-            //      }
-
             numbersHTML = numbersHTML + n;
         });
         $(".all-numbers-display").html(numbersHTML);
@@ -142,6 +158,7 @@ $(document).ready(function () {
         $(".setup_type").hide();
         $("#new_save_btn").hide();
         $("#loading-div").hide();
+        $("#numbering-modal-preloader").hide();
     }
 
     function fillTicketInPlayNewSetupDropdown() {
@@ -203,25 +220,15 @@ $(document).ready(function () {
         }
     }
 
-    function getOptions(color) {
-        // console.log("getOptions | color > ",color);
-        // console.log("getOptions | gameMasterColors > ",gameMasterColors);
+    function getOptions(color) {        
         var options = "";
-
-        // console.log("getOptions | gameMasterColors length > ",gameMasterColors.length);
-        
-
-         
-        $.each(gameMasterColors, function (key, value) {
-            console.log("ColorID > ",value["ColorID"]);
-            console.log("Colors > ",value["Colors"]);
+        $.each(gameMasterColors, function (key, value) {           
             var o = "";
             if (color.id == value["ColorID"]) {
                 o = "<option value='" + value["Colors"] + "' role='" + value["ColorID"] + "' selected>" + value["Colors"]+ "</option>";
             } else {
                 o = "<option value='" + value["Colors"] + "' role='" + value["ColorID"] + "'>" + value["Colors"] + "</option>";
             }
-
             options = options + o;
         });
          
@@ -229,15 +236,13 @@ $(document).ready(function () {
         return options;
     }
 
-    function setNumbersChangedValue(obj){
-        console.log("setNumbersChangedValue > obj : ",obj);     
+    function setNumbersChangedValue(obj){        
         var index=null;   
         $.each(numberings, function (key, value) {
             if(value.ID==obj.ID){
                 index=key;
             }
-        }); 
-        console.log("setNumbersChangedValue > index : ",index);   
+        });          
         if(index!=null){
             numberings[index]=obj;
         }
@@ -249,7 +254,7 @@ $(document).ready(function () {
         var no_text= $(this).val();
         var obj={
             "ID": ID,
-            "No Text": no_text
+            "Numbers": no_text
         };        
         setNumbersChangedValue(obj);
     });
@@ -259,8 +264,6 @@ $(document).ready(function () {
         $("#numbering-modal-preloader").show();
         setNumberingsDisplay(numberings);
         setAllNumbersDisplay(numberings);
-        
-
         $("#numbering-modal-preloader").hide();
 
     });
@@ -269,8 +272,7 @@ $(document).ready(function () {
         $("#new_save_btn").fadeIn();
         var val = $(this).children("option:selected").val();
         var id = $(this).children("option:selected").attr("role");
-        console.log("val : ", val);
-        console.log("id : ", id);
+        
         var ticket_in_play_selected = {
             "id": parseInt(id),
             "ticket": val
@@ -474,7 +476,7 @@ $(document).ready(function () {
         $.each(numberings, function (key, value) {
             if (value.ID == number) {
                 try {
-                    var no_text = value["No Text"];
+                    var no_text = value["Numbers"];
                     let sayMyNumber = new SpeechSynthesisUtterance();
                     sayMyNumber.lang = "en-US";
                     sayMyNumber.text = no_text;
