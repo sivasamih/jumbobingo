@@ -87,6 +87,11 @@
             border-spacing: unset !important;
         }
 
+        #userListTable tbody tr{
+            height: 50px !important;
+            line-height: 50px !important;
+        }
+
 
         .game-play-div {
             height: 100%;
@@ -160,6 +165,12 @@
 
         #modal1 {
             height: 85%;
+            max-height: 100%;
+            margin-top: -70px !important;
+        }
+
+        #approveUsersModal{
+            height: 74%;
             max-height: 100%;
             margin-top: -70px !important;
         }
@@ -590,6 +601,11 @@
         </div>
     </div>
 
+
+    
+
+  
+
     <!-- Verify Ticket prompt prompt -->
     <div id="modal5" class="modal brown lighten-4"
         style="width: 25%;border-style: solid;border-width: 4px;border-color: #eceff1;">
@@ -770,6 +786,43 @@
     </div>
 
 
+      <!-- approve Users Modal prompt prompt -->
+      <div id="approveUsersModal" class="modal brown lighten-4"
+      style="width: 80%;border-style: solid;border-width: 4px;border-color: #eceff1;">
+      <div class="modal-content ">          
+          <div class="row">
+            <h5 class="left-align" style="margin-top: -10px !important;"><b>Users List</b></h5>
+            <div class="divider"></div>
+        </div>
+        <div style="height: 400px;">
+            <div class="row">
+                <div class="col s12">
+                 <table id="userListTable" class="highlight responsive-table" style="border-style: solid;border-width: 1px;border-color:#424242;">
+                     <thead class="black white-text">
+                       <tr class="black white-text">
+                           <th style="width:60px;text-align: center;" class="black white-text">S.No</th>
+                           <th style="width:60px;text-align: center;" class="black white-text">User ID</th>
+                           <th style="width:120px;" class="black white-text">Name</th>
+                           <th style="width:120px;" class="black white-text">EmailID</th>
+                           <th style="width:200px;" class="black white-text">ClubName</th>                          
+                           <th style="width:100px;text-align: center;" class="black white-text">IsAdmin</th>
+                           <th style="width:120px;text-align: center;" class="black white-text">Status</th>
+                           
+                       </tr>
+                     </thead>            
+                     <tbody  style="border-style: solid;border-width: 1px;border-color:#424242;">
+                                             
+                     </tbody>
+                   </table>
+                </div>
+            </div>
+        </div>
+         
+      </div>
+      <div class="modal-footer brown lighten-4">         
+          <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+      </div>
+  </div>
 
 
     <!-- <nav class="black">
@@ -794,6 +847,18 @@
         </li>
         <li>
             <ul class="collapsible">
+                <li id="admin-manage">
+                    <div class="collapsible-header"><i class="material-icons"><span class="material-icons">
+                        manage_accounts
+                        </span></i>Manage</div>
+                    <div class="collapsible-body grey lighten-5">
+                        <ul>
+                            <li><a href="#approveUsersModal" class="modal-trigger"><i
+                                        class="material-icons">chevron_right</i>Approve Users</a></li>
+                            
+                        </ul>
+                    </div>
+                </li>
                 <li>
                     <div class="collapsible-header"><i class="material-icons">settings_applications</i>Setup</div>
                     <div class="collapsible-body grey lighten-5">
@@ -822,7 +887,7 @@
                         <ul>
                             <li><a id="bingo-ticket-verify" href="#modal5" class="modal-trigger"><i class="material-icons">chevron_right</i>Bingo
                                     90 tickets</a></li>
-                            <li><a href="#!"><i class="material-icons">chevron_right</i>Approve Users</a></a></li>
+                            
                         </ul>
                     </div>
                 </li>

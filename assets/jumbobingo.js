@@ -38,6 +38,7 @@ $(document).ready(function () {
     loadInitialblankTicketDesign();
     getAllLanguages();
     fillTicketInPlayNewSetupDropdown();
+    getUsersList();
 
 
     function checkedIfUserLoggedIn(){
@@ -63,7 +64,14 @@ $(document).ready(function () {
               $("#hide-when-logged-in").html(html); 
            }else{
                document.getElementById("dashboard-name-display").innerText=Name;
-               document.getElementById("dashboard-email-display").innerText=EmailID;             
+               document.getElementById("dashboard-email-display").innerText=EmailID;   
+
+               console.log("IsAdmin > ",IsAdmin);
+               if(IsAdmin=="true" || IsAdmin==true){
+                $("#admin-manage").show();
+               }else{
+                $("#admin-manage").hide();
+               }         
            }           
        }
 
@@ -265,6 +273,7 @@ $(document).ready(function () {
         $("#verify-wait").hide();
         $("#reg-email-accept-icon").hide();
         $("#reg-email-reject-icon").hide();
+       
     }
 
     function fillTicketInPlayNewSetupDropdown() {
@@ -640,6 +649,112 @@ $(document).ready(function () {
     }
 
 
+    function getUsersList(){
+        var json={};
+        fillUserListTable(json);
+        var url="";
+        var D={
+            "UID":JBuserID
+        };
+        // $.ajax({
+        //     type: 'POST',
+        //     url: url,
+        //     data: D,
+        //     success: function (json) {                
+        //         fillUserListTable(json);
+        //     },
+        //     error: function (parsedjson, textStatus, errorThrown) {
+
+        //     }
+        // });
+    }
+
+    function fillUserListTable(json){
+        var dummy=[
+            {
+                "UID":"1001",
+                "Name":"Samihan",
+                "EmailID":"sam@gmail.com",
+                "ClubName":"Siva Club",
+                "IsAdmin":"false",
+                "status":"1"               
+            },
+            {
+                "UID":"1002",
+                "Name":"Parshu",
+                "EmailID":"parshu@gmail.com",
+                "ClubName":"Siva Club",
+                "IsAdmin":"false",
+                "status":"0"               
+            }
+        ];
+
+        dummy=sortUsersByNewFirst(dummy);
+
+        
+
+        $.each(dummy, function (key, value) {
+           let sr_no=parseInt(key)+1;           
+             
+           let switch_btn="";
+           let tr="";
+
+           if(value.status==0){
+               switch_btn="<div class='switch'><label><span class='red-text'>In-Active</span><input role='"+value.UID+"' class='status-switch' role='"+value.UID+"' type='checkbox'><span class='lever'></span><span class='green-text'>Active</span></label></div>";
+               tr="<tr class='light-green lighten-5' style='border-style: solid;border-width: 1px;border-color:#424242;'>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+sr_no+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+value.UID+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.Name+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.EmailID+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.ClubName+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+value.IsAdmin+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+switch_btn+
+               "</td>"
+               +"</tr>";
+            }
+           if(value.status==1){
+               switch_btn="<div class='switch'><label><span class='red-text'>In-Active</span><input role='"+value.UID+"' class='status-switch' role='"+value.UID+"' type='checkbox' checked><span class='lever'></span><span class='green-text'>Active</span></label></div>";
+               tr="<tr  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+sr_no+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+value.UID+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.Name+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.EmailID+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.ClubName+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+value.IsAdmin+"</td>"+
+               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+switch_btn+
+               "</td>"
+               +"</tr>";
+            }
+
+
+
+            
+
+            console.log("tr > ",tr);
+            
+            $("#userListTable tbody").append(tr);
+
+        });
+    }
+
+    function sortUsersByNewFirst(dummy){
+        let sortedDummy=[];
+        $.each(dummy, function (key, value) {
+            if(value.status==0){
+                sortedDummy.push(value);
+            }
+        });
+
+        $.each(dummy, function (key, value) {
+            if(value.status==1){
+                sortedDummy.push(value);
+            }
+        });
+
+        return sortedDummy;
+    }
+
+
     //-------------------------------------------EVENTS--------------------------------
 
     $("#game-modal-verify-btn").click(function () {
@@ -936,10 +1051,13 @@ $(document).ready(function () {
     $(".input-chk").on("keyup", function () {
         var regClubName = $("#reg-club-name").val();
         var addressLine1 = $("#address_line_1").val();
+        var addressLine2 = $("#address_line_2").val();
         var postCode = $("#post_code").val();
         var city = $("#city").val();
+        var website = $("#website").val();
         var country = $("#country").val();
         var contactPerson = $("#contact_person").val();
+        var phone_no=$("#phone_no").val();
         var regEmailID = $("#reg_email_id").val();
         var regPassword = $("#reg-password").val();
         var confPassword = $("#conf-password").val();
@@ -954,6 +1072,9 @@ $(document).ready(function () {
                 console.log("--> IN chkConfPassword > chk ve  > ", ve);
                 if (ve) {
                     $("#register-btn").attr("disabled", false);
+
+                   
+
                 } else {
                     $("#register-btn").attr("disabled", true);
                 }
@@ -963,7 +1084,55 @@ $(document).ready(function () {
         }
     });
 
-
+$("#register-btn").click(function(){
+    $("#register-btn").attr("disabled", true);
+    var regClubName = $("#reg-club-name").val();
+    var addressLine1 = $("#address_line_1").val();
+    var addressLine2 = $("#address_line_2").val();
+    var postCode = $("#post_code").val();
+    var city = $("#city").val();
+    var website = $("#website").val();
+    var country = $("#country").val();
+    var contactPerson = $("#contact_person").val();
+    var phone_no=$("#phone_no").val();
+    var regEmailID = $("#reg_email_id").val();
+    var regPassword = $("#reg-password").val();
+    var confPassword = $("#conf-password").val();
+    var D={
+        "ClubName":regClubName,
+        "Address1":addressLine1,
+        "Address2":addressLine2,
+        "PostCode":postCode,
+        "City":city,
+        "Country":country,
+        "Website":website,
+        "ContactPerson":contactPerson,
+        "PhoneNo":phone_no,
+        "EmailID":regEmailID,
+        "Password":regPassword,
+    };
+    var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/Register";
+    $.ajax({
+       type: 'POST',
+       url: url,
+       data: D,
+       success: function (json) {
+          if(json.IsSuccess==true ||json.IsSuccess=="true"){
+           toastMsg("<span class='green-text'>Registration successful!</span>");
+           setTimeout(function() {
+               window.location='/';
+           }, 2000);
+          }else{
+            $("#register-btn").attr("disabled", false);
+           toastMsg("<span class='red-text'>Registration Not successful!</span>");
+          }  
+       },
+       error: function (parsedjson, textStatus, errorThrown) {
+           toastMsg("<span class='red-text'>Please Try Later!</span>");
+           $("#register-btn").attr("disabled", false);
+       }
+   });
+});
 
 
     //-------------------------------------------------
