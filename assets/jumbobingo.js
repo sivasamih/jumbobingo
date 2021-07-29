@@ -1035,12 +1035,6 @@ $(document).ready(function () {
         } else { }
     });
 
-
-
-
-
-
-
     //---------------------------------------------
 
     function toastMsg(msg) {
