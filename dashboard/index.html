@@ -170,7 +170,7 @@
         }
 
         #approveUsersModal{
-            height: 74%;
+            height: 95%;
             max-height: 100%;
             margin-top: -70px !important;
         }
@@ -249,6 +249,7 @@
     <div id="modal1" class="modal brown lighten-4"
         style="width: 70%; border-style: solid;border-width: 4px;border-color: #eceff1;">
         <div class="modal-content ">
+               
             <div class="row ">
                 <h5 class="left-align" style="margin-top: -10px !important;"><b>Numbering</b></h5>
                 <div class="divider"></div>
@@ -284,6 +285,7 @@
     <div id="modal2" class="modal brown lighten-4"
         style="width: 90%;border-style: solid;border-width: 4px;border-color: #eceff1;">
         <div class="modal-content ">
+            <span class="right modal-close"> <i class="material-icons">close</i></span>
             <div class="row">
                 <h5 class="left-align" style="margin-top: -10px !important;"><b>Game Setup</b></h5>
                 <div class="divider"></div>
@@ -312,15 +314,15 @@
                             <div class="row" style="margin-top: -45px !important;">
                                 <div class="col s12">
                                     <div style="height:350px; overflow: scroll;">
-                                        <table class="centered small" id="new_setup_table">
+                                        <table class="centered small id="new_setup_table">
                                             <thead>
-                                                <tr class="grey">
-                                                    <th class="grey" style="width:100px !important;">Game</th>
-                                                    <th class="grey" style="width:150px !important;">Color</th>
-                                                    <th class="grey">One Line</th>
-                                                    <th class="grey">Two Line</th>
-                                                    <th class="grey">Full House</th>
-                                                    <th class="grey">Corner</th>
+                                                <tr class="black">
+                                                    <th class="black white-text" style="width:100px !important;">Game</th>
+                                                    <th class="black" style="width:150px !important;">Color</th>
+                                                    <th class="black">One Line</th>
+                                                    <th class="black">Two Line</th>
+                                                    <th class="black">Full House</th>
+                                                    <th class="black">Corner</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -360,8 +362,7 @@
                                     <div class="col s12 right-align">
                                         <a id="new_save_btn" href="javascript:void(0);"
                                             class="waves-effect waves-green btn-small black">Save</a>
-                                        <a href="javascript:void(0);"
-                                            class="modal-close waves-effect waves-green btn-flat">Close</a>
+                                         
                                     </div>
                                 </div>
                             </div>
@@ -422,9 +423,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal-footer brown lighten-4">
-            <a href="javascript:void(0);" class="modal-close waves-effect waves-green btn-flat">Close</a>
-        </div>
+        
     </div>
 
     <!-- Game Screen prompt -->
@@ -789,23 +788,44 @@
       <!-- approve Users Modal prompt prompt -->
       <div id="approveUsersModal" class="modal brown lighten-4"
       style="width: 80%;border-style: solid;border-width: 4px;border-color: #eceff1;">
-      <div class="modal-content ">          
+      <div class="modal-content ">    
+        <span class="right modal-close"> <i class="material-icons">close</i></span>      
           <div class="row">
             <h5 class="left-align" style="margin-top: -10px !important;"><b>Users List</b></h5>
+           
             <div class="divider"></div>
         </div>
+        <div class="row" id="user-list-preloader">
+            <div class="progress">
+                <div class="indeterminate"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="right">
+                    <div class="input-field col s12">
+                        <input id="tableSearch" type="text" class="validate">
+                        <label for="tableSearch" class='black-text'>Search</label>
+                    </div>
+                    
+                     
+                </div>
+            </div>
+        </div>
+
         <div style="height: 400px;">
             <div class="row">
                 <div class="col s12">
                  <table id="userListTable" class="highlight responsive-table" style="border-style: solid;border-width: 1px;border-color:#424242;">
                      <thead class="black white-text">
                        <tr class="black white-text">
-                           <th style="width:60px;text-align: center;" class="black white-text">S.No</th>
-                           <th style="width:60px;text-align: center;" class="black white-text">User ID</th>
+                           <th style="width:60px;text-align: center;" class="black white-text">S.No</th>                           
                            <th style="width:120px;" class="black white-text">Name</th>
                            <th style="width:120px;" class="black white-text">EmailID</th>
-                           <th style="width:200px;" class="black white-text">ClubName</th>                          
-                           <th style="width:100px;text-align: center;" class="black white-text">IsAdmin</th>
+                           <th style="width:200px;" class="black white-text">ClubName</th>   
+                           <th style="width:100px;text-align: center;" class="black white-text">Address 1</th>                       
+                            
                            <th style="width:120px;text-align: center;" class="black white-text">Status</th>
                            
                        </tr>
@@ -819,27 +839,18 @@
         </div>
          
       </div>
-      <div class="modal-footer brown lighten-4">         
-          <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-      </div>
+      
   </div>
 
 
-    <!-- <nav class="black">
-        <div class="nav-wrapper">
-            <a href="#" class="brand-logo white-text" style="font-weight: bold; padding-left: 20px;">
-                Jumbo Bingo : ST Limited
-                
-            </a>
-        </div>        
-    </nav> -->
+   
 
     <ul id="slide-out" class="sidenav sidenav-fixed scrollbar">
         <li>
             <div class="user-view">
                 <div class="background black">
                 </div>
-                <a class="white-text" style="font-size: 2rem;">Dashboard</a>
+                <a class="white-text" style="font-size: 2rem;"><span id="dashboard-club-name"></span></a>
                 <a href="javascript:void(0);"><span class="white-text name"><span id="dashboard-name-display"></span></a>
                 <a href="javascript:void(0);"><span class="white-text email"><span id="dashboard-email-display"></span></a>
                 <a id="log-out" href="javascript:void(0);"><span class="white-text email right-align">LOG OUT</span></a>
