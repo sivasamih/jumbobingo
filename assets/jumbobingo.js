@@ -9,7 +9,7 @@ $(document).ready(function () {
     var isPaused = false;
     var time = 3000;
     var gameStartCalledNumbers = [];
-    var initAPIs={};
+    var initAPIs = {};
     var promptDisableMsg = 0;
     var setIntervalVal = "";
     var userID = "123";
@@ -23,20 +23,20 @@ $(document).ready(function () {
     var totalRevenue = 0;
     var totalGain = 0;
 
-    var JBuserID= "";
-    var ClubName= "";
-    var EmailID= "";
-    var IsAdmin= "";
-    var Name= "";
-    var Token= "";
- 
+    var JBuserID = "";
+    var ClubName = "";
+    var EmailID = "";
+    var IsAdmin = "";
+    var Name = "";
+    var Token = "";
+
     initAPI();
 
-    function performAllFunctions(){
+    function performAllFunctions() {
         checkedIfUserLoggedIn();
         initializeElements()
         getNumberings();
-        initialHidden();    
+        initialHidden();
         getMasterColors();
         loadInitialblankTicketDesign();
         getAllLanguages();
@@ -44,15 +44,15 @@ $(document).ready(function () {
         getUsersList();
     }
 
-    
 
-    function initAPI(){
-        var url="/assets/media/initAPI.json";
+
+    function initAPI() {
+        var url = "/assets/media/initAPI.json";
         $.ajax({
             type: 'GET',
             url: url,
             success: function (json) {
-                initAPIs=json;
+                initAPIs = json;
                 performAllFunctions();
             },
             error: function (parsedjson, textStatus, errorThrown) {
@@ -62,76 +62,76 @@ $(document).ready(function () {
     }
 
 
-    function checkedIfUserLoggedIn(){
-        JBuserID= getCookie("JBuserID");
-        ClubName= getCookie("ClubName");
-        EmailID= getCookie("EmailID");
-        IsAdmin= getCookie("IsAdmin");
-        Name= getCookie("Name");
-        Token= getCookie("Token");
-       if(Token=="" || Token==null){
-         var url=document.URL;
-         var pathname=window.location.pathname;        
-         if(pathname=="/" || pathname=="/index.html"){           
-             
-         }else{
-            window.location.replace("/");
-         }       
-       }else{
-           //set data values
-           var pathname=window.location.pathname;        
-           if(pathname=="/" || pathname=="/index.html"){
-               var html="<div><div class='row'><div class='col'><h3>Hi <span class='red-text'><b>"+Name+"</b></span>!</h3> <a href='/dashboard' style='font-size:1.4rem;'> <span class='black-text'>Go to</span> <u>Dashboard</u></a></div></div></div>";
-              $("#hide-when-logged-in").html(html); 
-           }else{
-               document.getElementById("dashboard-name-display").innerText=Name;
-               document.getElementById("dashboard-email-display").innerText=EmailID;  
-               document.getElementById("dashboard-club-name").innerText=ClubName;  
-               
+    function checkedIfUserLoggedIn() {
+        JBuserID = getCookie("JBuserID");
+        ClubName = getCookie("ClubName");
+        EmailID = getCookie("EmailID");
+        IsAdmin = getCookie("IsAdmin");
+        Name = getCookie("Name");
+        Token = getCookie("Token");
+        if (Token == "" || Token == null) {
+            var url = document.URL;
+            var pathname = window.location.pathname;
+            if (pathname == "/" || pathname == "/index.html") {
 
-               console.log("IsAdmin > ",IsAdmin);
-               if(IsAdmin=="true" || IsAdmin==true){
-                $("#admin-manage").show();
-               }else{
-                $("#admin-manage").hide();
-               }         
-           }           
-       }
+            } else {
+                window.location.replace("/");
+            }
+        } else {
+            //set data values
+            var pathname = window.location.pathname;
+            if (pathname == "/" || pathname == "/index.html") {
+                var html = "<div><div class='row'><div class='col'><h3>Hi <span class='red-text'><b>" + Name + "</b></span>!</h3> <a href='/dashboard' style='font-size:1.4rem;'> <span class='black-text'>Go to</span> <u>Dashboard</u></a></div></div></div>";
+                $("#hide-when-logged-in").html(html);
+            } else {
+                document.getElementById("dashboard-name-display").innerText = Name;
+                document.getElementById("dashboard-email-display").innerText = EmailID;
+                document.getElementById("dashboard-club-name").innerText = ClubName;
+
+
+                console.log("IsAdmin > ", IsAdmin);
+                if (IsAdmin == "true" || IsAdmin == true) {
+                    $("#admin-manage").show();
+                } else {
+                    $("#admin-manage").hide();
+                }
+            }
+        }
 
     }
 
-   function performLogOutProcess(){
-    setCookie("JBuserID", "", -1);
-    setCookie("ClubName", "", -1);
-    setCookie("EmailID", "", -1);
-    setCookie("IsAdmin","", -1);
-    setCookie("LoggedExpiryTime", "", -1);
-    setCookie("LoggedInDate", "", -1);
-    setCookie("LoggedInTime", "", -1);
-    setCookie("Name", "", -1);                    
-    setCookie("Token", "", -1);
-    window.location.replace("/");
-   }
+    function performLogOutProcess() {
+        setCookie("JBuserID", "", -1);
+        setCookie("ClubName", "", -1);
+        setCookie("EmailID", "", -1);
+        setCookie("IsAdmin", "", -1);
+        setCookie("LoggedExpiryTime", "", -1);
+        setCookie("LoggedInDate", "", -1);
+        setCookie("LoggedInTime", "", -1);
+        setCookie("Name", "", -1);
+        setCookie("Token", "", -1);
+        window.location.replace("/");
+    }
 
-    function generateToken(UID){
-        var token= md5(UID);
+    function generateToken(UID) {
+        var token = md5(UID);
         return token
-      }
-  
-      function sendToken(json){
-          var url="";
-          $.ajax({
-              type: 'POST',
-              url: url,
-              data: json,
-              success: function (json) {
-                   
-              },
-              error: function (parsedjson, textStatus, errorThrown) {
-  
-              }
-          });
-      }
+    }
+
+    function sendToken(json) {
+        var url = "";
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: json,
+            success: function (json) {
+
+            },
+            error: function (parsedjson, textStatus, errorThrown) {
+
+            }
+        });
+    }
 
     function preSetLanguageElements() {
         console.log("language > ", language);
@@ -153,10 +153,10 @@ $(document).ready(function () {
 
     }
 
-    
+
     function getMasterColors() {
-        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/ColorList";
-        var url = (initAPIs.domain+initAPIs.ColorList).toString();
+
+        var url = (initAPIs.domain + initAPIs.ColorList).toString();
 
         $.ajax({
             type: 'POST',
@@ -172,12 +172,10 @@ $(document).ready(function () {
 
     }
     function getNumberings() {
-       // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetNumbers";
-        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetNumbers?UID="+userID;
-        // const url="http://203.122.12.38/WebserviceDemo/WebService.asmx/UserNumbers";
-         
-        var url = (initAPIs.domain+initAPIs.UserNumbers).toString();
-       
+
+
+        var url = (initAPIs.domain + initAPIs.UserNumbers).toString();
+
         var D = {
             "UID": userID
         }
@@ -299,8 +297,8 @@ $(document).ready(function () {
     }
 
     function fillTicketInPlayNewSetupDropdown() {
-        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetAllTktTypes";
-        var url = (initAPIs.domain+initAPIs.GetAllTktTypes).toString();
+
+        var url = (initAPIs.domain + initAPIs.GetAllTktTypes).toString();
         var ticketsInPlay = "";
         $.ajax({
             type: 'POST',
@@ -321,43 +319,43 @@ $(document).ready(function () {
         });
     }
 
-    function getGamesTypeDetails(ticket_in_play_selected){
-        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketTypeDetails";
-        var url = (initAPIs.domain+initAPIs.GetTicketTypeDetails).toString();
+    function getGamesTypeDetails(ticket_in_play_selected) {
+
+        var url = (initAPIs.domain + initAPIs.GetTicketTypeDetails).toString();
         var ticketsInPlay = "";
         var games = [];
         $.ajax({
             type: 'POST',
             url: url,
-            data:{"TktTypeID":ticket_in_play_selected.id},
-            success: function (json) {                
-                console.log("populateTableListAsPerSelectedTicket : json > ",json);
-                games=json;
+            data: { "TktTypeID": ticket_in_play_selected.id },
+            success: function (json) {
+                console.log("populateTableListAsPerSelectedTicket : json > ", json);
+                games = json;
                 setTableDisplay1(games);
             },
             error: function (parsedjson, textStatus, errorThrown) {
-                 
+
             }
         });
     };
 
 
-    function setTableDisplay1(games){
+    function setTableDisplay1(games) {
         $("#new_setup_table tbody").empty();
-        
+
         for (let i = 0; i < games.length; i++) {
             var ID = games[i].GameID;
             var GAME_NAME = games[i].Game;
 
-            var C={
-                "id":games[i].ColorID,
-                "name":games[i].Color
+            var C = {
+                "id": games[i].ColorID,
+                "name": games[i].Color
             };
-            console.log("C > ",C);
+            console.log("C > ", C);
 
-            
+
             var options = getOptions(C);
-            console.log("options > ",options);
+            console.log("options > ", options);
 
             var tr = "<tr>" +
                 "<td> " + GAME_NAME + " </td>" +
@@ -380,7 +378,7 @@ $(document).ready(function () {
                 + "</td>" +
                 +"</tr>";
             $("#new_setup_table tbody").append(tr);
-            
+
         }
     }
 
@@ -389,8 +387,8 @@ $(document).ready(function () {
         var ticketGameList = {};
         var games = [];
 
-        games=getGamesTypeDetails(ticket_in_play_selected);
-         
+        games = getGamesTypeDetails(ticket_in_play_selected);
+
 
     }
 
@@ -700,13 +698,13 @@ $(document).ready(function () {
     }
 
 
-    function getUsersList(){
-        var json={};
+    function getUsersList() {
+        var json = {};
         fillUserListTable(json);
-        // var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/GetAllUsers";
-        var url = (initAPIs.domain+initAPIs.GetAllUsers).toString();
-        var D={
-            "UID":JBuserID
+
+        var url = (initAPIs.domain + initAPIs.GetAllUsers).toString();
+        var D = {
+            "UID": JBuserID
         };
         $.ajax({
             type: 'POST',
@@ -722,68 +720,68 @@ $(document).ready(function () {
         });
     }
 
-    function fillUserListTable(json){
-        
-        json=sortUsersByNewFirst(json);
+    function fillUserListTable(json) {
 
-        
+        json = sortUsersByNewFirst(json);
+
+
 
         $.each(json, function (key, value) {
-           let sr_no=parseInt(key)+1;           
-             
-           let switch_btn="";
-           let tr="";
+            let sr_no = parseInt(key) + 1;
 
-           if(value.IsActive=="false" || value.IsActive==false){
-               switch_btn="<div class='switch'><label><span class='red-text'>In-Active</span><input role='"+value.UID+"' class='status-switch' role='"+value.UID+"' type='checkbox'><span class='lever'></span><span class='green-text'>Active</span></label></div>";
-               tr="<tr class='light-green lighten-5' style='border-style: solid;border-width: 1px;border-color:#424242;'>"+
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+sr_no+"</td>"+
-               
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.Name+"</td>"+
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.EmailID+"</td>"+
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.ClubName+"</td>"+
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+value.Address1+"</td>"+
-              
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+switch_btn+
-               "</td>"
-               +"</tr>";
+            let switch_btn = "";
+            let tr = "";
+
+            if (value.IsActive == "false" || value.IsActive == false) {
+                switch_btn = "<div class='switch'><label><span class='red-text'>In-Active</span><input role='" + value.UID + "' class='status-switch' role='" + value.UID + "' type='checkbox'><span class='lever'></span><span class='green-text'>Active</span></label></div>";
+                tr = "<tr class='light-green lighten-5' style='border-style: solid;border-width: 1px;border-color:#424242;'>" +
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>" + sr_no + "</td>" +
+
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>" + value.Name + "</td>" +
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>" + value.EmailID + "</td>" +
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>" + value.ClubName + "</td>" +
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>" + value.Address1 + "</td>" +
+
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>" + switch_btn +
+                    "</td>"
+                    + "</tr>";
             }
-           if(value.IsActive=="true" || value.IsActive==true){
-               switch_btn="<div class='switch'><label><span class='red-text'>In-Active</span><input role='"+value.UID+"' class='status-switch' role='"+value.UID+"' type='checkbox' checked><span class='lever'></span><span class='green-text'>Active</span></label></div>";
-               tr="<tr  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+sr_no+"</td>"+
-             
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.Name+"</td>"+
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.EmailID+"</td>"+
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>"+value.ClubName+"</td>"+
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+value.Address1+"</td>"+
-               
-               "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>"+switch_btn+
-               "</td>"
-               +"</tr>";
+            if (value.IsActive == "true" || value.IsActive == true) {
+                switch_btn = "<div class='switch'><label><span class='red-text'>In-Active</span><input role='" + value.UID + "' class='status-switch' role='" + value.UID + "' type='checkbox' checked><span class='lever'></span><span class='green-text'>Active</span></label></div>";
+                tr = "<tr  style='border-style: solid;border-width: 1px;border-color:#424242;'>" +
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>" + sr_no + "</td>" +
+
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>" + value.Name + "</td>" +
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>" + value.EmailID + "</td>" +
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;'>" + value.ClubName + "</td>" +
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>" + value.Address1 + "</td>" +
+
+                    "<td  style='border-style: solid;border-width: 1px;border-color:#424242;text-align: center;'>" + switch_btn +
+                    "</td>"
+                    + "</tr>";
             }
 
 
 
-            
 
-            
-            
+
+
+
             $("#userListTable tbody").append(tr);
 
         });
     }
 
-    function sortUsersByNewFirst(dummy){
-        let sortedDummy=[];
+    function sortUsersByNewFirst(dummy) {
+        let sortedDummy = [];
         $.each(dummy, function (key, value) {
-            if(value.IsActive=="false" || value.IsActive==false){
+            if (value.IsActive == "false" || value.IsActive == false) {
                 sortedDummy.push(value);
             }
         });
 
         $.each(dummy, function (key, value) {
-            if(value.IsActive=="true" || value.IsActive==true){
+            if (value.IsActive == "true" || value.IsActive == true) {
                 sortedDummy.push(value);
             }
         });
@@ -889,8 +887,8 @@ $(document).ready(function () {
                 $("#verify-wait").hide();
             });
         } else {
-            // var url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketData";
-            var url = (initAPIs.domain+initAPIs.GetTicketData).toString();
+
+            var url = (initAPIs.domain + initAPIs.GetTicketData).toString();
             var D = {
                 "ID": ticket_val
             }
@@ -924,13 +922,7 @@ $(document).ready(function () {
             });
         } else {
             $('.modal#modal4').modal('close');
-            // $.get("/current-ticket.html?ticket_no=" + ticket_val, function (data, status) {
-            //     $("#current-ticket-display-div").html(data);
-            //     $("#loading-div").hide();
-            //     $("#current-ticket-display-div").show();
-            // });
-            // var url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketData";
-            var url = (initAPIs.domain+initAPIs.GetTicketData).toString();
+            var url = (initAPIs.domain + initAPIs.GetTicketData).toString();
             var D = {
                 "ID": ticket_val
             }
@@ -988,29 +980,29 @@ $(document).ready(function () {
         if (userID == "" || password == "") {
             toastMsg("<span class='red-text text-lighten-4'>Enter your credentials properly!</span>");
         } else {
-            
 
-            
-             var D={
-                 "ID":userID,
-                 "PWD":password
-             };
-            //  var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/Login";
-             var url = (initAPIs.domain+initAPIs.Login).toString();
-             $.ajax({
+
+
+            var D = {
+                "ID": userID,
+                "PWD": password
+            };
+
+            var url = (initAPIs.domain + initAPIs.Login).toString();
+            $.ajax({
                 type: 'POST',
                 url: url,
                 data: D,
-                success: function (json) {                   
-                    console.log("json > ",json);
+                success: function (json) {
+                    console.log("json > ", json);
 
-                    if(json.UID==0){
+                    if (json.UID == 0) {
                         toastMsg("<span class='red-text text-lighten-4'>User Not registered!</span>");
-                    }else{
-                        var token=generateToken(json.EmailID);
-                        json["Token"]=token;
-                        toastMsg("<span class='green-text'>Welcome "+json.Name+"</span>");
-                        console.log("token > ",token);
+                    } else {
+                        var token = generateToken(json.EmailID);
+                        json["Token"] = token;
+                        toastMsg("<span class='green-text'>Welcome " + json.Name + "</span>");
+                        console.log("token > ", token);
                         setCookie("JBuserID", json.UID, 1);
                         setCookie("ClubName", json.ClubName, 1);
                         setCookie("EmailID", json.EmailID, 1);
@@ -1018,7 +1010,7 @@ $(document).ready(function () {
                         setCookie("LoggedExpiryTime", json.LoggedExpiryTime, 1);
                         setCookie("LoggedInDate", json.LoggedInDate, 1);
                         setCookie("LoggedInTime", json.LoggedInTime, 1);
-                        setCookie("Name", json.Name, 1);                    
+                        setCookie("Name", json.Name, 1);
                         setCookie("Token", token, 1);
                         sendToken(json);
                         window.location.replace("/dashboard");
@@ -1028,11 +1020,11 @@ $(document).ready(function () {
                     toastMsg("<span class='red-text text-lighten-4'>Please try after some time!</span>");
                 }
             });
-            
+
         }
     });
 
-    $("#log-out").click(function(){
+    $("#log-out").click(function () {
         performLogOutProcess();
     });
 
@@ -1041,8 +1033,8 @@ $(document).ready(function () {
         var EmailID = $(this).val();
         var validEmail = validateEmail(EmailID);
         if (validEmail) {
-            // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/IsEmailIDExist";
-            var url = (initAPIs.domain+initAPIs.IsEmailIDExist).toString();
+
+            var url = (initAPIs.domain + initAPIs.IsEmailIDExist).toString();
             var D = {
                 "EmailID": EmailID
             }
@@ -1102,7 +1094,7 @@ $(document).ready(function () {
         var website = $("#website").val();
         var country = $("#country").val();
         var contactPerson = $("#contact_person").val();
-        var phone_no=$("#phone_no").val();
+        var phone_no = $("#phone_no").val();
         var regEmailID = $("#reg_email_id").val();
         var regPassword = $("#reg-password").val();
         var confPassword = $("#conf-password").val();
@@ -1118,7 +1110,7 @@ $(document).ready(function () {
                 if (ve) {
                     $("#register-btn").attr("disabled", false);
 
-                   
+
 
                 } else {
                     $("#register-btn").attr("disabled", true);
@@ -1129,107 +1121,107 @@ $(document).ready(function () {
         }
     });
 
-$("#register-btn").click(function(){
-    $("#register-btn").attr("disabled", true);
-    var regClubName = $("#reg-club-name").val();
-    var addressLine1 = $("#address_line_1").val();
-    var addressLine2 = $("#address_line_2").val();
-    var postCode = $("#post_code").val();
-    var city = $("#city").val();
-    var website = $("#website").val();
-    var country = $("#country").val();
-    var contactPerson = $("#contact_person").val();
-    var phone_no=$("#phone_no").val();
-    var regEmailID = $("#reg_email_id").val();
-    var regPassword = $("#reg-password").val();
-    var confPassword = $("#conf-password").val();
-    var D={
-        "ClubName":regClubName,
-        "Address1":addressLine1,
-        "Address2":addressLine2,
-        "PostCode":postCode,
-        "City":city,
-        "Country":country,
-        "Website":website,
-        "ContactPerson":contactPerson,
-        "PhoneNo":phone_no,
-        "EmailID":regEmailID,
-        "Password":regPassword,
-    };
-    // var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/Register";
-    var url = (initAPIs.domain+initAPIs.Register).toString();
-    $.ajax({
-       type: 'POST',
-       url: url,
-       data: D,
-       success: function (json) {
-          if(json.IsSuccess==true ||json.IsSuccess=="true"){
-           toastMsg("<span class='green-text'>Registration successful!</span>");
-           setTimeout(function() {
-               window.location='/';
-           }, 2000);
-          }else{
-            $("#register-btn").attr("disabled", false);
-           toastMsg("<span class='red-text'>Registration Not successful!</span>");
-          }  
-       },
-       error: function (parsedjson, textStatus, errorThrown) {
-           toastMsg("<span class='red-text'>Please Try Later!</span>");
-           $("#register-btn").attr("disabled", false);
-       }
-   });
-});
+    $("#register-btn").click(function () {
+        $("#register-btn").attr("disabled", true);
+        var regClubName = $("#reg-club-name").val();
+        var addressLine1 = $("#address_line_1").val();
+        var addressLine2 = $("#address_line_2").val();
+        var postCode = $("#post_code").val();
+        var city = $("#city").val();
+        var website = $("#website").val();
+        var country = $("#country").val();
+        var contactPerson = $("#contact_person").val();
+        var phone_no = $("#phone_no").val();
+        var regEmailID = $("#reg_email_id").val();
+        var regPassword = $("#reg-password").val();
+        var confPassword = $("#conf-password").val();
+        var D = {
+            "ClubName": regClubName,
+            "Address1": addressLine1,
+            "Address2": addressLine2,
+            "PostCode": postCode,
+            "City": city,
+            "Country": country,
+            "Website": website,
+            "ContactPerson": contactPerson,
+            "PhoneNo": phone_no,
+            "EmailID": regEmailID,
+            "Password": regPassword,
+        };
+
+        var url = (initAPIs.domain + initAPIs.Register).toString();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: D,
+            success: function (json) {
+                if (json.IsSuccess == true || json.IsSuccess == "true") {
+                    toastMsg("<span class='green-text'>Registration successful!</span>");
+                    setTimeout(function () {
+                        window.location = '/';
+                    }, 2000);
+                } else {
+                    $("#register-btn").attr("disabled", false);
+                    toastMsg("<span class='red-text'>Registration Not successful!</span>");
+                }
+            },
+            error: function (parsedjson, textStatus, errorThrown) {
+                toastMsg("<span class='red-text'>Please Try Later!</span>");
+                $("#register-btn").attr("disabled", false);
+            }
+        });
+    });
 
 
 
-$(document).on('change', '.status-switch', function (e){ 
-    $("#user-list-preloader").show();
-    console.log("status-switch btn e : ", e);
-    console.log("status-switch btn e : ", e.target);
-    var chk = $(this).prop('checked');
-    var ID=$(this).attr("role");
-    console.log("status-switch btn chk : ", chk);
-    let status=false;
-    if (chk == true) {
-        $(this).prop('checked', true);
-        status = true;        
-    } if (chk == false) {
-        $(this).prop('checked', false);
-        status = false;        
-    }
-    var D={
-        "UID":ID, 
-        "IsActive":status
-    };
-    console.log("status-switch D : ", D);
-    // var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/ActiveUser";
-    var url = (initAPIs.domain+initAPIs.ActiveUser).toString();
-    $.ajax({
-       type: 'POST',
-       url: url,
-       data: D,
-       success: function (json) {
-          if(json.IsSuccess==true ||json.IsSuccess=="true"){
-              if(status==false){
-                toastMsg("<span class='green-text'>User Deactivated</span>");
-              }
-              if(status==true){
-                toastMsg("<span class='green-text'>User Activated</span>");
-              }
-              $("#user-list-preloader").fadeOut();
-              getUsersList();
-          }else{            
-            toastMsg("<span class='red-text'>Please Try Later!</span>");
-          }  
-       },
-       error: function (parsedjson, textStatus, errorThrown) {
-           toastMsg("<span class='red-text'>Please Try Later!</span>");
-            
-       }
-   });
+    $(document).on('change', '.status-switch', function (e) {
+        $("#user-list-preloader").show();
+        console.log("status-switch btn e : ", e);
+        console.log("status-switch btn e : ", e.target);
+        var chk = $(this).prop('checked');
+        var ID = $(this).attr("role");
+
+        let status = false;
+        if (chk == true) {
+            $(this).prop('checked', true);
+            status = true;
+        } if (chk == false) {
+            $(this).prop('checked', false);
+            status = false;
+        }
+        var D = {
+            "UID": ID,
+            "IsActive": status
+        };
 
 
-});
+        var url = (initAPIs.domain + initAPIs.ActiveUser).toString();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: D,
+            success: function (json) {
+                if (json.IsSuccess == true || json.IsSuccess == "true") {
+                    if (status == false) {
+                        toastMsg("<span class='green-text'>User Deactivated</span>");
+                    }
+                    if (status == true) {
+                        toastMsg("<span class='green-text'>User Activated</span>");
+                    }
+                    $("#user-list-preloader").fadeOut();
+                    getUsersList();
+                } else {
+                    toastMsg("<span class='red-text'>Please Try Later!</span>");
+                }
+            },
+            error: function (parsedjson, textStatus, errorThrown) {
+                toastMsg("<span class='red-text'>Please Try Later!</span>");
+
+            }
+        });
+
+
+    });
 
     //-------------------------------------------------
 
@@ -1300,9 +1292,9 @@ $(document).on('change', '.status-switch', function (e){
         } else { }
     });
 
-    $("#tableSearch").on("keyup",function(){
+    $("#tableSearch").on("keyup", function () {
         var value = this.value.toLowerCase().trim();
-        console.log("value > ",value);
+        console.log("value > ", value);
         $("#userListTable tr").each(function (index) {
             if (!index) return;
             $(this).find("td").each(function () {
@@ -1312,11 +1304,11 @@ $(document).on('change', '.status-switch', function (e){
                 return not_found;
             });
         });
-        
+
     });
 
 
-    
+
 
     //---------------------------------------------
 
@@ -1336,191 +1328,190 @@ $(document).on('change', '.status-switch', function (e){
 
     function md5cycle(x, k) {
         var a = x[0], b = x[1], c = x[2], d = x[3];
-        
+
         a = ff(a, b, c, d, k[0], 7, -680876936);
         d = ff(d, a, b, c, k[1], 12, -389564586);
-        c = ff(c, d, a, b, k[2], 17,  606105819);
+        c = ff(c, d, a, b, k[2], 17, 606105819);
         b = ff(b, c, d, a, k[3], 22, -1044525330);
         a = ff(a, b, c, d, k[4], 7, -176418897);
-        d = ff(d, a, b, c, k[5], 12,  1200080426);
+        d = ff(d, a, b, c, k[5], 12, 1200080426);
         c = ff(c, d, a, b, k[6], 17, -1473231341);
         b = ff(b, c, d, a, k[7], 22, -45705983);
-        a = ff(a, b, c, d, k[8], 7,  1770035416);
+        a = ff(a, b, c, d, k[8], 7, 1770035416);
         d = ff(d, a, b, c, k[9], 12, -1958414417);
         c = ff(c, d, a, b, k[10], 17, -42063);
         b = ff(b, c, d, a, k[11], 22, -1990404162);
-        a = ff(a, b, c, d, k[12], 7,  1804603682);
+        a = ff(a, b, c, d, k[12], 7, 1804603682);
         d = ff(d, a, b, c, k[13], 12, -40341101);
         c = ff(c, d, a, b, k[14], 17, -1502002290);
-        b = ff(b, c, d, a, k[15], 22,  1236535329);
-        
+        b = ff(b, c, d, a, k[15], 22, 1236535329);
+
         a = gg(a, b, c, d, k[1], 5, -165796510);
         d = gg(d, a, b, c, k[6], 9, -1069501632);
-        c = gg(c, d, a, b, k[11], 14,  643717713);
+        c = gg(c, d, a, b, k[11], 14, 643717713);
         b = gg(b, c, d, a, k[0], 20, -373897302);
         a = gg(a, b, c, d, k[5], 5, -701558691);
-        d = gg(d, a, b, c, k[10], 9,  38016083);
+        d = gg(d, a, b, c, k[10], 9, 38016083);
         c = gg(c, d, a, b, k[15], 14, -660478335);
         b = gg(b, c, d, a, k[4], 20, -405537848);
-        a = gg(a, b, c, d, k[9], 5,  568446438);
+        a = gg(a, b, c, d, k[9], 5, 568446438);
         d = gg(d, a, b, c, k[14], 9, -1019803690);
         c = gg(c, d, a, b, k[3], 14, -187363961);
-        b = gg(b, c, d, a, k[8], 20,  1163531501);
+        b = gg(b, c, d, a, k[8], 20, 1163531501);
         a = gg(a, b, c, d, k[13], 5, -1444681467);
         d = gg(d, a, b, c, k[2], 9, -51403784);
-        c = gg(c, d, a, b, k[7], 14,  1735328473);
+        c = gg(c, d, a, b, k[7], 14, 1735328473);
         b = gg(b, c, d, a, k[12], 20, -1926607734);
-        
+
         a = hh(a, b, c, d, k[5], 4, -378558);
         d = hh(d, a, b, c, k[8], 11, -2022574463);
-        c = hh(c, d, a, b, k[11], 16,  1839030562);
+        c = hh(c, d, a, b, k[11], 16, 1839030562);
         b = hh(b, c, d, a, k[14], 23, -35309556);
         a = hh(a, b, c, d, k[1], 4, -1530992060);
-        d = hh(d, a, b, c, k[4], 11,  1272893353);
+        d = hh(d, a, b, c, k[4], 11, 1272893353);
         c = hh(c, d, a, b, k[7], 16, -155497632);
         b = hh(b, c, d, a, k[10], 23, -1094730640);
-        a = hh(a, b, c, d, k[13], 4,  681279174);
+        a = hh(a, b, c, d, k[13], 4, 681279174);
         d = hh(d, a, b, c, k[0], 11, -358537222);
         c = hh(c, d, a, b, k[3], 16, -722521979);
-        b = hh(b, c, d, a, k[6], 23,  76029189);
+        b = hh(b, c, d, a, k[6], 23, 76029189);
         a = hh(a, b, c, d, k[9], 4, -640364487);
         d = hh(d, a, b, c, k[12], 11, -421815835);
-        c = hh(c, d, a, b, k[15], 16,  530742520);
+        c = hh(c, d, a, b, k[15], 16, 530742520);
         b = hh(b, c, d, a, k[2], 23, -995338651);
-        
+
         a = ii(a, b, c, d, k[0], 6, -198630844);
-        d = ii(d, a, b, c, k[7], 10,  1126891415);
+        d = ii(d, a, b, c, k[7], 10, 1126891415);
         c = ii(c, d, a, b, k[14], 15, -1416354905);
         b = ii(b, c, d, a, k[5], 21, -57434055);
-        a = ii(a, b, c, d, k[12], 6,  1700485571);
+        a = ii(a, b, c, d, k[12], 6, 1700485571);
         d = ii(d, a, b, c, k[3], 10, -1894986606);
         c = ii(c, d, a, b, k[10], 15, -1051523);
         b = ii(b, c, d, a, k[1], 21, -2054922799);
-        a = ii(a, b, c, d, k[8], 6,  1873313359);
+        a = ii(a, b, c, d, k[8], 6, 1873313359);
         d = ii(d, a, b, c, k[15], 10, -30611744);
         c = ii(c, d, a, b, k[6], 15, -1560198380);
-        b = ii(b, c, d, a, k[13], 21,  1309151649);
+        b = ii(b, c, d, a, k[13], 21, 1309151649);
         a = ii(a, b, c, d, k[4], 6, -145523070);
         d = ii(d, a, b, c, k[11], 10, -1120210379);
-        c = ii(c, d, a, b, k[2], 15,  718787259);
+        c = ii(c, d, a, b, k[2], 15, 718787259);
         b = ii(b, c, d, a, k[9], 21, -343485551);
-        
+
         x[0] = add32(a, x[0]);
         x[1] = add32(b, x[1]);
         x[2] = add32(c, x[2]);
         x[3] = add32(d, x[3]);
-        
-        }
-        
-        function cmn(q, a, b, x, s, t) {
+
+    }
+
+    function cmn(q, a, b, x, s, t) {
         a = add32(add32(a, q), add32(x, t));
         return add32((a << s) | (a >>> (32 - s)), b);
-        }
-        
-        function ff(a, b, c, d, x, s, t) {
+    }
+
+    function ff(a, b, c, d, x, s, t) {
         return cmn((b & c) | ((~b) & d), a, b, x, s, t);
-        }
-        
-        function gg(a, b, c, d, x, s, t) {
+    }
+
+    function gg(a, b, c, d, x, s, t) {
         return cmn((b & d) | (c & (~d)), a, b, x, s, t);
-        }
-        
-        function hh(a, b, c, d, x, s, t) {
+    }
+
+    function hh(a, b, c, d, x, s, t) {
         return cmn(b ^ c ^ d, a, b, x, s, t);
-        }
-        
-        function ii(a, b, c, d, x, s, t) {
+    }
+
+    function ii(a, b, c, d, x, s, t) {
         return cmn(c ^ (b | (~d)), a, b, x, s, t);
-        }
-        
-        function md51(s) {
+    }
+
+    function md51(s) {
         txt = '';
         var n = s.length,
-        state = [1732584193, -271733879, -1732584194, 271733878], i;
-        for (i=64; i<=s.length; i+=64) {
-        md5cycle(state, md5blk(s.substring(i-64, i)));
+            state = [1732584193, -271733879, -1732584194, 271733878], i;
+        for (i = 64; i <= s.length; i += 64) {
+            md5cycle(state, md5blk(s.substring(i - 64, i)));
         }
-        s = s.substring(i-64);
-        var tail = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
-        for (i=0; i<s.length; i++)
-        tail[i>>2] |= s.charCodeAt(i) << ((i%4) << 3);
-        tail[i>>2] |= 0x80 << ((i%4) << 3);
+        s = s.substring(i - 64);
+        var tail = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for (i = 0; i < s.length; i++)
+            tail[i >> 2] |= s.charCodeAt(i) << ((i % 4) << 3);
+        tail[i >> 2] |= 0x80 << ((i % 4) << 3);
         if (i > 55) {
-        md5cycle(state, tail);
-        for (i=0; i<16; i++) tail[i] = 0;
+            md5cycle(state, tail);
+            for (i = 0; i < 16; i++) tail[i] = 0;
         }
-        tail[14] = n*8;
+        tail[14] = n * 8;
         md5cycle(state, tail);
         return state;
-        }
-        
-        /* there needs to be support for Unicode here,
-         * unless we pretend that we can redefine the MD-5
-         * algorithm for multi-byte characters (perhaps
-         * by adding every four 16-bit characters and
-         * shortening the sum to 32 bits). Otherwise
-         * I suggest performing MD-5 as if every character
-         * was two bytes--e.g., 0040 0025 = @%--but then
-         * how will an ordinary MD-5 sum be matched?
-         * There is no way to standardize text to something
-         * like UTF-8 before transformation; speed cost is
-         * utterly prohibitive. The JavaScript standard
-         * itself needs to look at this: it should start
-         * providing access to strings as preformed UTF-8
-         * 8-bit unsigned value arrays.
-         */
-        function md5blk(s) { /* I figured global was faster.   */
+    }
+
+    /* there needs to be support for Unicode here,
+     * unless we pretend that we can redefine the MD-5
+     * algorithm for multi-byte characters (perhaps
+     * by adding every four 16-bit characters and
+     * shortening the sum to 32 bits). Otherwise
+     * I suggest performing MD-5 as if every character
+     * was two bytes--e.g., 0040 0025 = @%--but then
+     * how will an ordinary MD-5 sum be matched?
+     * There is no way to standardize text to something
+     * like UTF-8 before transformation; speed cost is
+     * utterly prohibitive. The JavaScript standard
+     * itself needs to look at this: it should start
+     * providing access to strings as preformed UTF-8
+     * 8-bit unsigned value arrays.
+     */
+    function md5blk(s) { /* I figured global was faster.   */
         var md5blks = [], i; /* Andy King said do it this way. */
-        for (i=0; i<64; i+=4) {
-        md5blks[i>>2] = s.charCodeAt(i)
-        + (s.charCodeAt(i+1) << 8)
-        + (s.charCodeAt(i+2) << 16)
-        + (s.charCodeAt(i+3) << 24);
+        for (i = 0; i < 64; i += 4) {
+            md5blks[i >> 2] = s.charCodeAt(i)
+                + (s.charCodeAt(i + 1) << 8)
+                + (s.charCodeAt(i + 2) << 16)
+                + (s.charCodeAt(i + 3) << 24);
         }
         return md5blks;
-        }
-        
-        var hex_chr = '0123456789abcdef'.split('');
-        
-        function rhex(n)
-        {
-        var s='', j=0;
-        for(; j<4; j++)
-        s += hex_chr[(n >> (j * 8 + 4)) & 0x0F]
-        + hex_chr[(n >> (j * 8)) & 0x0F];
+    }
+
+    var hex_chr = '0123456789abcdef'.split('');
+
+    function rhex(n) {
+        var s = '', j = 0;
+        for (; j < 4; j++)
+            s += hex_chr[(n >> (j * 8 + 4)) & 0x0F]
+                + hex_chr[(n >> (j * 8)) & 0x0F];
         return s;
-        }
-        
-        function hex(x) {
-        for (var i=0; i<x.length; i++)
-        x[i] = rhex(x[i]);
+    }
+
+    function hex(x) {
+        for (var i = 0; i < x.length; i++)
+            x[i] = rhex(x[i]);
         return x.join('');
-        }
-        
-        function md5(s) {
+    }
+
+    function md5(s) {
         return hex(md51(s));
-        }
-        
-        /* this function is much faster,
-        so if possible we use it. Some IEs
-        are the only ones I know of that
-        need the idiotic second function,
-        generated by an if clause.  */
-        
-        function add32(a, b) {
+    }
+
+    /* this function is much faster,
+    so if possible we use it. Some IEs
+    are the only ones I know of that
+    need the idiotic second function,
+    generated by an if clause.  */
+
+    function add32(a, b) {
         return (a + b) & 0xFFFFFFFF;
-        }
-        
-        if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
+    }
+
+    if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
         function add32(x, y) {
-        var lsw = (x & 0xFFFF) + (y & 0xFFFF),
-        msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-        return (msw << 16) | (lsw & 0xFFFF);
+            var lsw = (x & 0xFFFF) + (y & 0xFFFF),
+                msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+            return (msw << 16) | (lsw & 0xFFFF);
         }
-        }
-        
-        
-         
+    }
+
+
+
 
 
 
