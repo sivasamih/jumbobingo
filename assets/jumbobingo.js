@@ -155,8 +155,8 @@ $(document).ready(function () {
 
     
     function getMasterColors() {
-        const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/ColorList";
-        
+        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/ColorList";
+        var url = (initAPIs.domain+initAPIs.ColorList).toString();
 
         $.ajax({
             type: 'POST',
@@ -175,9 +175,9 @@ $(document).ready(function () {
        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetNumbers";
         // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetNumbers?UID="+userID;
         // const url="http://203.122.12.38/WebserviceDemo/WebService.asmx/UserNumbers";
-        console.log("check initAPIs > ",initAPIs);
+         
         var url = (initAPIs.domain+initAPIs.UserNumbers).toString();
-        console.log("check url > ",url);
+       
         var D = {
             "UID": userID
         }
@@ -299,7 +299,8 @@ $(document).ready(function () {
     }
 
     function fillTicketInPlayNewSetupDropdown() {
-        const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetAllTktTypes";
+        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetAllTktTypes";
+        var url = (initAPIs.domain+initAPIs.GetAllTktTypes).toString();
         var ticketsInPlay = "";
         $.ajax({
             type: 'POST',
@@ -321,7 +322,8 @@ $(document).ready(function () {
     }
 
     function getGamesTypeDetails(ticket_in_play_selected){
-        const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketTypeDetails";
+        // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketTypeDetails";
+        var url = (initAPIs.domain+initAPIs.GetTicketTypeDetails).toString();
         var ticketsInPlay = "";
         var games = [];
         $.ajax({
@@ -701,7 +703,8 @@ $(document).ready(function () {
     function getUsersList(){
         var json={};
         fillUserListTable(json);
-        var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/GetAllUsers";
+        // var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/GetAllUsers";
+        var url = (initAPIs.domain+initAPIs.GetAllUsers).toString();
         var D={
             "UID":JBuserID
         };
@@ -886,7 +889,8 @@ $(document).ready(function () {
                 $("#verify-wait").hide();
             });
         } else {
-            var url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketData";
+            // var url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketData";
+            var url = (initAPIs.domain+initAPIs.GetTicketData).toString();
             var D = {
                 "ID": ticket_val
             }
@@ -925,7 +929,8 @@ $(document).ready(function () {
             //     $("#loading-div").hide();
             //     $("#current-ticket-display-div").show();
             // });
-            var url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketData";
+            // var url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/GetTicketData";
+            var url = (initAPIs.domain+initAPIs.GetTicketData).toString();
             var D = {
                 "ID": ticket_val
             }
@@ -990,7 +995,8 @@ $(document).ready(function () {
                  "ID":userID,
                  "PWD":password
              };
-             var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/Login";
+            //  var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/Login";
+             var url = (initAPIs.domain+initAPIs.Login).toString();
              $.ajax({
                 type: 'POST',
                 url: url,
@@ -1035,7 +1041,8 @@ $(document).ready(function () {
         var EmailID = $(this).val();
         var validEmail = validateEmail(EmailID);
         if (validEmail) {
-            const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/IsEmailIDExist";
+            // const url = "http://203.122.12.38/WebserviceDemo/WebService.asmx/IsEmailIDExist";
+            var url = (initAPIs.domain+initAPIs.IsEmailIDExist).toString();
             var D = {
                 "EmailID": EmailID
             }
@@ -1149,7 +1156,8 @@ $("#register-btn").click(function(){
         "EmailID":regEmailID,
         "Password":regPassword,
     };
-    var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/Register";
+    // var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/Register";
+    var url = (initAPIs.domain+initAPIs.Register).toString();
     $.ajax({
        type: 'POST',
        url: url,
@@ -1194,7 +1202,8 @@ $(document).on('change', '.status-switch', function (e){
         "IsActive":status
     };
     console.log("status-switch D : ", D);
-    var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/ActiveUser";
+    // var url="http://203.122.12.38/WebserviceDemo/WebService.asmx/ActiveUser";
+    var url = (initAPIs.domain+initAPIs.ActiveUser).toString();
     $.ajax({
        type: 'POST',
        url: url,
