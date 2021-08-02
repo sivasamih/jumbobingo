@@ -12,7 +12,7 @@ $(document).ready(function () {
     var initAPIs = {};
     var promptDisableMsg = 0;
     var setIntervalVal = "";
-    var userID = "123";
+    var userID = "";
     var language = "en";
 
     var soldFrom = 0;
@@ -175,7 +175,7 @@ $(document).ready(function () {
 
 
         var url = (initAPIs.domain + initAPIs.UserNumbers).toString();
-
+        userID=getCookie("JBuserID");
         var D = {
             "UID": userID
         }
@@ -358,23 +358,23 @@ $(document).ready(function () {
             console.log("options > ", options);
 
             var tr = "<tr>" +
-                "<td> " + GAME_NAME + " </td>" +
+                "<td> <input id='game_id_"+i+"' role='"+ID+"' type='hidden' value='"+GAME_NAME+"'/> " + GAME_NAME + " </td>" +
                 "<td>" +
-                "<div class='input-field  col s12'><select id='game_color_" + ID + "' class='browser-default game_color' role='" + ID + "' > " +
+                "<div class='input-field  col s12'><select id='game_color_" + i + "' class='browser-default game_color' role='" + ID + "' > " +
                 options
                 + " </select></div>"
                 + "</td>" +
                 "<td>" +
-                "<label><input id='game_chk_" + ID + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='oneLine'/><span>&nbsp;</span></label><input id='oneLine_game_price_" + ID + "' type='text' class='browser-default  game_price_input' value='0.00' style='width:50%' name='oneLine_" + ID + "' disabled> "
+                "<label><input id='oneLine_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='oneLine'/><span>&nbsp;</span></label><input id='oneLine_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='0.00' style='width:50%' name='oneLine_" + ID + "' disabled> "
                 + "</td>" +
                 "<td>" +
-                "<label><input id='game_chk_" + ID + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='twoLine'/><span>&nbsp;</span></label><input id='twoLine_game_price_" + ID + "' type='text' class='browser-default  game_price_input' value='0.00' style='width:50%' name='twoLine_" + ID + "' disabled>"
+                "<label><input id='twoLine_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='twoLine'/><span>&nbsp;</span></label><input id='twoLine_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='0.00' style='width:50%' name='twoLine_" + ID + "' disabled>"
                 + "</td>" +
                 "<td>" +
-                "<label><input id='game_chk_" + ID + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='fullHouse'/><span>&nbsp;</span></label><input id='fullHouse_game_price_" + ID + "' type='text' class='browser-default  game_price_input' value='0.00' style='width:50%' name='fullHouse_" + ID + "' disabled>   "
+                "<label><input id='fullHouse_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='fullHouse'/><span>&nbsp;</span></label><input id='fullHouse_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='0.00' style='width:50%' name='fullHouse_" + ID + "' disabled>   "
                 + "</td>" +
                 "<td>" +
-                "<label><input id='game_chk_" + ID + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='corner'/><span>&nbsp;</span></label><input id='corner_game_price_" + ID + "' type='text' class='browser-default  game_price_input' value='0.00' style='width:50%' name='corner_" + ID + "' disabled>   "
+                "<label><input id='corner_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='corner'/><span>&nbsp;</span></label><input id='corner_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='0.00' style='width:50%' name='corner_" + ID + "' disabled>   "
                 + "</td>" +
                 +"</tr>";
             $("#new_setup_table tbody").append(tr);
@@ -852,20 +852,56 @@ $(document).ready(function () {
     $(document).on('click', '.game_selection_chk', function (e) {
         console.log("checkbox clicked : ", e.target);
         console.log("checkbox val : ", e.target.checked);
+        var role = "";         
+            var name = "";            
+            var name="";
+            var textID="";
         if (e.target.checked == true) {
             //enable the input box next to it
-            var role = $(this).attr("role");
-            var name = $(this).attr("name");
-
-            $("#" + name + "_game_price_" + role).removeAttr("disabled");
+             role = $(this).attr("role");
+             name = $(this).attr("name");
+            console.log("checkbox clicked role : ", role);
+            console.log("checkbox clicked name : ", name);
+             name=name+"_"+role;
+             textID="";
+            // $("#" + name + "_game_price_" + role).removeAttr("disabled");
+            let game_price_inputs=$(".game_price_input");
+            $.each(game_price_inputs, function (key, value) {
+                var e =value;
+                if(e.name==name){
+                    textID=e.id;
+                }
+                
+            });
+            console.log("checkbox clicked game_price_inputs e textID : ", textID);
+            console.log("checkbox clicked game_price_inputs : ", game_price_inputs);
+            $("#"+textID).removeAttr("disabled");
         }
         if (e.target.checked == false) {
             //disable the input box next to it
-            var role = $(this).attr("role");
-            var name = $(this).attr("name");
-            console.log("checkbox role : ", role);
-            $("#" + name + "_game_price_" + role).val("0.00");
-            $("#" + name + "_game_price_" + role).attr("disabled", "disabled");
+            role = $(this).attr("role");
+            name = $(this).attr("name");             
+            name=name+"_"+role;            
+            let game_price_inputs=$(".game_price_input");
+          
+            $.each(game_price_inputs, function (key, value) {
+                
+                var el =value;
+                var elName=el.name;
+                var elID=el.id;
+                console.log("Unchecked game_price_inputs el >   ", el);
+                console.log("Unchecked game_price_inputs el.name >   ", elName);
+                console.log("Unchecked game_price_inputs name >   ", name);
+                if(elName==name){
+                    console.log("Unchecked game_price_inputs elName==name >   ");
+                    textID=elID;
+                }
+                
+            });
+            console.log("Unchecked checkbox clicked game_price_inputs e textID : ", textID);
+            console.log("Unchecked checkbox clicked game_price_inputs : ", game_price_inputs);
+            $("#"+textID).val("0.00");
+            $("#"+textID).attr("disabled", "disabled");
         }
     });
 
@@ -1307,7 +1343,118 @@ $(document).ready(function () {
 
     });
 
+    $("#new_save_btn").click(function(){       
+        let userID= getCookie("JBuserID"); 
+        let gameDate=$("#new-game-date").val();
+        let gameName=$("#new-game-name").val();
+        let ticketInPlayVal = $("#new_game_ticket_in_play").children("option:selected").val();
+        let ticketInPlayId = $("#new_game_ticket_in_play").children("option:selected").attr("role");
+        
 
+        
+
+        if(gameDate!="" && gameName!="" && ticketInPlayVal!="" && ticketInPlayId!=""){
+            let newGameDetails={
+                "UID": userID,                 
+                "TktID":ticketInPlayId,
+                "GameName": gameName,
+                "GameDate": gameDate
+            }
+    
+            let gameDetails=getNewGameSelectedData();
+    
+            let jsonData={
+                "GameSetupID":0,
+                "newGameDetails":newGameDetails,
+                "gameDetails":gameDetails
+            };
+
+            var url = (initAPIs.domain + initAPIs.UpdateGameSetup).toString();
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: jsonData,
+                success: function (json) {
+                    if (json.IsSuccess == true || json.IsSuccess == "true") {
+                        toastMsg("<span class='green-text'>Game created successfully!</span>");                         
+                    } else {                        
+                        toastMsg("<span class='red-text'>Game creation was Not successful!</span>");
+                    }
+                },
+                error: function (parsedjson, textStatus, errorThrown) {
+                    toastMsg("<span class='red-text'>Please Try Later!</span>");
+                     
+                }
+            });
+    
+             
+
+        }else{
+            toastMsg("<span class='red-text text-lighten-4'>Select All Details properly!</span>");
+        }
+    });
+
+    function getNewGameSelectedData(){
+        let gameDetailsObj=[];
+        let tr=$("#new_setup_table tbody tr");
+       
+        for(let i=0;i<tr.length;i++){
+
+            let gameID= $("#game_id_"+i).attr("role");
+            let Game= $("#game_id_"+i).val();
+            let ColorID=$("#game_color_"+i).children("option:selected").attr("role");
+            let Color=$("#game_color_"+i).children("option:selected").val();
+            let oneLine_game_chk=false;
+            let twoLine_game_chk=false;
+            let fullHouse_game_chk=false;
+            let corner_game_chk=false;
+
+            if ($("#oneLine_game_chk_"+i).is(":checked"))
+            {
+                oneLine_game_chk=true;
+            }
+             
+            let oneLine_game_price=$("#oneLine_game_price_"+i).val(); 
+             
+            if ($("#twoLine_game_chk_"+i).is(":checked"))
+            {
+                twoLine_game_chk=true;
+            }
+            let twoLine_game_price=$("#oneLine_game_price_"+i).val();
+            
+            if ($("#fullHouse_game_chk_"+i).is(":checked"))
+            {
+                fullHouse_game_chk=true;
+            }
+            let fullHouse_game_price=$("#fullHouse_game_price_"+i).val();
+           
+            if ($("#corner_game_chk_"+i).is(":checked"))
+            {
+                corner_game_chk=true;
+            }
+            let corner_game_price =$("#corner_game_price_"+i).val();
+
+          
+            var obj={
+                "ID": 0,
+                "GameID": gameID,               
+                "ColorID": ColorID,                 
+                "IsOneLn": oneLine_game_chk,
+                "OneLnPrice": oneLine_game_price,
+                "IsTwoLn": twoLine_game_chk,
+                "TwoLnPrice": twoLine_game_price,
+                "IsFH": fullHouse_game_chk,
+                "FHPrice": fullHouse_game_price,
+                "IsCorner": corner_game_chk,
+                "CornerPrice": corner_game_price
+            };
+            gameDetailsObj.push(obj);
+
+        }
+
+
+        return gameDetailsObj;
+    }
 
 
     //---------------------------------------------

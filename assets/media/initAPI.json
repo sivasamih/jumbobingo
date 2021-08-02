@@ -9,5 +9,6 @@
     "GetTicketData": "WebserviceDemo/WebService.asmx/GetTicketData",
     "Login": "WebserviceDemo/WebService.asmx/Login",
     "Register": "WebserviceDemo/WebService.asmx/Register",
-    "ActiveUser": "WebserviceDemo/WebService.asmx/ActiveUser"
+    "ActiveUser": "WebserviceDemo/WebService.asmx/ActiveUser",
+    "UpdateGameSetup":"WebserviceDemo/WebService.asmx/UpdateGameSetup"
 }
