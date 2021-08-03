@@ -7,7 +7,7 @@ $(document).ready(function () {
     var numberExhausted = false;
     var autoCallsSet = true;
     var isPaused = false;
-    var time = 3000;
+    var time = 500;
     var gameStartCalledNumbers = [];
     var initAPIs = {};
     var promptDisableMsg = 0;
@@ -86,8 +86,8 @@ $(document).ready(function () {
             } else {
                 document.getElementById("dashboard-name-display").innerText = Name;
                 document.getElementById("dashboard-email-display").innerText = EmailID;
-                document.getElementById("dashboard-club-name").innerText = ClubName;
-
+                // document.getElementById("dashboard-club-name").innerText = ClubName;
+                $(".user-clubName").text(ClubName);
 
                 console.log("IsAdmin > ", IsAdmin);
                 if (IsAdmin == "true" || IsAdmin == true) {
@@ -1365,16 +1365,24 @@ $(document).ready(function () {
     
             let jsonData={
                 "GameSetupID":0,
-                "newGameDetails":newGameDetails,
-                "gameDetails":gameDetails
+                "gameSetup":newGameDetails,
+                "gameSetupDetails":gameDetails
             };
 
+           
             var url = (initAPIs.domain + initAPIs.UpdateGameSetup).toString();
+            console.log("jsonData > ",jsonData);
+            console.log("url > ",url);
+
             $.ajax({
                 type: 'POST',
                 url: url,
                 data: jsonData,
+                dataType: 'json',
+                async: true,
+                cache: false,
                 success: function (json) {
+                    console.log("json : ",json);
                     if (json.IsSuccess == true || json.IsSuccess == "true") {
                         toastMsg("<span class='green-text'>Game created successfully!</span>");                         
                     } else {                        
@@ -1383,6 +1391,9 @@ $(document).ready(function () {
                 },
                 error: function (parsedjson, textStatus, errorThrown) {
                     toastMsg("<span class='red-text'>Please Try Later!</span>");
+                    console.log("parsedjson : ",parsedjson);
+                    console.log("textStatus : ",textStatus);
+                    console.log("errorThrown : ",errorThrown);
                      
                 }
             });
@@ -1420,7 +1431,7 @@ $(document).ready(function () {
             {
                 twoLine_game_chk=true;
             }
-            let twoLine_game_price=$("#oneLine_game_price_"+i).val();
+            let twoLine_game_price=$("#twoLine_game_price_"+i).val();
             
             if ($("#fullHouse_game_chk_"+i).is(":checked"))
             {

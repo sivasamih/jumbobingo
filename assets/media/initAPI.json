@@ -11,4 +11,4 @@
     "Register": "WebserviceDemo/WebService.asmx/Register",
     "ActiveUser": "WebserviceDemo/WebService.asmx/ActiveUser",
     "UpdateGameSetup":"WebserviceDemo/WebService.asmx/UpdateGameSetup"
-}
+}  
