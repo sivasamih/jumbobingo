@@ -3,17 +3,28 @@ $(document).ready(function () {
     var gameMasterData = [];
     var gameMasterColors = [];
     var gameLiveNumberStack = [];
+    var gameStartCalledNumbers = [];
+    var userGamesList = [];
+
     var chkAudio = true;
     var numberExhausted = false;
     var autoCallsSet = true;
     var isPaused = false;
-    var time = 500;
-    var gameStartCalledNumbers = [];
+  
+    
     var initAPIs = {};
-    var promptDisableMsg = 0;
+    var userGameMst = {};
+   
     var setIntervalVal = "";
     var userID = "";
     var language = "en";
+    var JBuserID = "";
+    var ClubName = "";
+    var EmailID = "";
+    var IsAdmin = "";
+    var Name = "";
+    var Token = "";
+    var time = 500;
 
     var soldFrom = 0;
     var soldTo = 0;
@@ -22,13 +33,9 @@ $(document).ready(function () {
     var totalPrice = 0;
     var totalRevenue = 0;
     var totalGain = 0;
+    var promptDisableMsg = 0;
 
-    var JBuserID = "";
-    var ClubName = "";
-    var EmailID = "";
-    var IsAdmin = "";
-    var Name = "";
-    var Token = "";
+  
 
     initAPI();
 
@@ -135,13 +142,13 @@ $(document).ready(function () {
     }
 
     function preSetLanguageElements() {
-        console.log("language > ", language);        
+        console.log("language > ", language);
         var e = document.getElementById("game-voice-language");
         for (i = 0; i < e.options.length; i++) {
             console.log(" option > ", e.options[i]);
             console.log("Found option.value > ", e.options[i].value);
             console.log("Found option.language > ", language);
-            if (e.options[i].value == language) {               
+            if (e.options[i].value == language) {
                 e.options[i].selected = true;
                 break;
             }
@@ -163,7 +170,7 @@ $(document).ready(function () {
 
     function getNumberings() {
         var url = (initAPIs.domain + initAPIs.UserNumbers).toString();
-        userID=getCookie("JBuserID");
+        userID = getCookie("JBuserID");
         var D = {
             "UID": userID
         }
@@ -269,16 +276,21 @@ $(document).ready(function () {
         $("#reg-email-reject-icon").hide();
         $("#user-list-preloader").hide();
         $("#new-game-note").hide();
+        $("#show-ticket-no").hide();
+        
+        $("#edit_setup_btn_grp").hide();
+        $("#edit-btn-action-loader").hide();
+        $("#new-btn-action-loader").hide();
     }
 
     function fillTicketInPlayNewSetupDropdown() {
         $('#new_game_ticket_in_play').children().remove();
         $('#new_game_ticket_in_play')
-        .append($("<option></option>")
-            .attr("value", '')
-            .attr("disabled", "disabled")
-            .attr("selected", 'selected')
-            .text("Ticket In Play"));        
+            .append($("<option></option>")
+                .attr("value", '')
+                .attr("disabled", "disabled")
+                .attr("selected", 'selected')
+                .text("Ticket In Play"));
         var url = (initAPIs.domain + initAPIs.GetAllTktTypes).toString();
         var ticketsInPlay = "";
         $.ajax({
@@ -334,7 +346,7 @@ $(document).ready(function () {
             console.log("options > ", options);
 
             var tr = "<tr>" +
-                "<td> <input id='game_id_"+i+"' role='"+ID+"' type='hidden' value='"+GAME_NAME+"'/> " + GAME_NAME + " </td>" +
+                "<td> <input id='game_id_" + i + "' role='" + ID + "' type='hidden' value='" + GAME_NAME + "'/> " + GAME_NAME + " </td>" +
                 "<td>" +
                 "<div class='input-field  col s12'><select id='game_color_" + i + "' class='browser-default game_color' role='" + ID + "' > " +
                 options
@@ -583,7 +595,7 @@ $(document).ready(function () {
 
     function validateRowStrike() {
         var rows = $("#current-called-ticket").find('> tbody > tr');
-        $.each(rows, function (key, value) {            
+        $.each(rows, function (key, value) {
             console.log("value > ", value);
             var tds = $(value).find('td');
             console.log("tds > ", tds);
@@ -760,7 +772,119 @@ $(document).ready(function () {
         return sortedDummy;
     }
 
+    function refreshUserGameList() {
+        getUserGameList();
+    }
 
+    function resetNewGameForm() {
+        $("#new_setup_table tbody").empty();
+        fillTicketInPlayNewSetupDropdown();
+        $("#new-game-name").val("");
+        $("#new-game-note").hide();
+        $("#new_save_btn").hide();
+        $("#new_save_btn").removeAttr('disabled');
+        $("#new-game-date").val("");
+    }
+
+    function getUserGameList() {
+        $('#edit-game-name-select').children().remove();
+        $('#edit-game-name-select')
+            .append($("<option></option>")
+                .attr("value", '')
+                .attr("disabled", "disabled")
+                .attr("selected", 'selected')
+                .text("Game Name"));
+                var url = (initAPIs.domain + initAPIs.GetAllGames).toString();   
+               
+                userID = getCookie("JBuserID");
+                var D = {
+                    "UID": userID
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: D,
+                    success: function (json) {                        
+                        userGameMst=json;
+                        setUserGameList(userGameMst);
+                    },
+                    error: function (parsedjson, textStatus, errorThrown) {
+                    }
+                });
+
+    }
+
+    function setUserGameList(userGameMst){
+        
+       let AllGame=userGameMst.AllGame;
+       userGamesList=AllGame;
+       $.each(userGamesList, function (key, value) {       
+        $('#edit-game-name-select')
+        .append($("<option></option>")
+            .attr("value", value.TktID)           
+            .attr("role", value.TktType)
+            .attr("class", value.SetupID)
+            .text(value.GameName));
+        });
+    }
+
+    function getNewGameSelectedData() {
+        let gameDetailsObj = [];
+        let tr = $("#new_setup_table tbody tr");
+
+        for (let i = 0; i < tr.length; i++) {
+
+            let gameID = $("#game_id_" + i).attr("role");
+            let Game = $("#game_id_" + i).val();
+            let ColorID = $("#game_color_" + i).children("option:selected").attr("role");
+            let Color = $("#game_color_" + i).children("option:selected").val();
+            let oneLine_game_chk = false;
+            let twoLine_game_chk = false;
+            let fullHouse_game_chk = false;
+            let corner_game_chk = false;
+
+            if ($("#oneLine_game_chk_" + i).is(":checked")) {
+                oneLine_game_chk = true;
+            }
+
+            let oneLine_game_price = $("#oneLine_game_price_" + i).val();
+
+            if ($("#twoLine_game_chk_" + i).is(":checked")) {
+                twoLine_game_chk = true;
+            }
+            let twoLine_game_price = $("#twoLine_game_price_" + i).val();
+
+            if ($("#fullHouse_game_chk_" + i).is(":checked")) {
+                fullHouse_game_chk = true;
+            }
+            let fullHouse_game_price = $("#fullHouse_game_price_" + i).val();
+
+            if ($("#corner_game_chk_" + i).is(":checked")) {
+                corner_game_chk = true;
+            }
+            let corner_game_price = $("#corner_game_price_" + i).val();
+
+
+            var obj = {
+                "ID": 0,
+                "GameID": gameID,
+                "ColorID": ColorID,
+                "IsOneLn": oneLine_game_chk,
+                "OneLnPrice": oneLine_game_price,
+                "IsTwoLn": twoLine_game_chk,
+                "TwoLnPrice": twoLine_game_price,
+                "IsFH": fullHouse_game_chk,
+                "FHPrice": fullHouse_game_price,
+                "IsCorner": corner_game_chk,
+                "CornerPrice": corner_game_price
+            };
+            gameDetailsObj.push(obj);
+
+        }
+
+
+        return gameDetailsObj;
+    }
 
     //-------------------------------------------EVENTS--------------------------------
 
@@ -810,33 +934,33 @@ $(document).ready(function () {
     });
 
 
-    function validateIfSelected(){
-        let tr=$("#new_setup_table tbody tr");
-        console.log("tr.length > ",tr.length);
-        let trLineChkArray=[];
-        let isOneInTheRowSelectedCount=0;
-        for(let i=0;i<tr.length;i++){
-            let isOneInTheRowSelected=false;
-            
+    function validateIfSelected() {
+        let tr = $("#new_setup_table tbody tr");
+        console.log("tr.length > ", tr.length);
+        let trLineChkArray = [];
+        let isOneInTheRowSelectedCount = 0;
+        for (let i = 0; i < tr.length; i++) {
+            let isOneInTheRowSelected = false;
 
-            console.log("oneLine_game_chk_ is checked  > ",$("#oneLine_game_chk_"+i).is(":checked"));
-            if ($("#oneLine_game_chk_"+i).is(":checked")==true ||
-                $("#twoLine_game_chk_"+i).is(":checked")==true ||
-                $("#fullHouse_game_chk_"+i).is(":checked")==true || 
-                $("#corner_game_chk_"+i).is(":checked")==true
-            ){
-                isOneInTheRowSelected=true;
-                isOneInTheRowSelectedCount=isOneInTheRowSelectedCount+1;
+
+            console.log("oneLine_game_chk_ is checked  > ", $("#oneLine_game_chk_" + i).is(":checked"));
+            if ($("#oneLine_game_chk_" + i).is(":checked") == true ||
+                $("#twoLine_game_chk_" + i).is(":checked") == true ||
+                $("#fullHouse_game_chk_" + i).is(":checked") == true ||
+                $("#corner_game_chk_" + i).is(":checked") == true
+            ) {
+                isOneInTheRowSelected = true;
+                isOneInTheRowSelectedCount = isOneInTheRowSelectedCount + 1;
             }
-            trLineChkArray.push(isOneInTheRowSelected);             
+            trLineChkArray.push(isOneInTheRowSelected);
         }
-        console.log("isOneInTheRowSelectedCount > ",isOneInTheRowSelectedCount);
-        if(isOneInTheRowSelectedCount==tr.length){
+        console.log("isOneInTheRowSelectedCount > ", isOneInTheRowSelectedCount);
+        if (isOneInTheRowSelectedCount == tr.length) {
             $("#new_save_btn").fadeIn();
-        }else{
+        } else {
             $("#new_save_btn").hide();
         }
-        
+
 
     }
 
@@ -856,56 +980,56 @@ $(document).ready(function () {
         validateIfSelected();
         console.log("checkbox clicked : ", e.target);
         console.log("checkbox val : ", e.target.checked);
-        var role = "";         
-            var name = "";            
-            var name="";
-            var textID="";
+        var role = "";
+        var name = "";
+        var name = "";
+        var textID = "";
         if (e.target.checked == true) {
             //enable the input box next to it
-             role = $(this).attr("role");
-             name = $(this).attr("name");
+            role = $(this).attr("role");
+            name = $(this).attr("name");
             console.log("checkbox clicked role : ", role);
             console.log("checkbox clicked name : ", name);
-             name=name+"_"+role;
-             textID="";
+            name = name + "_" + role;
+            textID = "";
             // $("#" + name + "_game_price_" + role).removeAttr("disabled");
-            let game_price_inputs=$(".game_price_input");
+            let game_price_inputs = $(".game_price_input");
             $.each(game_price_inputs, function (key, value) {
-                var e =value;
-                if(e.name==name){
-                    textID=e.id;
+                var e = value;
+                if (e.name == name) {
+                    textID = e.id;
                 }
-                
+
             });
             console.log("checkbox clicked game_price_inputs e textID : ", textID);
             console.log("checkbox clicked game_price_inputs : ", game_price_inputs);
-            $("#"+textID).removeAttr("disabled");
+            $("#" + textID).removeAttr("disabled");
         }
         if (e.target.checked == false) {
             //disable the input box next to it
             role = $(this).attr("role");
-            name = $(this).attr("name");             
-            name=name+"_"+role;            
-            let game_price_inputs=$(".game_price_input");
-          
+            name = $(this).attr("name");
+            name = name + "_" + role;
+            let game_price_inputs = $(".game_price_input");
+
             $.each(game_price_inputs, function (key, value) {
-                
-                var el =value;
-                var elName=el.name;
-                var elID=el.id;
+
+                var el = value;
+                var elName = el.name;
+                var elID = el.id;
                 console.log("Unchecked game_price_inputs el >   ", el);
                 console.log("Unchecked game_price_inputs el.name >   ", elName);
                 console.log("Unchecked game_price_inputs name >   ", name);
-                if(elName==name){
+                if (elName == name) {
                     console.log("Unchecked game_price_inputs elName==name >   ");
-                    textID=elID;
+                    textID = elID;
                 }
-                
+
             });
             console.log("Unchecked checkbox clicked game_price_inputs e textID : ", textID);
             console.log("Unchecked checkbox clicked game_price_inputs : ", game_price_inputs);
-            $("#"+textID).val("0.00");
-            $("#"+textID).attr("disabled", "disabled");
+            $("#" + textID).val("0.00");
+            $("#" + textID).attr("disabled", "disabled");
         }
     });
 
@@ -1341,157 +1465,225 @@ $(document).ready(function () {
 
     });
 
-    $("#new_save_btn").click(function(){    
+    $("#new_save_btn").click(function () {
+        $("#new-btn-action-loader").show();
         $(this).attr("disabled", true);
-        let userID= getCookie("JBuserID"); 
-        let gameDate=$("#new-game-date").val();
-        let gameName=$("#new-game-name").val();
+        let userID = getCookie("JBuserID");
+        let gameDate = $("#new-game-date").val();
+        let gameName = $("#new-game-name").val();
         let ticketInPlayVal = $("#new_game_ticket_in_play").children("option:selected").val();
         let ticketInPlayId = $("#new_game_ticket_in_play").children("option:selected").attr("role");
-               
 
-        if(gameDate!="" && gameName!="" && ticketInPlayVal!="" && ticketInPlayId!=""){
-            let newGameDetails={
-                "UID": userID,                 
-                "TktID":ticketInPlayId,
+
+        if (gameDate != "" && gameName != "" && ticketInPlayVal != "" && ticketInPlayId != "") {
+            let newGameDetails = {
+                "UID": userID,
+                "TktID": ticketInPlayId,
                 "GameName": gameName,
                 "GameDate": gameDate
             }
-    
-            let gameDetails=getNewGameSelectedData();
-    
-            let jsonData={
-                "GameSetupID":0 ,
-                "gameSetup":newGameDetails,
-                "gameSetupDetails":gameDetails 
+
+            let gameDetails = getNewGameSelectedData();
+
+            let jsonData = {
+                "GameSetupID": 0,
+                "gameSetup": newGameDetails,
+                "gameSetupDetails": gameDetails
             };
 
-           
+
             var url = (initAPIs.domain + initAPIs.UpdateGameSetup).toString();
-            console.log("jsonData > ",jsonData);
-            console.log("url > ",url);
- 
-        
+            console.log("jsonData > ", jsonData);
+            console.log("url > ", url);
+
+
             $.ajax({
                 type: 'POST',
                 url: url,
                 data: JSON.stringify(jsonData),
                 contentType: "application/json",
-                dataType:"json",
+                dataType: "json",
                 success: function (json) {
-                    console.log("json : ",json);
+                    console.log("json : ", json);
                     if (json.IsSuccess == true || json.IsSuccess == "true") {
-                        toastMsg("<span class='green-text'>Game created successfully!</span>");   
+                        toastMsg("<span class='green-text'>Game created successfully!</span>");
                         refreshUserGameList();
                         resetNewGameForm();
-                                            
-                    } else {                        
+                        $("#new-btn-action-loader").hide();
+                    } else {
                         toastMsg("<span class='red-text'>Game creation was Not successful!</span>");
+                        $("#new-btn-action-loader").hide();
                     }
                 },
                 error: function (parsedjson, textStatus, errorThrown) {
                     toastMsg("<span class='red-text'>Please Try Later!</span>");
-                    console.log("parsedjson : ",parsedjson);
-                    console.log("textStatus : ",textStatus);
-                    console.log("errorThrown : ",errorThrown);
-                     
+                    console.log("parsedjson : ", parsedjson);
+                    console.log("textStatus : ", textStatus);
+                    console.log("errorThrown : ", errorThrown);
+                    $("#new-btn-action-loader").hide();
+
                 }
             });
 
-        }else{
+        } else {
             toastMsg("<span class='red-text text-lighten-4'>Choose All Details properly!</span>");
         }
     });
 
-    function refreshUserGameList(){
-        getUserGameList();
-    }
-
-    function resetNewGameForm(){
-        $("#new_setup_table tbody").empty();
-        fillTicketInPlayNewSetupDropdown();
-        $("#new-game-name").val("");
-        $("#new-game-note").hide();
-        $("#new_save_btn").hide();        
-        $("#new_save_btn").removeAttr('disabled');
-        $("#new-game-date").val("");
-    }
-
-    function getUserGameList(){
-        $('#edit-game-name-select').children().remove();
-        $('#edit-game-name-select')
-        .append($("<option></option>")
-            .attr("value", '')
-            .attr("disabled", "disabled")
-            .attr("selected", 'selected')
-            .text("Game Name"));     
-
-
-    }
-
-
-
-    function getNewGameSelectedData(){
-        let gameDetailsObj=[];
-        let tr=$("#new_setup_table tbody tr");
-       
-        for(let i=0;i<tr.length;i++){
-
-            let gameID= $("#game_id_"+i).attr("role");
-            let Game= $("#game_id_"+i).val();
-            let ColorID=$("#game_color_"+i).children("option:selected").attr("role");
-            let Color=$("#game_color_"+i).children("option:selected").val();
-            let oneLine_game_chk=false;
-            let twoLine_game_chk=false;
-            let fullHouse_game_chk=false;
-            let corner_game_chk=false;
-
-            if ($("#oneLine_game_chk_"+i).is(":checked"))
-            {
-                oneLine_game_chk=true;
-            }
-             
-            let oneLine_game_price=$("#oneLine_game_price_"+i).val(); 
-             
-            if ($("#twoLine_game_chk_"+i).is(":checked"))
-            {
-                twoLine_game_chk=true;
-            }
-            let twoLine_game_price=$("#twoLine_game_price_"+i).val();
-            
-            if ($("#fullHouse_game_chk_"+i).is(":checked"))
-            {
-                fullHouse_game_chk=true;
-            }
-            let fullHouse_game_price=$("#fullHouse_game_price_"+i).val();
+    $("#edit-game-name-select").on("change", function (e) {    
            
-            if ($("#corner_game_chk_"+i).is(":checked"))
-            {
-                corner_game_chk=true;
-            }
-            let corner_game_price =$("#corner_game_price_"+i).val();
+        console.log("userGamesList > ",userGamesList); 
+        var val = $(this).children("option:selected").val();
+        var id = $(this).children("option:selected").attr("role");
+        var SetupID = $(this).children("option:selected").attr("class");
+        var GameDate="";
+        console.log("val > ",val);
+        console.log("id > ",id);
+        console.log("SetupID > ",SetupID);
 
-          
-            var obj={
-                "ID": 0,
-                "GameID": gameID,               
-                "ColorID": ColorID,                 
-                "IsOneLn": oneLine_game_chk,
-                "OneLnPrice": oneLine_game_price,
-                "IsTwoLn": twoLine_game_chk,
-                "TwoLnPrice": twoLine_game_price,
-                "IsFH": fullHouse_game_chk,
-                "FHPrice": fullHouse_game_price,
-                "IsCorner": corner_game_chk,
-                "CornerPrice": corner_game_price
+        $.each(userGamesList, function (key, value) {
+          if(value.SetupID==SetupID){
+            GameDate=value.GameDate;
+          }
+        });
+
+     
+        $("#edit-game-selected-display-ticketNo").text(id);
+        $("#edit-game-date").val(GameDate);
+        $("#show-ticket-no").fadeIn();
+        $("#edit_setup_btn_grp").fadeIn();
+
+        getGameDetails(SetupID);
+   
+    });
+
+    function getGameDetails(SetupID){
+        $("#edit_setup_table tbody").empty();
+        $("#new_setup_table tbody").empty();
+        console.log("=======================================================");
+        // console.log("GameID > ", GameID);
+        // console.log("userGameMst > ", userGameMst);
+        let gameDetailList = [];
+        let AllGameDetails = userGameMst.AllGameDetails;
+        // console.log("AllGameDetails > ", AllGameDetails);
+        $.each(AllGameDetails, function (key, value) {
+            if (value.SetupID == SetupID) {
+                gameDetailList.push(value);
+            }
+        });
+        console.log("gameDetailList > ", gameDetailList);
+
+        for( let i=0;i<gameDetailList.length;i++){
+            var OneLnPrice=gameDetailList[i].OneLnPrice;
+            var TwoLnPrice=gameDetailList[i].TwoLnPrice;
+            var FHPrice=gameDetailList[i].FHPrice;
+            var CornerPrice=gameDetailList[i].CornerPrice;
+            var ID = gameDetailList[i].GameID;
+            var GAME_NAME = gameDetailList[i].GameName;
+            var C = {
+                "id": gameDetailList[i].ColorID,
+                "name": gameDetailList[i].Color
             };
-            gameDetailsObj.push(obj);
+            var options = getOptions(C);
+
+            var onlineTD="";
+            var twoLineTD="";
+            var fullHTD="";
+            var cornerTD="";
+
+            var IsOneLn=false;
+            var IsTwoLn=false;
+            var IsFH=false;
+            var IsCorner=false;
+
+             IsOneLn=gameDetailList[i].IsOneLn;
+             IsTwoLn=gameDetailList[i].IsTwoLn;
+             IsFH=gameDetailList[i].IsFH;
+             IsCorner=gameDetailList[i].IsCorner;
+
+            if(IsOneLn==true){
+                onlineTD="<label><input id='oneLine_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='oneLine' checked/><span>&nbsp;</span></label><input id='oneLine_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='"+OneLnPrice+"' style='width:50%' name='oneLine_" + ID + "' >";
+            }else{
+                onlineTD="<label><input id='oneLine_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='oneLine'/><span>&nbsp;</span></label><input id='oneLine_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='"+OneLnPrice+"' style='width:50%' name='oneLine_" + ID + "' disabled>";
+            }
+            if(IsTwoLn==true){
+                twoLineTD="<label><input id='twoLine_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='twoLine' checked/><span>&nbsp;</span></label><input id='twoLine_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='"+TwoLnPrice+"' style='width:50%' name='twoLine_" + ID + "' >";
+            }else{
+                twoLineTD="<label><input id='twoLine_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='twoLine'/><span>&nbsp;</span></label><input id='twoLine_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='"+TwoLnPrice+"' style='width:50%' name='twoLine_" + ID + "' disabled>";
+            }
+            if(IsFH==true){
+                fullHTD="<label><input id='fullHouse_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='fullHouse' checked/><span>&nbsp;</span></label><input id='fullHouse_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='"+FHPrice+"' style='width:50%' name='fullHouse_" + ID + "' >";
+            }else{
+                fullHTD="<label><input id='fullHouse_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='fullHouse'/><span>&nbsp;</span></label><input id='fullHouse_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='"+FHPrice+"' style='width:50%' name='fullHouse_" + ID + "' disabled>";
+            }
+            if(IsCorner==true){
+                cornerTD="<label><input id='corner_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='corner' checked/><span>&nbsp;</span></label><input id='corner_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='"+CornerPrice+"' style='width:50%' name='corner_" + ID + "' >";
+            }else{
+                cornerTD="<label><input id='corner_game_chk_" + i + "' type='checkbox' class='filled-in game_selection_chk' role='" + ID + "' name='corner'/><span>&nbsp;</span></label><input id='corner_game_price_" + i + "' type='text' class='browser-default  game_price_input' value='"+CornerPrice+"' style='width:50%' name='corner_" + ID + "' disabled>";
+            }
+          
+            var tr = "<tr>" +
+            "<td> <input id='game_id_" + i + "' role='" + ID + "' type='hidden' value='" + GAME_NAME + "'/> " + GAME_NAME + " </td>" +
+            "<td>" +
+            "<div class='input-field  col s12'><select id='game_color_" + i + "' class='browser-default game_color' role='" + ID + "' > " +
+            options
+            + " </select></div>"
+            + "</td>" +
+            "<td>" +
+            onlineTD
+            + "</td>" +
+            "<td>" +
+            twoLineTD
+            + "</td>" +
+            "<td>" +
+            fullHTD
+            + "</td>" +
+            "<td>" +
+            cornerTD
+            + "</td>" +
+            +"</tr>";
+         $("#edit_setup_table tbody").append(tr);
 
         }
 
-
-        return gameDetailsObj;
     }
+
+      
+
+    $("#edit_deactivate_btn").click(function(){
+        $("#show-ticket-no").hide();
+        $("#edit-btn-action-loader").show();
+        var val = $("#edit-game-name-select").children("option:selected").val();
+        var id = $("#edit-game-name-select").children("option:selected").attr("role");
+        var Class = $("#edit-game-name-select").children("option:selected").attr("class");
+        
+
+        let D={
+            "SetupID":Class,
+            "IsActive":false
+        };
+        console.log("edit_deactivate_btn > D > ",D);
+        var url = (initAPIs.domain + initAPIs.ActiveGame).toString(); 
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: D,
+            success: function (json) {
+                console.log("response > json > ",json);
+                toastMsg("<span class='green-text'>Game Deactivated!</span>");
+                $("#edit_setup_btn_grp").hide(); 
+                getUserGameList();
+                $("#edit-game-selected-display-ticketNo").text("");
+                $("#edit-btn-action-loader").hide();
+                $("#edit-game-date").val("");
+            },
+            error: function (parsedjson, textStatus, errorThrown) {
+                $("#edit-btn-action-loader").hide();
+            }
+        });
+
+
+    });
 
 
     //---------------------------------------------
