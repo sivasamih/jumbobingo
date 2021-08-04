@@ -158,7 +158,7 @@
 
 
         #modal2 {
-            height: 75%;
+            height: 80%;
             max-height: 100%;
             margin-top: -50px !important;
         }
@@ -313,7 +313,7 @@
                         <div class="col s7 push-s5">
                             <div class="row" style="margin-top: -45px !important;">
                                 <div class="col s12">
-                                    <div style="height:350px; overflow: scroll;">
+                                    <div style="height:400px; overflow: scroll;">
                                         <table class="centered small" id="new_setup_table">
                                             <thead>
                                                 <tr class="black">
@@ -353,7 +353,7 @@
                                 <div class="input-field  col s4">
                                     <select id="new_game_ticket_in_play"
                                         class="browser-default ticket_in_play_new_setup">
-                                        <option value="" disabled selected>Ticket In Play</option>
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -367,8 +367,19 @@
                                 </div>
                             </div>
 
-
-
+                            <div id="new-game-note" class="right">
+                                <p class="brown-text">
+                                    Note: Selecting one option for each Game is compulsary.
+                                   
+                                </p> 
+                                <div class="right">
+                                    <span class="brown-text">
+                                        <i class="medium material-icons">subdirectory_arrow_right</i>
+                                    </span>
+                                </div>
+                                
+                            </div>
+                           
 
                         </div>
                     </div>
@@ -382,13 +393,13 @@
                                     <div style="height:350px; overflow: scroll;">
                                         <table class="centered small" id="edit_setup_table">
                                             <thead>
-                                                <tr class="grey">
-                                                    <th class="grey" style="width:100px !important;">Game</th>
-                                                    <th class="grey" style="width:150px !important;">Color</th>
-                                                    <th class="grey">One Line</th>
-                                                    <th class="grey">Two Line</th>
-                                                    <th class="grey">Full House</th>
-                                                    <th class="grey">Corner</th>
+                                                <tr class="black white-text">
+                                                    <th class="black" style="width:100px !important;">Game</th>
+                                                    <th class="black" style="width:150px !important;">Color</th>
+                                                    <th class="black">One Line</th>
+                                                    <th class="black">Two Line</th>
+                                                    <th class="black">Full House</th>
+                                                    <th class="black">Corner</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -407,16 +418,28 @@
                                     <input type="text" class="datepicker browser-default">
                                 </div>
                             </div>
-                            <div class="col s12" style="margin-top: -33px !important;margin-left: -10px !important;">
+                            <div class="col s6" style="margin-top: -33px !important;margin-left: -10px !important;">
                                 <div class="input-field  col s12 ">
-                                    <select id="game_name_select" class="browser-default edit_game_name_select">
-                                        <option value="" disabled selected>Game Name</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
+                                    <select id="edit-game-name-select" class="browser-default edit_game_name_select">
+                                        <option value="" disabled selected>Game Name</option>                                       
                                     </select>
                                 </div>
+                                <div>
+                                    
+                                </div>
                             </div>
+                            <div class="col s6" style="margin-top: -33px !important;margin-left: -10px !important;">
+                                <div id="show-ticket-no" style="margin-top: 22px !important;">
+                                    <h5>
+                                        <i class="material-icons">chevron_right</i>   
+                                        <b id="edit-game-selected-display-ticketNo" class="grey lighten-3 grey-text " 
+                                        style="border-style: solid;border-width: 1px;padding-left: 20px;padding-right: 20px;padding-top: 7px;padding-bottom: 7px;">
+                                        
+                                    </b>
+                                    </h5>
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>
@@ -640,7 +663,7 @@
         style="width: 70%;border-style: solid;border-width: 4px;border-color: #eceff1;">
         <div class="modal-content ">
             <div class="row">
-                <h5 class="left-align" style="margin-top: -10px !important;"><b>Game Setup</b></h5>
+                <h5 class="left-align" style="margin-top: -10px !important;"><b>Select Game </b></h5>
                 <div class="divider"></div>
             </div>
             <div class="row">

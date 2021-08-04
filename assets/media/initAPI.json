@@ -7,8 +7,9 @@
     "IsEmailIDExist": "WebserviceDemo/WebService.asmx/IsEmailIDExist",
     "GetAllUsers": "WebserviceDemo/WebService.asmx/GetAllUsers",
     "GetTicketData": "WebserviceDemo/WebService.asmx/GetTicketData",
-    "Login": "WebserviceDemo/WebService.asmx/Login",
+    "Login": "WebserviceDemo/WebService.asmx/Login",  
     "Register": "WebserviceDemo/WebService.asmx/Register",
     "ActiveUser": "WebserviceDemo/WebService.asmx/ActiveUser",
-    "UpdateGameSetup":"WebserviceDemo/WebService.asmx/UpdateGameSetup"
-}  
+    "UpdateGameSetup":"WebserviceDemo/WebService.asmx/UpdateGameSetup",
+    "":"WebserviceDemo/WebService.asmx/"
+}

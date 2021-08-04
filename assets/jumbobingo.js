@@ -42,6 +42,7 @@ $(document).ready(function () {
         getAllLanguages();
         fillTicketInPlayNewSetupDropdown();
         getUsersList();
+        getUserGameList();
     }
 
 
@@ -56,7 +57,7 @@ $(document).ready(function () {
                 performAllFunctions();
             },
             error: function (parsedjson, textStatus, errorThrown) {
-
+                console.log("Error in initAPI");
             }
         });
     }
@@ -134,30 +135,21 @@ $(document).ready(function () {
     }
 
     function preSetLanguageElements() {
-        console.log("language > ", language);
-        // $('#game-voice-language').val(language);
-        // $('#game-voice-language option[value='+language+']').attr("selected",true);
-        //document.getElementById("game-voice-language").value= language;
+        console.log("language > ", language);        
         var e = document.getElementById("game-voice-language");
         for (i = 0; i < e.options.length; i++) {
             console.log(" option > ", e.options[i]);
             console.log("Found option.value > ", e.options[i].value);
             console.log("Found option.language > ", language);
-            if (e.options[i].value == language) {
-                // Item is found. Set its property and exit   
-                // console.log("Found option > ",e.options[i]); 
+            if (e.options[i].value == language) {               
                 e.options[i].selected = true;
                 break;
             }
         }
-
     }
 
-
     function getMasterColors() {
-
         var url = (initAPIs.domain + initAPIs.ColorList).toString();
-
         $.ajax({
             type: 'POST',
             url: url,
@@ -165,15 +157,11 @@ $(document).ready(function () {
                 gameMasterColors = json;
             },
             error: function (parsedjson, textStatus, errorThrown) {
-
             }
         });
-
-
     }
+
     function getNumberings() {
-
-
         var url = (initAPIs.domain + initAPIs.UserNumbers).toString();
         userID=getCookie("JBuserID");
         var D = {
@@ -196,7 +184,6 @@ $(document).ready(function () {
                 $("#numberings").html(numberingsColmns);
             }
         });
-
     }
 
     function loadInitialblankTicketDesign() {
@@ -216,44 +203,34 @@ $(document).ready(function () {
                         .attr("value", key)
                         .attr("role", key)
                         .text(TEXT));
-
             });
-
         });
-
-
     }
 
     function setNumberingsDisplay(numberings) {
         var numberingsColmns = "";
-
         if (numberings.length > 0) {
             for (var i = 0; i < numberings.length; i++) {
                 var nc = "";
-
                 if (i > 5) {
                     if (numberings[i]["ID"] < 10) {
                         nc = "<div id='col_" + i + "' class='col s2 no-margin'><div class='input-field inline '><span class='no-id-bold'>" + numberings[i]["ID"] + "&nbsp;&nbsp;</span><input id='no_" + numberings[i]["ID"] + "' role='" + numberings[i]["ID"] + "' type='text' class='validate numbers_text no-text-box active' value='" + numberings[i]["Numbers"] + "'></div></div>";
                     } else {
                         nc = "<div id='col_" + i + "' class='col s2 no-margin'><div class='input-field inline '><span class='no-id-bold'>" + numberings[i]["ID"] + "</span><input id='no_" + numberings[i]["ID"] + "' role='" + numberings[i]["ID"] + "' type='text' class='validate numbers_text no-text-box active' value='" + numberings[i]["Numbers"] + "'></div></div>";
                     }
-
                 } else {
-
                     if (numberings[i]["ID"] < 10) {
                         nc = "<div id='col_" + i + "' class='col s2'><div class='input-field inline'><span class='no-id-bold'>" + numberings[i]["ID"] + "&nbsp;&nbsp;</span><input id='no_" + numberings[i]["ID"] + "' role='" + numberings[i]["ID"] + "' type='text' class='validate numbers_text  no-text-box active' value='" + numberings[i]["Numbers"] + "'>  </div></div>";
                     } else {
 
                         nc = "<div id='col_" + i + "' class='col s2'><div class='input-field inline'><span class='no-id-bold'>" + numberings[i]["ID"] + "</span><input id='no_" + numberings[i]["ID"] + "' role='" + numberings[i]["ID"] + "' type='text' class='validate numbers_text  no-text-box active' value='" + numberings[i]["Numbers"] + "'>  </div></div>";
                     }
-
                 }
                 numberingsColmns = numberingsColmns + nc;
             }
         } else {
             numberingsColmns = "<div class='col s12'><h6 class='center-align red-text'>Pls check later...</h6></div>";
         }
-
         $("#numberings").html(numberingsColmns);
     }
 
@@ -261,7 +238,6 @@ $(document).ready(function () {
     function setAllNumbersDisplay(numberings) {
         var numbersHTML = "";
         var c = 1;
-
         $.each(numberings, function (key, value) {
             var n = "";
             n = "<div class='col'><a id='call_number_" + value.ID + "' class='btn-floating btn-small grey darken-1 round-btn-numberings all-number-initial-pointer'>" + value.ID + "</a></div>";
@@ -282,8 +258,6 @@ $(document).ready(function () {
             setDefaultDate: true,
             defaultDate: new Date(),
         });
-
-
     }
     function initialHidden() {
         $(".setup_type").hide();
@@ -294,10 +268,17 @@ $(document).ready(function () {
         $("#reg-email-accept-icon").hide();
         $("#reg-email-reject-icon").hide();
         $("#user-list-preloader").hide();
+        $("#new-game-note").hide();
     }
 
     function fillTicketInPlayNewSetupDropdown() {
-
+        $('#new_game_ticket_in_play').children().remove();
+        $('#new_game_ticket_in_play')
+        .append($("<option></option>")
+            .attr("value", '')
+            .attr("disabled", "disabled")
+            .attr("selected", 'selected')
+            .text("Ticket In Play"));        
         var url = (initAPIs.domain + initAPIs.GetAllTktTypes).toString();
         var ticketsInPlay = "";
         $.ajax({
@@ -314,13 +295,11 @@ $(document).ready(function () {
                 });
             },
             error: function (parsedjson, textStatus, errorThrown) {
-
             }
         });
     }
 
     function getGamesTypeDetails(ticket_in_play_selected) {
-
         var url = (initAPIs.domain + initAPIs.GetTicketTypeDetails).toString();
         var ticketsInPlay = "";
         var games = [];
@@ -334,7 +313,6 @@ $(document).ready(function () {
                 setTableDisplay1(games);
             },
             error: function (parsedjson, textStatus, errorThrown) {
-
             }
         });
     };
@@ -342,11 +320,9 @@ $(document).ready(function () {
 
     function setTableDisplay1(games) {
         $("#new_setup_table tbody").empty();
-
         for (let i = 0; i < games.length; i++) {
             var ID = games[i].GameID;
             var GAME_NAME = games[i].Game;
-
             var C = {
                 "id": games[i].ColorID,
                 "name": games[i].Color
@@ -607,8 +583,7 @@ $(document).ready(function () {
 
     function validateRowStrike() {
         var rows = $("#current-called-ticket").find('> tbody > tr');
-        $.each(rows, function (key, value) {
-            // console.log("key > ", key);
+        $.each(rows, function (key, value) {            
             console.log("value > ", value);
             var tds = $(value).find('td');
             console.log("tds > ", tds);
@@ -627,7 +602,6 @@ $(document).ready(function () {
                     $(this).addClass("cyan accent-2");
                 });
             }
-
         });
     }
 
@@ -721,10 +695,7 @@ $(document).ready(function () {
     }
 
     function fillUserListTable(json) {
-
         json = sortUsersByNewFirst(json);
-
-
 
         $.each(json, function (key, value) {
             let sr_no = parseInt(key) + 1;
@@ -827,7 +798,7 @@ $(document).ready(function () {
     });
 
     $("#new_game_ticket_in_play").on("change", function (e) {
-        $("#new_save_btn").fadeIn();
+        $("#new-game-note").fadeIn();
         var val = $(this).children("option:selected").val();
         var id = $(this).children("option:selected").attr("role");
 
@@ -837,6 +808,38 @@ $(document).ready(function () {
         };
         populateTableListAsPerSelectedTicket(ticket_in_play_selected);
     });
+
+
+    function validateIfSelected(){
+        let tr=$("#new_setup_table tbody tr");
+        console.log("tr.length > ",tr.length);
+        let trLineChkArray=[];
+        let isOneInTheRowSelectedCount=0;
+        for(let i=0;i<tr.length;i++){
+            let isOneInTheRowSelected=false;
+            
+
+            console.log("oneLine_game_chk_ is checked  > ",$("#oneLine_game_chk_"+i).is(":checked"));
+            if ($("#oneLine_game_chk_"+i).is(":checked")==true ||
+                $("#twoLine_game_chk_"+i).is(":checked")==true ||
+                $("#fullHouse_game_chk_"+i).is(":checked")==true || 
+                $("#corner_game_chk_"+i).is(":checked")==true
+            ){
+                isOneInTheRowSelected=true;
+                isOneInTheRowSelectedCount=isOneInTheRowSelectedCount+1;
+            }
+            trLineChkArray.push(isOneInTheRowSelected);             
+        }
+        console.log("isOneInTheRowSelectedCount > ",isOneInTheRowSelectedCount);
+        if(isOneInTheRowSelectedCount==tr.length){
+            $("#new_save_btn").fadeIn();
+        }else{
+            $("#new_save_btn").hide();
+        }
+        
+
+    }
+
 
     $(".select_setup_type").click(function () {
         if ($(this).attr('id') == "new_game_radio") {
@@ -850,6 +853,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.game_selection_chk', function (e) {
+        validateIfSelected();
         console.log("checkbox clicked : ", e.target);
         console.log("checkbox val : ", e.target.checked);
         var role = "";         
@@ -993,10 +997,6 @@ $(document).ready(function () {
         }
     });
 
-
-
-
-
     $("#sold-from").on("keyup", function () {
         soldFrom = $(this).val();
         calculateOthers();
@@ -1016,8 +1016,6 @@ $(document).ready(function () {
         if (userID == "" || password == "") {
             toastMsg("<span class='red-text text-lighten-4'>Enter your credentials properly!</span>");
         } else {
-
-
 
             var D = {
                 "ID": userID,
@@ -1343,15 +1341,14 @@ $(document).ready(function () {
 
     });
 
-    $("#new_save_btn").click(function(){       
+    $("#new_save_btn").click(function(){    
+        $(this).attr("disabled", true);
         let userID= getCookie("JBuserID"); 
         let gameDate=$("#new-game-date").val();
         let gameName=$("#new-game-name").val();
         let ticketInPlayVal = $("#new_game_ticket_in_play").children("option:selected").val();
         let ticketInPlayId = $("#new_game_ticket_in_play").children("option:selected").attr("role");
-        
-
-        
+               
 
         if(gameDate!="" && gameName!="" && ticketInPlayVal!="" && ticketInPlayId!=""){
             let newGameDetails={
@@ -1364,27 +1361,30 @@ $(document).ready(function () {
             let gameDetails=getNewGameSelectedData();
     
             let jsonData={
-                "GameSetupID":0,
+                "GameSetupID":0 ,
                 "gameSetup":newGameDetails,
-                "gameSetupDetails":gameDetails
+                "gameSetupDetails":gameDetails 
             };
 
            
             var url = (initAPIs.domain + initAPIs.UpdateGameSetup).toString();
             console.log("jsonData > ",jsonData);
             console.log("url > ",url);
-
+ 
+        
             $.ajax({
                 type: 'POST',
                 url: url,
-                data: jsonData,
-                dataType: 'json',
-                async: true,
-                cache: false,
+                data: JSON.stringify(jsonData),
+                contentType: "application/json",
+                dataType:"json",
                 success: function (json) {
                     console.log("json : ",json);
                     if (json.IsSuccess == true || json.IsSuccess == "true") {
-                        toastMsg("<span class='green-text'>Game created successfully!</span>");                         
+                        toastMsg("<span class='green-text'>Game created successfully!</span>");   
+                        refreshUserGameList();
+                        resetNewGameForm();
+                                            
                     } else {                        
                         toastMsg("<span class='red-text'>Game creation was Not successful!</span>");
                     }
@@ -1397,13 +1397,39 @@ $(document).ready(function () {
                      
                 }
             });
-    
-             
 
         }else{
-            toastMsg("<span class='red-text text-lighten-4'>Select All Details properly!</span>");
+            toastMsg("<span class='red-text text-lighten-4'>Choose All Details properly!</span>");
         }
     });
+
+    function refreshUserGameList(){
+        getUserGameList();
+    }
+
+    function resetNewGameForm(){
+        $("#new_setup_table tbody").empty();
+        fillTicketInPlayNewSetupDropdown();
+        $("#new-game-name").val("");
+        $("#new-game-note").hide();
+        $("#new_save_btn").hide();        
+        $("#new_save_btn").removeAttr('disabled');
+        $("#new-game-date").val("");
+    }
+
+    function getUserGameList(){
+        $('#edit-game-name-select').children().remove();
+        $('#edit-game-name-select')
+        .append($("<option></option>")
+            .attr("value", '')
+            .attr("disabled", "disabled")
+            .attr("selected", 'selected')
+            .text("Game Name"));     
+
+
+    }
+
+
 
     function getNewGameSelectedData(){
         let gameDetailsObj=[];
