@@ -64,7 +64,7 @@ $(document).ready(function () {
                 performAllFunctions();
             },
             error: function (parsedjson, textStatus, errorThrown) {
-                console.log("Error in initAPI");
+                toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
             }
         });
     }
@@ -136,7 +136,7 @@ $(document).ready(function () {
 
             },
             error: function (parsedjson, textStatus, errorThrown) {
-
+              //  toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
             }
         });
     }
@@ -164,6 +164,7 @@ $(document).ready(function () {
                 gameMasterColors = json;
             },
             error: function (parsedjson, textStatus, errorThrown) {
+                toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
             }
         });
     }
@@ -184,9 +185,10 @@ $(document).ready(function () {
                 setAllNumbersDisplay(numberings);
             },
             error: function (parsedjson, textStatus, errorThrown) {
-                console.log("parsedjson > ", parsedjson);
-                console.log("textStatus > ", textStatus);
-                console.log("errorThrown > ", errorThrown);
+                toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
+                // console.log("parsedjson > ", parsedjson);
+                // console.log("textStatus > ", textStatus);
+                // console.log("errorThrown > ", errorThrown);
                 var numberingsColmns = "<div class='col s12'><h6 class='center-align red-text'>Pls check later...</h6></div>";
                 $("#numberings").html(numberingsColmns);
             }
@@ -307,6 +309,7 @@ $(document).ready(function () {
                 });
             },
             error: function (parsedjson, textStatus, errorThrown) {
+                toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
             }
         });
     }
@@ -325,6 +328,7 @@ $(document).ready(function () {
                 setTableDisplay1(games);
             },
             error: function (parsedjson, textStatus, errorThrown) {
+                toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
             }
         });
     };
@@ -701,7 +705,7 @@ $(document).ready(function () {
                 fillUserListTable(json);
             },
             error: function (parsedjson, textStatus, errorThrown) {
-
+                toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
             }
         });
     }
@@ -809,6 +813,7 @@ $(document).ready(function () {
                         setUserGameList(userGameMst);
                     },
                     error: function (parsedjson, textStatus, errorThrown) {
+                        toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
                     }
                 });
 
@@ -1065,7 +1070,7 @@ $(document).ready(function () {
 
                 },
                 error: function (parsedjson, textStatus, errorThrown) {
-
+                    toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
                 }
             });
 
@@ -1099,7 +1104,7 @@ $(document).ready(function () {
 
                 },
                 error: function (parsedjson, textStatus, errorThrown) {
-
+                    toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
                 }
             });
         }
@@ -1213,7 +1218,7 @@ $(document).ready(function () {
                     }
                 },
                 error: function (parsedjson, textStatus, errorThrown) {
-
+                    toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
                 }
             });
         } else {
@@ -1324,7 +1329,7 @@ $(document).ready(function () {
                 }
             },
             error: function (parsedjson, textStatus, errorThrown) {
-                toastMsg("<span class='red-text'>Please Try Later!</span>");
+                toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
                 $("#register-btn").attr("disabled", false);
             }
         });
@@ -1373,7 +1378,7 @@ $(document).ready(function () {
                 }
             },
             error: function (parsedjson, textStatus, errorThrown) {
-                toastMsg("<span class='red-text'>Please Try Later!</span>");
+                toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
 
             }
         });
@@ -1516,10 +1521,10 @@ $(document).ready(function () {
                     }
                 },
                 error: function (parsedjson, textStatus, errorThrown) {
-                    toastMsg("<span class='red-text'>Please Try Later!</span>");
-                    console.log("parsedjson : ", parsedjson);
-                    console.log("textStatus : ", textStatus);
-                    console.log("errorThrown : ", errorThrown);
+                    toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
+                    // console.log("parsedjson : ", parsedjson);
+                    // console.log("textStatus : ", textStatus);
+                    // console.log("errorThrown : ", errorThrown);
                     $("#new-btn-action-loader").hide();
 
                 }
@@ -1678,6 +1683,7 @@ $(document).ready(function () {
                 $("#edit-game-date").val("");
             },
             error: function (parsedjson, textStatus, errorThrown) {
+                toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
                 $("#edit-btn-action-loader").hide();
             }
         });
