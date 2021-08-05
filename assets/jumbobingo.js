@@ -41,15 +41,14 @@ $(document).ready(function () {
 
     function performAllFunctions() {
         checkedIfUserLoggedIn();
-        initializeElements()
-        getNumberings();
+        initializeElements();        
         initialHidden();
         getMasterColors();
         loadInitialblankTicketDesign();
         getAllLanguages();
         fillTicketInPlayNewSetupDropdown();
         getUsersList();
-        getUserGameList();
+        
     }
 
 
@@ -86,7 +85,8 @@ $(document).ready(function () {
                 window.location.replace("/");
             }
         } else {
-            //set data values
+            getUserGameList();
+            getNumberings();
             var pathname = window.location.pathname;
             if (pathname == "/" || pathname == "/index.html") {
                 var html = "<div><div class='row'><div class='col'><h3>Hi <span class='red-text'><b>" + Name + "</b></span>!</h3> <a href='/dashboard' style='font-size:1.4rem;'> <span class='black-text'>Go to</span> <u>Dashboard</u></a></div></div></div>";

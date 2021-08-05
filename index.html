@@ -16,6 +16,20 @@
       cursor: pointer;
     }
 
+    .login-btn-css{
+      border-radius: 50px !important;
+    }
+
+    .modal-css{
+            border-style: solid;border-width: 2px;border-color: #b71c1c;
+    }
+
+    /* body {
+        background-image: url("/assets/media/bg-1.png");
+        background-color: #ffffff;
+        background-repeat: no-repeat;
+      } */
+
     td,
     th {
       padding: 1px 1px !important;
@@ -25,16 +39,16 @@
 
 </head>
 
-<body class="grey lighten-5">
+<body class="white">
 
 
   <!-- Login prompt -->
-  <div id="modal1" class="modal brown lighten-4"
-    style="width: 30%;border-style: solid;border-width: 4px;border-color: #eceff1;">
+  <div id="modal1" class="modal modal-css white"
+    style="width: 30%;">
     <div class="modal-content">
-      <span class="right modal-close"> <i class="material-icons">close</i></span> 
-      <h4 class="center-align"><b>Login</b></h4>
-      
+      <span class="right modal-close"> <i class="material-icons">close</i></span>
+      <h4 class="center-align indigo-text text-darken-4"><b>Login</b></h4>
+
       <div class="container">
         <br />
         <table style="border-style: none !important;border-collapse:initial !important;">
@@ -69,7 +83,7 @@
             </td>
             <td>&nbsp;</td>
             <td>
-              <a id="login-btn" class="btn-small black">Login</a>
+              <a id="login-btn" class="btn-small indigo darken-4">Login</a>
             </td>
           </tr>
         </table>
@@ -78,15 +92,15 @@
       </div>
 
     </div>
-    
+
   </div>
 
   <!-- Register prompt -->
-  <div id="modal2" class="modal brown lighten-4"
-    style="width: 40%;border-style: solid;border-width: 4px;border-color: #eceff1;">
+  <div id="modal2" class="modal modal-css white"
+    style="width: 40%;">
     <div class="modal-content">
-      <span class="right modal-close"> <i class="material-icons">close</i></span>   
-      <h4 class="center-align"><b>Register</b></h4>
+      <span class="right modal-close "> <i class="material-icons">close</i></span>
+      <h4 class="center-align indigo-text text-darken-4"><b>Register</b></h4>
       <div class="container ">
         <br />
         <table style="border-style: none !important;border-collapse:initial !important;">
@@ -224,7 +238,7 @@
           </tr>
           <tr>
             <td>
-              <a id="register-btn" class="btn-small black" disabled>Register</a>
+              <a id="register-btn" class="btn-small indigo darken-4" disabled>Register</a>
             </td>
             <td>&nbsp;</td>
             <td>
@@ -239,11 +253,11 @@
       </div>
 
     </div>
-   
+
   </div>
 
 
-  <nav class="black">
+  <nav class="indigo darken-4">
     <div class="nav-wrapper">
       <a href="#" class="brand-logo white-text" style="font-weight: bold; padding-left: 20px;">
         Jumbo Bingo : ST Limited
@@ -256,6 +270,7 @@
     <div class="col s7 push-s5">
       <br />
       <img class="responsive-img" src="/assets/media/bingo-startup-index.jpg" />
+      
     </div>
     <div class="col s5 pull-s7">
 
@@ -264,14 +279,14 @@
         <div id="hide-when-logged-in">
           <div class="row ">
             <div class="col ">
-              <a class="waves-effect waves-light btn-small black bold center-align modal-trigger" href="#modal1"
+              <a class="waves-effect waves-light btn-small white-text bold center-align modal-trigger login-btn-css indigo darken-4" href="#modal1"
                 style="font-size: 24px;">LOGIN</a>
             </div>
           </div>
           <div class="row ">
             <div class="col ">
               <a class="black-text">Not Registered yet? </a>
-              <a class="blue-grey-text text-darken-4 bold center-align modal-trigger" href="#modal2"> <u>REGISTER
+              <a class="indigo-text text-darken-4 bold center-align modal-trigger" href="#modal2"> <u>REGISTER
                   HERE</u></a>
             </div>
           </div>
@@ -286,14 +301,14 @@
 
 
 
-
-  <footer class="page-footer black" style="margin-top: 37px;">
+<!-- 
+  <footer class="page-footer indigo darken-4" style="margin-top: 37px;">
     <div class="footer-copyright">
       <div class="container">
         © 2021 Copyright SIVA Tec Ltd.
       </div>
     </div>
-  </footer>
+  </footer> -->
 
 
   <script type="text/javascript" src="/assets/jquery.js"></script>
