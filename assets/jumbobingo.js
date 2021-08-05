@@ -24,6 +24,7 @@ $(document).ready(function () {
     var IsAdmin = "";
     var Name = "";
     var Token = "";
+    var ticketsInPlay = "";
     var time = 500;
 
     var soldFrom = 0;
@@ -294,7 +295,7 @@ $(document).ready(function () {
                 .attr("selected", 'selected')
                 .text("Ticket In Play"));
         var url = (initAPIs.domain + initAPIs.GetAllTktTypes).toString();
-        var ticketsInPlay = "";
+        
         $.ajax({
             type: 'POST',
             url: url,
@@ -645,8 +646,14 @@ $(document).ready(function () {
 
     function calculateOthers() {
         totalTicketsSold = parseInt(soldTo) - parseInt(soldFrom) + 1;
-        totalPrice = bookletPrice * totalTicketsSold;
-        $("#total-tickets-sold").val(totalTicketsSold);
+        // totalPrice = bookletPrice * totalTicketsSold;
+        let chk=isNaN(totalTicketsSold);
+        if(chk){
+            $("#total-tickets-sold").val(0);
+        }else{
+            $("#total-tickets-sold").val(totalTicketsSold);
+        }
+        
     }
 
     function validateEmail(email) {
@@ -790,7 +797,15 @@ $(document).ready(function () {
         $("#new-game-date").val("");
     }
 
+    function resetEditGameForm() {
+        $("#edit_setup_table tbody").empty();       
+        // $("#new_save_btn").removeAttr('disabled');
+        $("#edit-game-date").val("");
+        $("#edit-game-selected-display-ticketNo").text("");
+    }
+
     function getUserGameList() {
+        
         $('#edit-game-name-select').children().remove();
         $('#edit-game-name-select')
             .append($("<option></option>")
@@ -798,6 +813,15 @@ $(document).ready(function () {
                 .attr("disabled", "disabled")
                 .attr("selected", 'selected')
                 .text("Game Name"));
+                $('#select-game-modal-choose-game').children().remove();
+                $('#select-game-modal-choose-game')
+                    .append($("<option></option>")
+                        .attr("value", '')
+                        .attr("disabled", "disabled")
+                        .attr("selected", 'selected')
+                        .text("Select Game"));
+
+
                 var url = (initAPIs.domain + initAPIs.GetAllGames).toString();   
                
                 userID = getCookie("JBuserID");
@@ -823,6 +847,9 @@ $(document).ready(function () {
         
        let AllGame=userGameMst.AllGame;
        userGamesList=AllGame;
+       console.log("================================================");
+       console.log("setUserGameList > userGamesList : ",userGamesList);
+       console.log("================================================");
        $.each(userGamesList, function (key, value) {       
         $('#edit-game-name-select')
         .append($("<option></option>")
@@ -830,6 +857,13 @@ $(document).ready(function () {
             .attr("role", value.TktType)
             .attr("class", value.SetupID)
             .text(value.GameName));
+
+            $('#select-game-modal-choose-game').append($("<option></option>")
+            .attr("value", value.TktID)           
+            .attr("role", value.TktType)
+            .attr("class", value.SetupID)
+            .text(value.GameName));
+
         });
     }
 
@@ -1681,14 +1715,237 @@ $(document).ready(function () {
                 $("#edit-game-selected-display-ticketNo").text("");
                 $("#edit-btn-action-loader").hide();
                 $("#edit-game-date").val("");
+                $("#edit_setup_table tbody").empty();
+                $("#new_setup_table tbody").empty();
             },
             error: function (parsedjson, textStatus, errorThrown) {
                 toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
                 $("#edit-btn-action-loader").hide();
             }
         });
+    });
+
+    $("#edit_save_btn").click(function(){  
+        $("#edit-btn-action-loader").show();
+        console.log("edit_save_btn clicked");
+        let userID = getCookie("JBuserID");
+        let gameDate = $("#edit-game-date").val();
+        let gameName = $("#edit-game-name-select").children("option:selected").text();
+        let GameSetupID = $("#edit-game-name-select").children("option:selected").attr("class");
+        let ticketInPlayVal = $("#edit-game-selected-display-ticketNo").text(); 
+        let ticketInPlayId = getTicketInPlayId(ticketInPlayVal);
+        let newGameDetails = {
+            "UID": userID,
+            "TktID": ticketInPlayId,
+            "GameName": gameName,
+            "GameDate": gameDate
+        }
+
+        let gameDetails = getEditGameSelectedData(GameSetupID);
+
+            let jsonData = {
+                "GameSetupID": GameSetupID,
+                "gameSetup": newGameDetails,
+                "gameSetupDetails": gameDetails
+            };
+
+        console.log("========================================");        
+        console.log("Edit jsonData : ",jsonData);
+        console.log("========================================");
+
+        var url = (initAPIs.domain + initAPIs.UpdateGameSetup).toString();
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: JSON.stringify(jsonData),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (json) {
+                console.log("json : ", json);
+                if (json.IsSuccess == true || json.IsSuccess == "true") {
+                    toastMsg("<span class='green-text'>Game Updated successfully!</span>");
+                    refreshUserGameList();
+                    resetEditGameForm();
+                    $("#edit-btn-action-loader").hide();
+                } else {
+                    toastMsg("<span class='red-text'>Game Updation was Not successful!</span>");
+                    $("#edit-btn-action-loader").hide();
+                }
+            },
+            error: function (parsedjson, textStatus, errorThrown) {
+                toastMsg("<span class='red-text text-lighten-4'>Network Error, Please Try Later!</span>");
+                
+                $("#edit-btn-action-loader").hide();
+
+            }
+        });
 
 
+    });
+    
+
+    function getTicketInPlayId(ticketInPlayVal){
+        let ticketInPlayId=0;        
+        $.each(ticketsInPlay, function (key, value) {
+            if (value.TktType == ticketInPlayVal) {
+                ticketInPlayId=value.TktID;
+            }
+        });
+       return ticketInPlayId;
+    }
+
+    function getEditGameSelectedData(GameSetupID) {
+        let gameDetailsObj = [];
+        let tr = $("#edit_setup_table tbody tr");
+
+        for (let i = 0; i < tr.length; i++) {
+
+            let gameID = $("#game_id_" + i).attr("role");
+            let Game = $("#game_id_" + i).val();
+            let ColorID = $("#game_color_" + i).children("option:selected").attr("role");
+            let Color = $("#game_color_" + i).children("option:selected").val();
+            let oneLine_game_chk = false;
+            let twoLine_game_chk = false;
+            let fullHouse_game_chk = false;
+            let corner_game_chk = false;
+
+            if ($("#oneLine_game_chk_" + i).is(":checked")) {
+                oneLine_game_chk = true;
+            }
+
+            let oneLine_game_price = $("#oneLine_game_price_" + i).val();
+
+            if ($("#twoLine_game_chk_" + i).is(":checked")) {
+                twoLine_game_chk = true;
+            }
+            let twoLine_game_price = $("#twoLine_game_price_" + i).val();
+
+            if ($("#fullHouse_game_chk_" + i).is(":checked")) {
+                fullHouse_game_chk = true;
+            }
+            let fullHouse_game_price = $("#fullHouse_game_price_" + i).val();
+
+            if ($("#corner_game_chk_" + i).is(":checked")) {
+                corner_game_chk = true;
+            }
+            let corner_game_price = $("#corner_game_price_" + i).val();
+
+
+            var obj = {
+                "ID": getDetailID(GameSetupID,gameID),
+                "GameID": gameID,
+                "ColorID": ColorID,
+                "IsOneLn": oneLine_game_chk,
+                "OneLnPrice": oneLine_game_price,
+                "IsTwoLn": twoLine_game_chk,
+                "TwoLnPrice": twoLine_game_price,
+                "IsFH": fullHouse_game_chk,
+                "FHPrice": fullHouse_game_price,
+                "IsCorner": corner_game_chk,
+                "CornerPrice": corner_game_price
+            };
+            gameDetailsObj.push(obj);
+
+        }
+
+
+        return gameDetailsObj;
+    }
+
+
+    function getDetailID(SetupID,GameID){
+        // console.log("SetupID > ",SetupID);
+        // console.log("GameID > ",GameID);
+        let ID=0;
+        let AllGameDetails=userGameMst.AllGameDetails;
+        console.log("AllGameDetails > ",AllGameDetails);
+        $.each(AllGameDetails, function (key, value) {
+            // console.log("key > ",key);
+            console.log("SetupID > ",SetupID);           
+            console.log("value.SetupID > ",value.SetupID);
+            console.log("GameID > ",GameID);
+            console.log("value.GameID > ",value.GameID);
+            if (value.SetupID == SetupID && value.GameID==GameID) {
+                 ID=value.ID;                
+            }
+        });
+        return ID;
+    }
+
+
+
+    $("#select-game-modal-choose-game").on("change", function (e) {  
+        console.log("select-game-modal-choose-game > ",e);
+        var val = $(this).children("option:selected").val();
+        var id = $(this).children("option:selected").attr("role");
+        var SetupID = $(this).children("option:selected").attr("class");
+        
+        console.log("val > ",val);
+        console.log("id > ",id);
+        console.log("SetupID > ",SetupID);
+
+        $.each(userGamesList, function (key, value) {
+          if(value.SetupID==SetupID){
+            GameDate=value.GameDate;
+          }
+        });     
+        $("#select-game-modal-choose-game-tkt-display").text(id);
+
+        //get table list of game details from mst
+        displayGameDetailsInSelectGameModal();
+         
+    }); 
+    
+    $(".calculateData").on("keyup", function (e) {
+
+        // var soldFrom = 0;
+        // var soldTo = 0;
+        // var bookletPrice = 0;
+        // var totalTicketsSold = 0;
+        // var totalPrice = 0;
+        // var totalRevenue = 0;
+        // var totalGain = 0;
+
+         soldFrom=$("#sold-from").val();
+         soldTo=$("#sold-to").val();
+         totalTicketsSold= $("#total-tickets-sold").val();
+         bookletPrice=$("#per-booklet-price").val();  
+         let tktNo=$("#select-game-modal-choose-game-tkt-display").text();
+        
+        if(tktNo.trim()==""){
+            toastMsg("<span class='red-text text-lighten-4'>Please Select Game!</span>");
+        }else{
+            let noOfTickets=getNumberOfTickets(tktNo);            
+            let N1=0;
+            N1=parseFloat(totalTicketsSold)/parseFloat(noOfTickets);
+            totalRevenue=N1*parseFloat(bookletPrice);
+            totalRevenue=parseFloat(totalRevenue);
+            let roundOffRevenue=(Math.round(totalRevenue * 100) / 100).toFixed(2);
+            let chk=isNaN(roundOffRevenue);
+            console.log("--- > chk > ",chk);
+            if(chk){
+                $("#total-revenue").val(0);
+            }else{
+                $("#total-revenue").val(roundOffRevenue);
+            }
+            
+        }
+        
+    });
+
+    function getNumberOfTickets(tktNo){
+        let noOfTickets=0;       
+          $.each(ticketsInPlay, function (key, value) {
+            if(value.TktType==tktNo){              
+                noOfTickets=value.NoOfTkts;
+            }
+          });
+          return noOfTickets;
+    }
+
+    
+    $("#game-call-speed").on("keyup", function (e) {
+        time=$(this).val();
     });
 
 

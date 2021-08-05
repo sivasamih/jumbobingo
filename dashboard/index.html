@@ -10,6 +10,12 @@
     <link type="text/css" rel="stylesheet" href="/assets/jumbobingo.css" media="screen,projection" />
 
     <style>
+  body {
+        background-image: url("/assets/media/bg-1.png");
+        background-color: #ffffff;
+        background-repeat: no-repeat;
+      }
+
         nav,
         header,
         main,
@@ -566,11 +572,9 @@
                         <div class="indeterminate yellow"></div>
                     </div>
                     <div id="current-ticket-display-div" style="margin-top: 5px;"></div>
-                    <select id="game-view-game-select" class="browser-default " style="margin-top: 11px;">
+                    <select id="game-game-select" class="browser-default " style="margin-top: 11px;">
                         <option value="" disabled selected>Select Game</option>
-                        <option value="1">Game 1</option>
-                        <option value="2">Game 2</option>
-                        <option value="3">Game 3</option>
+                        
                     </select>
                 </div>
                 <div class="col s4 bottom-margin center-align">
@@ -706,25 +710,40 @@
                         <div class="col s6">
                             <select id="select-game-modal-choose-game" class="browser-default "
                                 style="margin-top: 11px;">
-                                <option value="" disabled selected>Select Game</option>
-                                <option value="1">Game 1</option>
-                                <option value="2">Game 2</option>
-                                <option value="3">Game 3</option>
+                                 
+                                
                             </select>
                         </div>
                         <div class="col s6">
                             <div style="margin-top: 18px !important;">
                                 <h5>
                                     <i class="material-icons">chevron_right</i>   
-                                    <b class="grey lighten-3 grey-text" 
+                                    <b id="select-game-modal-choose-game-tkt-display" class="grey lighten-3 grey-text" 
                                     style="border-style: solid;border-width: 1px;padding-left: 20px;padding-right: 20px;padding-top: 7px;padding-bottom: 7px;">
-                                    1206
+                                     
                                 </b>
                                 </h5>
                             </div>
                         </div>
                     </div>
-                   
+                    <div class="row">
+                        <div class="col s12">
+                            <table class="centered small" id="select-game-forPlay-Game-detail-display">
+                                <thead class="indigo darken-4 white-text">
+                                    <tr class="indigo darken-4 white-text">
+                                        <th class="indigo darken-4" style="width:100px !important;">Game</th>
+                                        <th class="indigo darken-4" style="width:150px !important;">Color</th>
+                                        <th class="indigo darken-4">One Line</th>
+                                        <th class="indigo darken-4">Two Line</th>
+                                        <th class="indigo darken-4">Full House</th>
+                                        <th class="indigo darken-4">Corner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>                   
 
                 </div>
                 <div class="col s5 brown lighten-5">
@@ -737,19 +756,19 @@
                                 <tr>
                                     <td style="width: 120px;"> Tickets sold:</td>
                                     <td style="width: 120px;">
-                                        <input id="sold-from" type="text" class="validate browser-default"
+                                        <input id="sold-from" type="text" class="validate browser-default calculateData"
                                             placeholder="From" style="width:100%">
                                     </td>
                                     <td class="center-align">-</td>
                                     <td style="width: 120px;">
-                                        <input id="sold-to" type="text" class="validate browser-default"
+                                        <input id="sold-to" type="text" class="validate browser-default calculateData"
                                             placeholder="To" style="width:100%">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="width: 120px;"> Booklet price:</td>
                                     <td style="width: 120px;">
-                                        <input id="per-booklet-price" type="text" class="validate browser-default"
+                                        <input id="per-booklet-price" type="text" class="validate browser-default calculateData"
                                             placeholder="Price" style="width:100%">
                                     </td>
                                 </tr>
@@ -761,7 +780,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 120px;"> Total price:</td>
+                                    <td style="width: 120px;"> Total prize:</td>
                                     <td style="width: 120px;">
                                         <input disabled id="total-price" type="text" class="validate browser-default"
                                             placeholder="0" style="width:100%">
