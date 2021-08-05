@@ -496,7 +496,7 @@
             <div style="margin-top: -20px !important;">
                 <h5 class="center-align light-blue-text text-darken-4 user-clubName" style="font-weight: bold;">ST Limited Game</h5>
                 <h6 class="center-align light-blue-text text-darken-3"
-                    style="font-weight: bold;margin-top: -12px !important;">Jumbo Bingo : Game Name : Color</h6>
+                    style="font-weight: bold;margin-top: -12px !important;"> <span class="black-text">Jumbo Bingo</span> : <span class="ScreengameName"></span> : <span  class="ScreengameColor"></span></h6>
             </div>
             <div class="row">
                 <div class="col s6 game-play-div " style="margin-top: 10px !important;">
@@ -572,8 +572,7 @@
                         <div class="indeterminate yellow"></div>
                     </div>
                     <div id="current-ticket-display-div" style="margin-top: 5px;"></div>
-                    <select id="game-game-select" class="browser-default " style="margin-top: 11px;">
-                        <option value="" disabled selected>Select Game</option>
+                    <select id="gameScreen-game-select" class="browser-default " style="margin-top: 11px;">
                         
                     </select>
                 </div>
@@ -737,6 +736,7 @@
                                         <th class="indigo darken-4">Two Line</th>
                                         <th class="indigo darken-4">Full House</th>
                                         <th class="indigo darken-4">Corner</th>
+                                        <th class="indigo darken-4">&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -854,9 +854,10 @@
 
         </div>
         <div class="modal-footer  brown lighten-4">
+             
             <a id="play-btn-from-select-game" href="#modal3"
                 class="waves-effect waves-green btn-small black modal-trigger">PLAY</a>
-            <a href="javascript:Void(0);" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            <a href="#" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
         </div>
     </div>
 
