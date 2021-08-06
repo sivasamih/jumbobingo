@@ -9,9 +9,14 @@ $(document).ready(function () {
 
     var chkAudio = true;
     var numberExhausted = false;
-    var autoCallsSet = true;
+    
     var isPaused = false;
-  
+    var autoCallsSet = true;  //true if auto & false if manual
+    var manualEnterKeyPress=false;
+    var manualInputNumberEnterKeyPress=false;
+    var startBtnClicked=false;
+
+    
     
     var initAPIs = {};
     var userGameMst = {};
@@ -287,6 +292,10 @@ $(document).ready(function () {
         $("#edit_setup_btn_grp").hide();
         $("#edit-btn-action-loader").hide();
         $("#new-btn-action-loader").hide();
+        $("#play-btn-from-select-game").attr("disabled", true);
+        if(manualEnterKeyPress==true || autoCallsSet==true){
+            $("#game-manual-enter-number-display").hide();
+        }
     }
 
     function fillTicketInPlayNewSetupDropdown() {
@@ -942,6 +951,7 @@ $(document).ready(function () {
     //-------------------------------------------EVENTS--------------------------------
 
     $("#game-modal-verify-btn").click(function () {
+        $("#pause-game-btn").click();
         document.getElementById("ticket_number").value = "";
     });
 
@@ -1465,6 +1475,7 @@ $(document).ready(function () {
     });
 
     $("#pause-game-btn").click(function () {
+        startBtnClicked=false;
         clearInterval(setIntervalVal);
         $(this).attr("disabled", true);
         toastMsg("<span class='red-text text-lighten-4'>Game Paused!</span>");
@@ -1473,6 +1484,10 @@ $(document).ready(function () {
     });
 
     $("#start-game-btn").click(function () {
+
+        
+
+        startBtnClicked=true;
         M.Toast.dismissAll();
         $("#pause-game-btn").attr("disabled", false);
         isPaused = false;
@@ -1498,10 +1513,123 @@ $(document).ready(function () {
                     // promptDisableMsg++;
                 }
             }, time);
+        } else {
 
+            if(manualEnterKeyPress==true){
+                toastMsg("<span class='red-text text-lighten-4'>Press Enter to call Numbers!</span>");
+            }
 
-        } else { }
+         }
     });
+
+    $("#game-screen-user-input-number").on("change",function(e){
+        
+        if (startBtnClicked==true) {            
+            let number=$(this).val();
+            console.log("input number : ",number);
+            if (gameStartCalledNumbers.length > 89) {
+                numberExhausted=true;
+                toastMsg("<span class='red-text text-lighten-4'>Numbers Exhausted!</span>");
+                $(this).val("");
+            }
+            if (numberExhausted == false) {
+                if(number>=1 && number <=90){
+                    let chk=chkIfNumberExist(number);
+                    if(chk==true){
+                        toastMsg("<span class='red-text text-lighten-4'>Number Already Entered!</span>");
+                        $(this).val("");
+                    }else{
+                        gameStartCalledNumbers.push(number);
+                        if (chkAudio == true) {
+                            dictateNumber(number);
+                        }
+                        displayNumberOnScreen(number);
+                        highlightNumberInSeriesDisplay(number);
+                        updateSelectedCallsList();
+                        validateCalledNumbers();
+                        $(this).val("");
+                    }
+                }else{
+                    toastMsg("<span class='red-text text-lighten-4'>Please Enter Valid Number !</span>");
+                    $(this).val("");
+                }          
+                
+            }
+        }else{
+            toastMsg("<span class='red-text text-lighten-4'>Click on Start to continue!</span>");
+            $(this).val("");
+        }    
+        
+    });
+
+    $(document).on("keyup",function(e){
+        if(manualEnterKeyPress==true){
+            if (startBtnClicked==true) {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    if (isPaused == false) {
+                        var random = bingo.generateNextRandom().toString();
+                        if (numberExhausted == false) {
+                            gameStartCalledNumbers.push(random);
+                            if (chkAudio == true) {
+                                dictateNumber(random);
+                            }
+                            displayNumberOnScreen(random);
+                            highlightNumberInSeriesDisplay(random);
+                            updateSelectedCallsList();
+                            validateCalledNumbers();
+                        }
+                    } else {
+                        // if(promptDisableMsg==1){
+                        //     toastMsg("<span class='red-text text-lighten-4'>Game Paused!</span>");
+                        // }                        
+                        // promptDisableMsg++;
+                    }
+                }
+            }else{
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    toastMsg("<span class='red-text text-lighten-4'>Click Start to continue!</span>");
+                }
+                
+            }
+        }
+           
+        
+    });
+
+    $(".game-call-type-selection").on("click",function(){       
+        let val=$(this).val();
+        if(val=="auto"){
+             autoCallsSet = true;   
+             manualEnterKeyPress=false;
+             manualInputNumberEnterKeyPress=false;
+        }
+        if(val=="enterkey"){
+            autoCallsSet = false;   
+            manualEnterKeyPress=true;
+            manualInputNumberEnterKeyPress=false;
+        }
+        if(val=="manualEnter"){
+            autoCallsSet = false;   
+            manualEnterKeyPress=false;
+            manualInputNumberEnterKeyPress=true;
+            $("#game-manual-enter-number-display").show();
+        }
+    });
+
+    function chkIfNumberExist(number){
+        console.log("==========================================");
+        console.log("chkIfNumberExist > number > ",number);
+        let isPresent=false;
+        $.each(gameStartCalledNumbers, function (key, value) {
+            console.log("chkIfNumberExist > value > ",value);
+            if(value==number){
+                console.log("chkIfNumberExist  Already Present");
+                isPresent=true;
+            }
+          });
+          console.log("==========================================");
+          return isPresent;
+    }
 
     $("#tableSearch").on("keyup", function () {
         var value = this.value.toLowerCase().trim();
@@ -1887,6 +2015,7 @@ $(document).ready(function () {
 
 
     $("#select-game-modal-choose-game").on("change", function (e) {  
+        // $("#play-btn-from-select-game").attr("disabled", false);
         console.log("select-game-modal-choose-game > ",e);
         var val = $(this).children("option:selected").val();
         var id = $(this).children("option:selected").attr("role");
@@ -1945,18 +2074,30 @@ $(document).ready(function () {
 
     $("#game-call-speed").on("keyup", function (e) {
         time=$(this).val();
+        if(time==""){
+            time=5000;  
+        }else{
+            if(parseFloat(time)>0){
+                time=parseFloat(time)*1000;
+            }else{
+                time=5000;  
+            }
+        }
     });
 
     $(document).on('click', '.playSelectedGame', function (e) {    
-        console.log("Hi e > ",e);
-        console.log("Hi e.target > ",e.target);
+        // console.log("Hi e > ",e);
+        // console.log("Hi e.target > ",e.target);
         selectedGameID=$(this).attr("role");//to selected the game master ID
-       
+        $("#play-btn-from-select-game").attr("disabled", false);
     });
 
      
     $("#play-btn-from-select-game").click(function(){
-        console.log("Hi your have selectedGameID > ",selectedGameID);        
+        console.log("Hi your have selectedGameID > ",selectedGameID);    
+        
+        
+
         $.each(selectedGameForPlay, function (key, value) {
             if (value.ID == selectedGameID) {
                 console.log("Play Clicked Now searching > value > ",value);
@@ -1964,6 +2105,8 @@ $(document).ready(function () {
                 $(".ScreengameColor").text(value.Color);
             }
         });
+
+
     });
 
     function getNumberOfTickets(tktNo){

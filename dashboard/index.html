@@ -11,7 +11,7 @@
 
     <style>
   body {
-        background-image: url("/assets/media/bg-1.png");
+        background-image: url("/assets/media/bg-02.png");
         background-color: #ffffff;
         background-repeat: no-repeat;
       }
@@ -577,8 +577,8 @@
                     </select>
                 </div>
                 <div class="col s4 bottom-margin center-align">
-                    <div class="red-text" style="margin-top: 20px;font-weight: bold;">
-                        <span class="blink">Enter Number:</span> <input id="user-input-number" type="text"
+                    <div id="game-manual-enter-number-display" class="red-text" style="margin-top: 20px;font-weight: bold;">
+                        <span class="blink">Enter Number:</span> <input id="game-screen-user-input-number" type="text"
                             class="validate browser-default" style="width: 10%;">
                         Wrong Number: <input id="user-input-wrong-number" type="text" class="validate browser-default"
                             style="width: 10%;">
@@ -695,7 +695,7 @@
         </div>
     </div>
 
-    <!-- Verify Ticket prompt prompt -->
+    <!-- Select Game prompt prompt -->
     <div id="modal6" class="modal brown lighten-4"
         style="width: 70%;border-style: solid;border-width: 4px;border-color: #eceff1;">
         <div class="modal-content ">
@@ -709,8 +709,6 @@
                         <div class="col s6">
                             <select id="select-game-modal-choose-game" class="browser-default "
                                 style="margin-top: 11px;">
-                                 
-                                
                             </select>
                         </div>
                         <div class="col s6">
@@ -827,19 +825,19 @@
                         <div class="col s12">
                             <p>
                                 <label>
-                                    <input name="game-call-type" type="radio" checked />
+                                    <input class="game-call-type-selection" name="game-call-type" value="auto" type="radio" checked/>
                                     <span class="radio-label">Auto</span>
                                 </label>
                             </p>
                             <p>
                                 <label>
-                                    <input name="game-call-type" type="radio"  />
+                                    <input class="game-call-type-selection" name="game-call-type"  value="enterkey" type="radio"  />
                                     <span class="radio-label">Auto-Manual, Press "ENTER-KEY" to continue</span>
                                 </label>
                             </p>
                             <p>
                                 <label>
-                                    <input name="game-call-type" type="radio"  />
+                                    <input class="game-call-type-selection" name="game-call-type"  value="manualEnter" type="radio"  />
                                     <span class="radio-label">Manual, Enter a number from keyboard</span>
                                 </label>
                             </p>
@@ -1009,10 +1007,9 @@
 
     <main>
         <div class="container">
-            <img id="dashboard-img" class="responsive-img center-align" src="/assets/media/bingo-startup-index.jpg"
-                style="margin-top: 3%;" />
+            <!-- <img id="dashboard-img" class="responsive-img center-align" src="/assets/media/bg-01.png"
+                style="margin-top: 3%;" /> -->
             <div>
-
             </div>
         </div>
 
