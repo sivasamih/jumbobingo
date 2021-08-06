@@ -2089,27 +2089,21 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.playSelectedGame', function (e) {    
-        // console.log("Hi e > ",e);
-        // console.log("Hi e.target > ",e.target);
+        
         selectedGameID=$(this).attr("role");//to selected the game master ID
         $("#play-btn-from-select-game").attr("disabled", false);
+        $('#gameScreen-game-select option[value="'+selectedGameID+'"]').prop('selected', true);
     });
 
      
     $("#play-btn-from-select-game").click(function(){
-        console.log("Hi your have selectedGameID > ",selectedGameID);    
-        //$(".ScreengameName").text(value.GameName);
-        
-
+        console.log("Hi your have selectedGameID > ",selectedGameID);
         $.each(selectedGameForPlay, function (key, value) {
             if (value.ID == selectedGameID) {
-                console.log("Play Clicked Now searching > value > ",value);
-                // $(".ScreengameName").text(value.GameName);
+                console.log("Play Clicked Now searching > value > ",value);                
                 $(".ScreengameColor").text(value.Color);
             }
         });
-
-
     });
 
     function getNumberOfTickets(tktNo){
@@ -2142,7 +2136,7 @@ $(document).ready(function () {
                 .attr("value", value.ID)
                 .attr("role", value.SetupID)
                 .attr("class", value.GameID)
-                .attr("selected", '')
+                // .attr("selected", '')
                 .text(value.GameName));
           });
 
