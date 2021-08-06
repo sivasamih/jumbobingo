@@ -1702,6 +1702,7 @@ $(document).ready(function () {
                     // console.log("textStatus : ", textStatus);
                     // console.log("errorThrown : ", errorThrown);
                     $("#new-btn-action-loader").hide();
+                    $(this).attr("disabled", false);
 
                 }
             });
@@ -2020,7 +2021,9 @@ $(document).ready(function () {
         var val = $(this).children("option:selected").val();
         var id = $(this).children("option:selected").attr("role");
         var SetupID = $(this).children("option:selected").attr("class");
-        
+        var text = $(this).children("option:selected").text();
+        $(".ScreengameName").html(text);
+        console.log("text > ",text);        
         console.log("val > ",val);
         console.log("id > ",id);
         console.log("SetupID > ",SetupID);
@@ -2095,13 +2098,13 @@ $(document).ready(function () {
      
     $("#play-btn-from-select-game").click(function(){
         console.log("Hi your have selectedGameID > ",selectedGameID);    
-        
+        //$(".ScreengameName").text(value.GameName);
         
 
         $.each(selectedGameForPlay, function (key, value) {
             if (value.ID == selectedGameID) {
                 console.log("Play Clicked Now searching > value > ",value);
-                $(".ScreengameName").text(value.GameName);
+                // $(".ScreengameName").text(value.GameName);
                 $(".ScreengameColor").text(value.Color);
             }
         });
