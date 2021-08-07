@@ -33,7 +33,7 @@ $(document).ready(function () {
     var Token = "";
     var ticketsInPlay = "";
     var selectedGameID="";
-    var time = 500;
+    var time = 5000;
 
     var soldFrom = 0;
     var soldTo = 0;
@@ -953,6 +953,10 @@ $(document).ready(function () {
     $("#game-modal-verify-btn").click(function () {
         $("#pause-game-btn").click();
         document.getElementById("ticket_number").value = "";
+    });
+
+    $("#exitInitiate-game-btn").click(function () {
+        $("#pause-game-btn").click();       
     });
 
     $("#numbering-modal-open").click(function () {
